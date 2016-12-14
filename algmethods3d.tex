@@ -10,6 +10,7 @@
 \documentclass{aicom2e}
 \usepackage{comment}
 \newtheorem{z}{Exercise}
+\usepackage{amsfonts}
 
 \begin{document}
 
@@ -128,8 +129,6 @@ propositions about volumes.
 To the best of our knowledge, there are no papers that describe
 application of Wu's or Gr\"obner basis method into problems in solid
 geometry.
-% ovo jos proveriti, mada nema nista;
-% hm, svi radovi su stari, oko 2000-te, naci nesto novije za citat.
 
 
 \section{Background}
@@ -146,6 +145,10 @@ of the existing ones. However, the properties of the new object can
 usually be specified in terms of one or more relations, so without
 losing generality, it can be assumed that we are dealing only with
 relations.
+
+The standard algebrization procedure introduces fresh symbolic
+variables for point coordinates and introduces (polynomial) equations
+that characterize every relation between objected observed.
 
 \begin{comment}
 Each object can be given independently by adding its arbitrary
@@ -177,42 +180,119 @@ given objects.
 \end{comment}
 
 \subsection{Algebraic methods}
-% prebaciti tekst iz rada o formalizaciji algebarskih metoda
+
+Algebraic methods in geometry are well described in literature
+\cite{}.  In this section we give a brief account on algebraic methods
+in geometry, in order to explain some relevant steps needed in
+algebraization of solid objects. 
+
+
+Once the geometric theorem has been algebrized, it is possible to
+apply algebraic theorem proving methods. During algebraization are
+gained polynomials equations describing objects of the form $p(v_1,
+\ldots, v_n) = q(v_1, \ldots, v_n)$. Before applying any
+algebraization method, these equations are transformed to $p(v_1,
+\ldots, v_n) - q(v_1, \ldots, v_n) = 0$. Lets denote polynomials (left
+side of equations) representing relation between objects width $f_i$,
+$i = 1, \ldots, k$, and lets denote relations to be proved with $g_j$,
+$j = 1, \ldots, l$, then proving theorem reduces to checking if for
+each $g_j$ it holds that
+\begin{tabbing}
+$\forall v_1, \ldots, v_n \in \mathbb{R}. \bigwedge_{i = 1}^{k} f_i(v_1,$ \= $\ldots, v_n) = 0 \Longrightarrow$ \\
+\> $g_j(v_1, \ldots, v_n) = 0$
+\end{tabbing}
+
+As Tarski suggested, proving geometric properties can be done using
+quantifier elimination procedure for the reals, but this approach is
+inefficient and proving nontrivial geometric properties would take too
+long. But, there is another approach. The main insight, given by Wu
+Wen-ts\"un in 1978, is that remarkably many geometrical theorems, when
+formulated as universal algebraic statements in terms of coordinates,
+are also true for all complex values of the “coordinates”. However, a
+care should be taken, since, in some cases, the condition holds for
+$\mathbb{R}$, but not for $\mathbb{C}$, and in these cases methods
+fail due to counterexamples in $\mathbb{C}$. The statement to be
+proved is following:
+\begin{tabbing}
+$\forall v_1, \ldots, v_n \in \mathbb{C}. \bigwedge_{i = 1}^{k} f_i(v_1,$ \= $\ldots, v_n) = 0 \Longrightarrow$ \\
+\> $g_j(v_1, \ldots, v_n) = 0$
+\end{tabbing}
+
+This is true when $g_j$ belongs to the radical ideal $I = \langle f_1,
+\ldots, f_k \rangle$, i.e. when exists an integer $r$ and polynomials
+$h_1, \ldots, h_k$ such that $g_j^r = \sum_{i=1}^k h_if_i$.
+
+The two most significant algebraic methods that use a kind of
+Euclidean division to check the validity of an observed conjecture are
+Buchberger’s method consists in transforming the generating set into a
+Gr\"obner basis and the Wu’s method.
+
 \paragraph{Wu's method}
-\begin{comment}
-There are two variants of Wu's method: simplified or full. In this
-paper we use GeoProver that uses simplified Wu's method. Although,
-this method cannot prove all statement, it is very powerful and can be
-used for many problems.
 
-%jos o razlikama izmedju potpune i uproscene metode?
+The first step of simple Wu’s method \cite{} uses the pseudo--division
+operation to transform the polynomial system to triangular form, i.e.,
+to a system of equations where each successive equation introduces
+exactly one dependent variable. After that, the final reminder is
+calculated by pseudo dividing polynomial for the statements to be
+proved by each polynomial from triangular system.  Summarizing, Wu’s
+method, in its simplest form, allows to compute some polynomials $c,
+h_1, \ldots, h_k$ and $r$ such that
+$$cg_j = \sum_{i=1}^{k}h_if_i + r$$ If the final remainder $r$ is
+equal to zero, then the conjecture is considered to be proved. This
+simple method of Wu is not complete (in algebraic sense) and
+sometimes the result of applying method is indecisive, i.e. the
+theorem can't be proved nor disproved. A more complex and complete
+version of the method uses ascending chains which are considered in
+the Ritt-Wu principle.
 
-Wu's method can be used for proving statement in elementary geometry,
-whose hypotheses and conclusions could be written in polynomial form:
-\begin{eqnarray*}
-h_1 (u_1 , \ldots, u_d , x_1 , \ldots, x_t ) & = & 0 \\
-h_2 (u_1 , \ldots, u_d , x_1 , \ldots, x_t ) & = & 0\\
-\ldots \\
-h_t (u_1 , \ldots, u_d , x_1 , \ldots, x_t ) & = & 0 \\
-g(u_1 , \ldots, u_d , x_1 , \ldots, x_t ) & = & 0
-\end{eqnarray*}
-
-where $h_1$, $h_2$, $\ldots$, $h_t$ are hypotheses and $g$ is
-conclusion and all polynomials belong to the ring
-$K[u_1 , \ldots, u_d , x_1 , \ldots, x_t ]$ ($K$ is field). Variables
-$u_1$, $u_2$, $\ldots$, $u_t$ are parameters or independent variables,
-and variables $x_1$, $x_2$, $\ldots$, $x_t$ are algebraically
-dependent in the respect of the variables $u_1$, $u_2$, $\ldots$,
-$u_t$ and that dependency is given in the above polynomial system. The
-next step is to reduce system to triangular form. To prove theorem
-using simple Wu's method it is necessarily to find the final remainder
-of polynomial $g$ over triangular system. If the final remainder is
-zero, then the theorem has been proved.
-\end{comment}
 \paragraph{Gr\"obner basis method}
+
+$G$ is gr\"obner basis for ideal $I = \langle f_1, \ldots, f_k
+\rangle$ if and only if multivariate division any polynomial belonging
+to ideal $I$ with $G$ gives $0$. This means that proving given
+conjecture consists of two steps. The first is determining the
+Gr\"obner basis for polynomials describing relation between objects,
+$f_1, \ldots, f_k$. The second step is multivariate division of
+polynomial describing relation to be proved, $g_j$ with $G$. If the
+result of division is $0$ then statement is proved, otherwise is
+disproved.
+
+For calculating Gr\"obner basis is used Buchberger's algorithm witch
+transforms a given set of polynomials into a Gr\"obner basis with
+respect to some monomial order using B-reduction.
+
 \subsection{Implementations of algebraic methods}
+
+For testing results of applied agrebaization we used two systems --
+GeoProver that uses simple Wu's method and Mathematica with
+implemented Gr\"obner basis method. Shortly, both systems are going to
+be presented here.
+
 \paragraph{GeoProver}
+
+GeoProver is open source software implemented in Java providing
+support for algebraic theorem proving using Wu's method. GeoProver
+consists of two main modules: one provides support for algebraic
+methods and the other is a set of APIs from different geometric
+applications and formats to the prover.  
+
+GeoProver produces detailed reports with steps that are taken in
+proving process: transformation of input geometric problem to
+algebraic form, invoking a specified algebraic-based theorem prover,
+and presenting the result with time and space spent to prove the
+theorem and with a list of NDG conditions obtained during proving
+process, transformed to a readable, geometry form.
+
+One of the main purposes of this Java implementation is integration
+with various dynamic geometry tools (including GeoGebra ) that
+currently don’t have support for proving geometry theorems. The
+architecture of GeoProver enables easy integration with other systems
+for interactive geometry and can be simply modified to accept various
+input formats for conjectures.
+
 \paragraph{Gr\"obner basis in Mathematica}
+
+??
 
 \section{Alegebrization of geometric relations in solid geometry}
 \label{polynomials}

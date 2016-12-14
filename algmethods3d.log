@@ -1,0 +1,966 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.10.19)  14 DEC 2016 12:56
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**algmethods3d.tex
+(./algmethods3d.tex
+LaTeX2e <2011/06/27>
+Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+(./aicom2e.cls
+Document Class: aicom2e 2000/01/26 v1.1, IOS Press
+(/usr/share/texlive/texmf-dist/tex/latex/base/fleqn.clo
+File: fleqn.clo 1998/08/17 v1.1c Standard LaTeX option (flush left equations)
+\mathindent=\dimen102
+)
+Ten point
+\c@section=\count79
+\c@subsection=\count80
+\c@subsubsection=\count81
+\c@paragraph=\count82
+\c@subparagraph=\count83
+\c@figure=\count84
+\c@table=\count85
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\tablewidth=\dimen103
+\saved@tablewidth=\dimen104
+\c@algorithm=\count86
+\t@glob@notes=\toks14
+\t@loc@notes=\toks15
+\note@cnt=\count87
+\c@author=\count88
+\n@author=\count89
+\c@address=\count90
+\sv@mathsurround=\dimen105
+\sv@hyphenpenalty=\count91
+\prev@elem=\count92
+\cur@elem=\count93
+\fm@box=\box26
+\fm@size=\dimen106
+\t@abstract=\box27
+\t@keywords=\box28
+\a@title@skip=\dimen107
+\b@section@skip=\skip43
+\b@pretitle@skip=\skip44
+\t@xtheight=\dimen108
+\@@topskip=\dimen109
+\b@author@skip=\dimen110
+\dp@t@keywords=\dimen111
+\@pubyear=\count94
+\@copyear=\count95
+) (/usr/share/texlive/texmf-dist/tex/latex/comment/comment.sty
+\CommentStream=\write3
+
+Excluding comment 'comment')
+\c@z=\count96
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks16
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)
+(./algmethods3d.aux)
+\openout1 = `algmethods3d.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+
+
+LaTeX Warning: Citation `geogebra' on page 1 undefined on input line 26.
+
+
+LaTeX Warning: Citation `cinderella' on page 1 undefined on input line 26.
+
+
+LaTeX Warning: Citation `geogebra-provers' on page 1 undefined on input line 44
+.
+
+
+LaTeX Warning: Citation `wu' on page 1 undefined on input line 80.
+
+
+LaTeX Warning: Citation `ritt' on page 1 undefined on input line 83.
+
+
+LaTeX Warning: Citation `area' on page 1 undefined on input line 98.
+
+
+LaTeX Warning: Citation `fullangle' on page 1 undefined on input line 99.
+
+
+LaTeX Warning: Citation `gelertner' on page 1 undefined on input line 106.
+
+
+LaTeX Warning: Citation `sana' on page 1 undefined on input line 111.
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+
+LaTeX Warning: Citation `volumemethod' on page 2 undefined on input line 116.
+
+Excluding 'comment' comment.
+LaTeX Font Info:    Try loading font information for U+msa on input line 192.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 192.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ú in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+
+Overfull \hbox (1.90855pt too wide) in paragraph at lines 232--240
+ \OT1/cmr/m/it/10 Wu's method \OT1/cmr/m/n/10 The first step of sim-ple Wus met
+hod
+ []
+
+[2]
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+ [3]
+Overfull \hbox (14.12646pt too wide) detected at line 349
+\OML/cmm/m/it/10 x \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 k \OMS/cmsy/m/n/10 ^^A \O
+T1/cmr/m/n/10 [[]][] + [][]  \OML/cmm/m/it/10 y \OT1/cmr/m/n/10 = \OML/cmm/m/it
+/10 k \OMS/cmsy/m/n/10 ^^A \OT1/cmr/m/n/10 [[]][] + [][]  \OML/cmm/m/it/10 z \O
+T1/cmr/m/n/10 = \OML/cmm/m/it/10 k \OMS/cmsy/m/n/10 ^^A \OT1/cmr/m/n/10 [[]][] 
++ [][]\OML/cmm/m/it/10 :
+ []
+
+
+Overfull \hbox (1.36555pt too wide) in paragraph at lines 373--381
+[]\OT1/cmr/m/n/10 Vector de-ter-mined by two points $\OML/cmm/m/it/10 A \OT1/cm
+r/m/n/10 = (\OML/cmm/m/it/10 a[]; a[]; a[]\OT1/cmr/m/n/10 )$
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 435--437
+
+ []
+
+[5]
+
+LaTeX Warning: Citation `harrison' on page 6 undefined on input line 609.
+
+
+Overfull \hbox (1.80899pt too wide) in paragraph at lines 649--651
+[]\OT1/cmr/m/n/10 To sim-plify con-struc-tions even fur-ther, we choose
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 698--704
+
+ []
+
+
+Overfull \hbox (28.94452pt too wide) in paragraph at lines 720--720
+[]\OT1/cmr/m/n/10 mislim
+ []
+
+
+Overfull \hbox (10.55559pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 da
+ []
+
+
+Overfull \hbox (23.33339pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 nema
+ []
+
+
+Overfull \hbox (33.36119pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 potrebe
+ []
+
+
+Overfull \hbox (25.3334pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 svuda
+ []
+
+
+Overfull \hbox (23.94449pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 stavl-
+ []
+
+
+Overfull \hbox (14.72227pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 jati
+ []
+
+
+Overfull \hbox (17.50003pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 "In-
+ []
+
+
+Overfull \hbox (20.00006pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 put"
+ []
+
+
+Overfull \hbox (2.77779pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 i
+ []
+
+
+Overfull \hbox (25.55562pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 "Out-
+ []
+
+
+Overfull \hbox (22.77785pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 put".
+ []
+
+
+Overfull \hbox (29.16673pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 Mozda
+ []
+
+
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 u
+ []
+
+
+Overfull \hbox (12.80557pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 pr-
+ []
+
+
+Overfull \hbox (18.33339pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 vom
+ []
+
+
+Overfull \hbox (34.50008pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 primeru
+ []
+
+
+Overfull \hbox (13.88892pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ob-
+ []
+
+
+Overfull \hbox (15.33336pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 jas-
+ []
+
+
+Overfull \hbox (17.77783pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 niti,
+ []
+
+
+Overfull \hbox (10.55559pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ali
+ []
+
+
+Overfull \hbox (25.83339pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 deluje
+ []
+
+
+Overfull \hbox (11.69444pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 re-
+ []
+
+
+Overfull \hbox (14.44447pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 du-
+ []
+
+
+Overfull \hbox (25.00008pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 datno
+ []
+
+
+Overfull \hbox (10.55559pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 da
+ []
+
+
+Overfull \hbox (8.38889pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 se
+ []
+
+
+Overfull \hbox (25.3334pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 svuda
+ []
+
+
+Overfull \hbox (28.66675pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 stavlja
+ []
+
+
+Overfull \hbox (11.41669pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 jer
+ []
+
+
+Overfull \hbox (8.88889pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ce
+ []
+
+
+Overfull \hbox (31.38896pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 citaocu
+ []
+
+
+Overfull \hbox (7.22223pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 iz
+ []
+
+
+Overfull \hbox (22.27783pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 opisa
+ []
+
+
+Overfull \hbox (15.00005pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 biti
+ []
+
+
+Overfull \hbox (22.55562pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 jasno
+ []
+
+
+Overfull \hbox (12.83336pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 sta
+ []
+
+
+Overfull \hbox (9.50002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 su
+ []
+
+
+Overfull \hbox (20.00006pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 dati,
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 a
+ []
+
+
+Overfull \hbox (12.83336pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 sta
+ []
+
+
+Overfull \hbox (18.33339pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 novi
+ []
+
+
+Overfull \hbox (13.88892pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ob-
+ []
+
+
+Overfull \hbox (22.22229pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 jekti,
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 a
+ []
+
+
+Overfull \hbox (24.75006pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ranije
+ []
+
+
+Overfull \hbox (7.50002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 je
+ []
+
+
+Overfull \hbox (11.69444pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 re-
+ []
+
+
+Overfull \hbox (19.44447pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ceno
+ []
+
+
+Overfull \hbox (10.55559pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 da
+ []
+
+
+Overfull \hbox (20.27785pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 kada
+ []
+
+
+Overfull \hbox (31.94452pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 kazemo
+ []
+
+
+Overfull \hbox (14.44449pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 dat
+ []
+
+
+Overfull \hbox (7.50002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 je
+ []
+
+
+Overfull \hbox (18.33339pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 novi
+ []
+
+
+Overfull \hbox (13.88892pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ob-
+ []
+
+
+Overfull \hbox (21.11118pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 jekat
+ []
+
+
+Overfull \hbox (10.55559pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 da
+ []
+
+
+Overfull \hbox (8.88892pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 to
+ []
+
+
+Overfull \hbox (22.22226pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 znaci
+ []
+
+
+Overfull \hbox (18.88893pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 date
+ []
+
+
+Overfull \hbox (9.50002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 su
+ []
+
+
+Overfull \hbox (16.38892pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 nje-
+ []
+
+
+Overfull \hbox (19.1667pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 gove
+ []
+
+
+Overfull \hbox (13.33336pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ko-
+ []
+
+
+Overfull \hbox (12.25002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 or-
+ []
+
+
+Overfull \hbox (11.66669pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 di-
+ []
+
+
+Overfull \hbox (21.66672pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 nate.
+ []
+
+
+Overfull \hbox (9.16669pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 Ili
+ []
+
+
+Overfull \hbox (14.44449pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 dat
+ []
+
+
+Overfull \hbox (7.50002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 je
+ []
+
+
+Overfull \hbox (18.33339pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 novi
+ []
+
+
+Overfull \hbox (13.88892pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ob-
+ []
+
+
+Overfull \hbox (23.88896pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 jekat,
+ []
+
+
+Overfull \hbox (22.22226pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 znaci
+ []
+
+
+Overfull \hbox (25.8334pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 uvode
+ []
+
+
+Overfull \hbox (8.38889pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 se
+ []
+
+
+Overfull \hbox (19.72226pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 nove
+ []
+
+
+Overfull \hbox (13.33336pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ko-
+ []
+
+
+Overfull \hbox (12.25002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 or-
+ []
+
+
+Overfull \hbox (11.66669pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 di-
+ []
+
+
+Overfull \hbox (18.88893pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 nate
+ []
+
+
+Overfull \hbox (9.44446pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 za
+ []
+
+
+Overfull \hbox (12.50003pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 taj
+ []
+
+
+Overfull \hbox (13.88892pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 ob-
+ []
+
+
+Overfull \hbox (23.88896pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 jekat.
+ []
+
+
+Overfull \hbox (19.22224pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 Mis-
+ []
+
+
+Overfull \hbox (13.88893pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 lim
+ []
+
+
+Overfull \hbox (10.55559pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 da
+ []
+
+
+Overfull \hbox (7.50002pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 je
+ []
+
+
+Overfull \hbox (12.83334pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 su-
+ []
+
+
+Overfull \hbox (22.55562pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 visno
+ []
+
+
+Overfull \hbox (25.3334pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 svuda
+ []
+
+
+Overfull \hbox (23.9445pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 pisati
+ []
+
+
+Overfull \hbox (30.55563pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 "ulaz",
+ []
+
+
+Overfull \hbox (32.22229pt too wide) in paragraph at lines 720--720
+\OT1/cmr/m/n/10 "izlaz". 
+ []
+
+
+Overfull \hbox (2.5429pt too wide) in paragraph at lines 725--727
+\OT1/cmr/m/n/10 three fresh sym-bolic co-or-di-nates $(\OML/cmm/m/it/10 m[]; m[
+]; m[]\OT1/cmr/m/n/10 )$. 
+ []
+
+
+Overfull \hbox (80.85342pt too wide) in paragraph at lines 747--751
+\OT1/cmr/m/n/10 ram-e-ters $\OML/cmm/m/it/10 l[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/
+10 l[]; l[]; l[]; l[]; l[]; l[]\OT1/cmr/m/n/10 )$ and $\OML/cmm/m/it/10 l[]\OT1
+/cmr/m/n/10 (\OML/cmm/m/it/10 l[]; l[]; l[]; l[]l[]; l[]\OT1/cmr/m/n/10 )$. 
+ []
+
+
+Overfull \hbox (29.26395pt too wide) in paragraph at lines 789--789
+[]\OT1/cmr/m/n/10 Govori
+ []
+
+
+Overfull \hbox (8.38889pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 se
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 o
+ []
+
+
+Overfull \hbox (18.11115pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 pos-
+ []
+
+
+Overfull \hbox (25.83342pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 tupku
+ []
+
+
+Overfull \hbox (11.69444pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 re-
+ []
+
+
+Overfull \hbox (12.27779pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 sa-
+ []
+
+
+Overfull \hbox (23.33342pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 vanja
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 o
+ []
+
+
+Overfull \hbox (18.33339pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 kom
+ []
+
+
+Overfull \hbox (15.83337pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 nije
+ []
+
+
+Overfull \hbox (12.00003pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 jos
+ []
+
+
+Overfull \hbox (16.11116pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 bilo
+ []
+
+
+Overfull \hbox (18.36113pt too wide) in paragraph at lines 789--789
+\OT1/cmr/m/n/10 reci. 
+ []
+
+[7]
+Overfull \hbox (2.5429pt too wide) in paragraph at lines 814--816
+\OT1/cmr/m/n/10 three fresh sym-bolic co-or-di-nates $(\OML/cmm/m/it/10 m[]; m[
+]; m[]\OT1/cmr/m/n/10 )$. 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 894--895
+
+ []
+
+[8]
+Overfull \hbox (14.72226pt too wide) in paragraph at lines 942--942
+[]\OT1/cmr/m/n/10 ovo
+ []
+
+
+Overfull \hbox (15.83337pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 nije
+ []
+
+
+Overfull \hbox (29.27785pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 sasvim
+ []
+
+
+Overfull \hbox (26.66673pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 tacno,
+ []
+
+
+Overfull \hbox (11.41669pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 jer
+ []
+
+
+Overfull \hbox (20.00005pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 ovde
+ []
+
+
+Overfull \hbox (29.44453pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 imamo
+ []
+
+
+Overfull \hbox (10.58336pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 tri
+ []
+
+
+Overfull \hbox (16.38892pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 jed-
+ []
+
+
+Overfull \hbox (30.55562pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 nacine,
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 a
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 4
+ []
+
+
+Overfull \hbox (28.61116pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 nepoz-
+ []
+
+
+Overfull \hbox (18.88893pt too wide) in paragraph at lines 942--942
+\OT1/cmr/m/n/10 nate 
+ []
+
+
+Overfull \hbox (12.63892pt too wide) in paragraph at lines 975--975
+[]\OT1/cmr/m/n/10 Da
+ []
+
+
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 975--975
+\OT1/cmr/m/n/10 li
+ []
+
+
+Overfull \hbox (25.61116pt too wide) in paragraph at lines 975--975
+\OT1/cmr/m/n/10 uvesti
+ []
+
+
+Overfull \hbox (38.91673pt too wide) in paragraph at lines 975--975
+\OT1/cmr/m/n/10 izometri-
+ []
+
+
+Overfull \hbox (16.44447pt too wide) in paragraph at lines 975--975
+\OT1/cmr/m/n/10 jske
+ []
+
+
+Overfull \hbox (25.63893pt too wide) in paragraph at lines 975--975
+\OT1/cmr/m/n/10 trans-
+ []
+
+
+Overfull \hbox (15.30559pt too wide) in paragraph at lines 975--975
+\OT1/cmr/m/n/10 for-
+ []
+
+
+Overfull \hbox (16.6667pt too wide) in paragraph at lines 975--975
+\OT1/cmr/m/n/10 ma-
+ []
+
+
+Overfull \hbox (19.44447pt too wide) in paragraph at lines 975--975
+\OT1/cmr/m/n/10 cije? 
+ []
+
+
+Overfull \hbox (23.88371pt too wide) in paragraph at lines 1011--1020
+\OT1/cmr/m/it/10 Objects and pa-ram-e-ters: \OT1/cmr/m/n/10 Points $\OML/cmm/m/
+it/10 A\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ;
+ \OT1/cmr/m/n/10 0)$, $\OML/cmm/m/it/10 B\OT1/cmr/m/n/10 (1\OML/cmm/m/it/10 ; \
+OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0)$,
+ []
+
+[9]
+Overfull \hbox (23.88371pt too wide) in paragraph at lines 1053--1056
+[]\OT1/cmr/m/it/10 Objects and pa-ram-e-ters: \OT1/cmr/m/n/10 Points $\OML/cmm/
+m/it/10 A\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10
+ ; \OT1/cmr/m/n/10 0)$, $\OML/cmm/m/it/10 B\OT1/cmr/m/n/10 (1\OML/cmm/m/it/10 ;
+ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0)$,
+ []
+
+
+Overfull \hbox (0.97592pt too wide) in paragraph at lines 1053--1056
+\OML/cmm/m/it/10 C\OT1/cmr/m/n/10 (1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1\OML/cm
+m/m/it/10 ; \OT1/cmr/m/n/10 0)$, $\OML/cmm/m/it/10 D\OT1/cmr/m/n/10 (0\OML/cmm/
+m/it/10 ; \OT1/cmr/m/n/10 1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0)$ and $\OML/cmm
+/m/it/10 S\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s[]; s[]; s[]\OT1/cmr/m/n/10 )$, fo
+r three
+ []
+
+
+Overfull \hbox (23.88371pt too wide) in paragraph at lines 1074--1076
+[]\OT1/cmr/m/it/10 Objects and pa-ram-e-ters: \OT1/cmr/m/n/10 Points $\OML/cmm/
+m/it/10 A\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10
+ ; \OT1/cmr/m/n/10 0)$, $\OML/cmm/m/it/10 B\OT1/cmr/m/n/10 (1\OML/cmm/m/it/10 ;
+ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0)$,
+ []
+
+
+Overfull \hbox (40.66922pt too wide) in paragraph at lines 1105--1107
+[]\OT1/cmr/m/it/10 Input: \OT1/cmr/m/n/10 Plane $\OML/cmm/m/it/10 ^^Y$ \OT1/cmr
+/m/n/10 with fresh pa-ram-e-ters $(\OML/cmm/m/it/10 ^^Y[]; ^^Y[]; ^^Y[]; ^^Y[]\
+OT1/cmr/m/n/10 )$. 
+ []
+
+
+Overfull \hbox (23.88371pt too wide) in paragraph at lines 1142--1144
+[]\OT1/cmr/m/it/10 Objects and pa-ram-e-ters: \OT1/cmr/m/n/10 Points $\OML/cmm/
+m/it/10 A\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10
+ ; \OT1/cmr/m/n/10 0)$, $\OML/cmm/m/it/10 B\OT1/cmr/m/n/10 (1\OML/cmm/m/it/10 ;
+ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0)$,
+ []
+
+
+Overfull \hbox (12.54619pt too wide) in paragraph at lines 1160--1164
+\OML/cmm/m/it/10 A[]\OT1/cmr/m/n/10 (1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/
+cmm/m/it/10 ; \OT1/cmr/m/n/10 0)$, $\OML/cmm/m/it/10 A[]\OT1/cmr/m/n/10 (\OML/c
+mm/m/it/10 a[]; a[]; \OT1/cmr/m/n/10 0)$, $\OML/cmm/m/it/10 A[]\OT1/cmr/m/n/10 
+(1\OML/cmm/m/it/10 ; a[]; \OT1/cmr/m/n/10 0)$, $\OML/cmm/m/it/10 A[]\OT1/cmr/m/
+n/10 (0\OML/cmm/m/it/10 ; a[]; \OT1/cmr/m/n/10 0)$
+ []
+
+[10] [11
+
+] (./algmethods3d.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 543 strings out of 493304
+ 6191 string characters out of 6139870
+ 75240 words of memory out of 5000000
+ 4062 multiletter control sequences out of 15000+600000
+ 6462 words of font info for 26 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 21i,17n,25p,194b,269s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on algmethods3d.pdf (11 pages, 205316 bytes).
+PDF statistics:
+ 96 PDF objects out of 1000 (max. 8388607)
+ 68 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
