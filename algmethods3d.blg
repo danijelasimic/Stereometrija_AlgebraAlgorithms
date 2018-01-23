@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: algmethods3d.aux
+The style file: elsarticle-harv.bst
+Database file #1: algmethods3d.bib
+Warning--I didn't find a database entry for "geogebra"
+Warning--I didn't find a database entry for "cinderella"
+Warning--I didn't find a database entry for "geogebra-provers"
+Warning--I didn't find a database entry for ""
+Warning--I didn't find a database entry for "harrison"
+You've used 12 entries,
+            2821 wiz_defined-function locations,
+            714 strings with 6533 characters,
+and the built_in function-call counts, 5635 in all, are:
+= -- 611
+> -- 214
+< -- 10
++ -- 83
+- -- 69
+* -- 442
+:= -- 1001
+add.period$ -- 39
+call.type$ -- 12
+change.case$ -- 86
+chr.to.int$ -- 12
+cite$ -- 12
+duplicate$ -- 226
+empty$ -- 423
+format.name$ -- 95
+if$ -- 1167
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 12
+newline$ -- 43
+num.names$ -- 48
+pop$ -- 74
+preamble$ -- 1
+purify$ -- 71
+quote$ -- 0
+skip$ -- 190
+stack$ -- 0
+substring$ -- 353
+swap$ -- 36
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 105
+warning$ -- 0
+while$ -- 56
+width$ -- 0
+write$ -- 139
+(There were 5 warnings)

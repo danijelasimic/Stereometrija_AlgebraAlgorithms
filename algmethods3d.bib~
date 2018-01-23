@@ -1,0 +1,132 @@
+@article{wu,
+  title={On the decision problem and the mechanization of theorem-proving in elementary geometry},
+  author={Wu, Wen-ts{\"u}n},
+  journal={Scientia Sinica},
+  volume={21},
+  number={2},
+  pages={159--172},
+  year={1978}
+}
+
+@book{ritt,
+  title={Differential algebra},
+  author={Ritt, Joseph Fels},
+  volume={33},
+  year={1950},
+  publisher={American Mathematical Soc.}
+}
+
+
+@mastersthesis{chou1984,
+  title={Proving elementary geometry theorems using Wu's algorithm},
+  author={Chou, Shang-Ching},
+  year={1984},
+  school={University of Texas at Austin}
+}
+
+@article{buchberger,
+  title={Bruno Buchberger’s PhD thesis 1965: An algorithm for finding the basis elements of the residue class ring of a zero dimensional polynomial ideal},
+  author={Buchberger, Bruno},
+  journal={Journal of symbolic computation},
+  volume={41},
+  number={3},
+  pages={475--511},
+  year={2006},
+  publisher={Elsevier}
+}
+
+
+@inproceedings{area,
+  title={Automated production of traditional proofs for constructive geometry theorems},
+  author={Chou, Shang-Ching and Gao, Xiao-Shan and Zhang, Jing-Zhong},
+  booktitle={Logic in Computer Science, 1993. LICS'93., Proceedings of Eighth Annual IEEE Symposium on},
+  pages={48--56},
+  year={1993},
+  organization={IEEE}
+}
+
+
+@article{fullangle,
+  title={Automated generation of readable proofs with geometric invariants},
+  author={Chou, Shang-Ching and Gao, Xiao-Shan and Zhang, Jing-Zhong},
+  journal={Journal of Automated Reasoning},
+  volume={17},
+  number={3},
+  pages={325--347},
+  year={1996},
+  publisher={Springer}
+}
+
+
+@inproceedings{gelertner,
+  title={Realization of a geometry theorem proving machine.},
+  author={Gelernter, Herbert},
+  booktitle={IFIP Congress},
+  pages={273--281},
+  year={1959}
+}
+
+@article{sana,
+  title={Automated generation of machine verifiable and readable proofs: A case study of Tarski’s geometry},
+  author={\D ur\d evi{\'c}, Sana Stojanovi{\'c} and Narboux, Julien and Jani{\v{c}}i{\'c}, Predrag},
+  journal={Annals of Mathematics and Artificial Intelligence},
+  volume={74},
+  number={3-4},
+  pages={249--269},
+  year={2015},
+  publisher={Springer}
+}
+
+
+@article{volumemethod,
+  title={Automated production of traditional proofs in solid geometry},
+  author={Chou, Shang-Ching and Gao, Xiao-Shan and Zhang, Jing-Zhong},
+  journal={Journal of Automated Reasoning},
+  volume={14},
+  number={2},
+  pages={257--291},
+  year={1995},
+  publisher={Springer}
+}
+
+
+@article{shao2016challenging,
+  title={Challenging Theorem Provers with Mathematical Olympiad Problems in Solid Geometry},
+  author={Shao, Changpeng and Li, Hongbo and Huang, Lei},
+  journal={Mathematics in Computer Science},
+  volume={10},
+  number={1},
+  pages={75--96},
+  year={2016},
+  publisher={Springer}
+}
+
+@article{lord1985method,
+  title={A Method for Vector Proofs in Geometry},
+  author={Lord, NJ},
+  journal={Mathematics Magazine},
+  volume={58},
+  number={2},
+  pages={84--89},
+  year={1985},
+  publisher={JSTOR}
+}
+
+
+@inproceedings{chen2002projection,
+  title={The projection of quasi variety and its application on geometric theorem proving and formula deduction},
+  author={Chen, XueFeng and Wang, DingKang},
+  booktitle={International Workshop on Automated Deduction in Geometry},
+  pages={21--30},
+  year={2002},
+  organization={Springer}
+}
+
+
+@article{loch2009geometric,
+  title={Geometric reasoning in 3D building models using multivariate polynomials and characteristic sets},
+  author={Loch-Dehbi, S and Pl{\"u}mer, L},
+  journal={International Archives of Photogrammetry, Remote Sensing and Spatial Information Sciences},
+  volume={38},
+  year={2009}
+}

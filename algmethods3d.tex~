@@ -25,8 +25,6 @@
 
 
 \usepackage{comment}
-\def\d{{\fontencoding{T1}\selectfont\dj}}
-\def\D{{\fontencoding{T1}\selectfont\DJ}}
 
 \begin{document}
 
@@ -116,23 +114,22 @@ in geometry. Automated theorem provers for geometry are based either
 on the synthetic approach or on the algebraic approach (based on some
 coordinates).
 
-Major breakthrough in the algebraic approach was made by
+Major breakthrough in the algebraic approach was made by Wu
 \cite{wu}. The geometric construction and the statement are first
 encoded as a set of polynomial equalities over their coordinates, and
 then the Wu's method uses algebraic techniques for dealing with these
-polynomials. In his paper \cite{ritt} described similar ideas as
+polynomials. In his paper \cite{ritt}, Ritt described similar ideas as
 Wu, so nowdays this method is usually called Ritt-Wu's method. Many
-theorems were successfully proved using this method
-\cite{chou1984}. The success of the Wu's method motivated other
-researcher to develop new methods, and one of the most prominent is
-the Gr\"obner basis method based on Buchberger's algorithm
-\cite{buchberger}. Similar to Wu's method, the Gr\"obner basis also
-reasons representation in form of a set of polynomial
-equalities. There are many implementations of these algorithms and
-some are in commercial software (e.g. Matllab, Mathematica or
-Maple). However, both methods produce only yes or no answers instead
-of human understandable proofs and cannot deal with width inequality
-(therefore cannot reason about the order of points).
+theorems were successfully proved using this method \cite{chou1984}. The
+success of the Wu's method motivated other researcher to develop new
+methods, and one of the most prominent is the Gr\"obner basis method
+based on Buchberger's algorithm \cite{buchberger}. Similar to Wu's method, the
+Gr\"obner basis also reasons representation in form of a set of
+polynomial equalities. There are many implementations of these algorithms and some
+are in commercial software (e.g. Matllab, Mathematica or Maple). However,
+both methods produce only yes or no answers
+instead of human understandable proofs and cannot deal with with
+inequality (therefore cannot reason about the order of poins).
 
 Several coordinate-free methods that do not use coordinate
 representation of points are developed in the 1980's. The reason for
@@ -140,13 +137,13 @@ their development was in the idea that it is possible to develop
 prover that would produce human readable proofs. Most prominent are
 the area method \cite{area} and the full angle method
 \cite{fullangle}, and those methods are usually referred to as
-semi--algebraic, since they involve reasoning over some special
+semi-algebraic, since they involve reasoning over some special
 geometric quantities (e.g., signed area or Pythagora's
 differences). These methods are usually not as efficient as algebraic
 methods and have smaller scope than algebraic methods.
 
 One of the first synthetic provers, that uses method of resolution,
-was developed by \cite{gelertner} whose idea was to develop
+was developed by Gelertner \cite{gelertner} whose idea was to develop
 the proof that is similar to human proof. He successfully proved many
 problems taken from high--school textbooks. In modern times, synthetic
 provers are usually based on coherent (synthetic) logic --- a special
@@ -156,48 +153,32 @@ human readable proofs.
 
 
 \paragraph{Automated reasoning in solid geometry.}
-\cite{volumemethod} at al.~presented volume method.  It is a
-semi--algebraic method that is extension of the area method for solid
-geometry. Hypotheses can be described constructively and conclusions
-are polynomial equations of several geometry quantities, such as
-volumes, ratios of line segments, ratios of areas, and Pythagoras
-differences. The key idea of the method is to eliminate points from
-the conclusion of a geometry statement using several basic
+Shang-Ching Chou at al.~presented volume method \cite{volumemethod}.
+It is a semi-algebraic method that is extension of the area method for
+solid geometry. Hypotheses can be described constructively and
+conclusions are polynomial equations of several geometry quantities,
+such as volumes, ratios of line segments, ratios of areas, and
+Pythagoras differences. The key idea of the method is to eliminate
+points from the conclusion of a geometry statement using several basic
 propositions about volumes.
 
-\cite{shao2016challenging} used solid geometry problems from
-Mathematical Olympiad problems and exercises to evaluate different
-geometry provers.  In the paper are presented three different
-examples. For each example are given polynomials (derived using
-pen--and--paper) representing solid geometry conjecture. Using these
-examples is demonstrated that algebraic methods can be used for
-proving in solid geometry. For each example they used three different
-methods, characteristic set method \cite{wu}, Gr\"obner basis method
-\cite{buchberger} and vector algebra method \cite{lord1985method}.
-These methods are compered and they give conclusion that vector
-algebra method gives better geometry proof but derived equations can
-be long and difficult for manipulation and calculation. They tested
-these methods on 97 problems, but they derived all polynomials using
-pen--and--paper. Although Maple is used for Gr\"obner basis method,
-they do not present any automatic algebraization of solid geometric
-statements, e.g. how to transform geometric statements into
-polynomials.
+In paper written 2016. \cite{shao2016challenging} solid geometry problems from 
+Mathematical Olympiad problems and exercises are used to evaluate different geometry provers.
+In the paper are presented tree different examples. For each example are given polynomials (derived using pen--and--paper) representing solid geometry conjecture. Using these examples is demonstrated that algebraic 
+methods can be used for proving in solid geometry. For each example they used three different methods, 
+characteristic set method \cite{chen2002projection}, Gr\"obner basis method \cite{buchberger} and vector algebra method \cite{lord1985method}.
+These methods are compered and they give conclusion that vector algebra method gives 
+better geometry proof but derived equations can be long and difficult for manipulation
+and calculation. They tested these methods on 97 problems, but they derived all polynomials 
+using pen--and--paper. Although Maple is used for Gr\"obner basis method, they do not present any
+automatic algebraization of solid geometric statements, e.g. how to transform geometric statements into polynomials.
 
-\cite{loch2009geometric} analyzed how algebraic methods could be
-applied for reducing constraints for 3D buildings. Focus was on
-analyzing existing city models and constraints such as parallelity,
-orthogonality and symmetry.  The goal was to determine witch
-constraints are subsumed by others and therefore can be omitted.  They
-presented polynomial equations for parallelity, orthogonality and
-incidence for point and plane and Wu's characteristic set method was
-successfully applied. Since polynomials were quite complex the key was
-to reduce the number of variables and to use miltilinear polynomials
-rather than quadratic. They also made a prototype of the system where
-user can manipulate with constraints.
+\cite{loch2009geometric}
 
 To the best of our knowledge, there are no papers that describe
 application of Wu's or Gr\"obner basis method into problems in solid
 geometry.
+
 
 \section{Background}
 \subsection{Algebrization of geometry relations}
