@@ -25,6 +25,7 @@
 
 
 \usepackage{comment}
+\usepackage{url}
 \def\d{{\fontencoding{T1}\selectfont\dj}}
 \def\D{{\fontencoding{T1}\selectfont\DJ}}
 
@@ -55,25 +56,28 @@ Keywords go here....
 
 
 \section{Introduction}
-For over two millenia, geometry has been one of the major topics in
+For over two millennia, geometry has been one of the major topics in
 education all around the world. Since Euclid's ,,Elements'', geometry
 has been a central field for introducing students to deduction and
 rigorous argumentation. 
 
 In recent years, computers and technology have been intensively used
 to change how geometry is taught. Dynamic geometry systems such as
-GeoGebra, Cinderella,Geometer's Sketchpad, Cabri, Eukleides
-\cite{geogebra,cinderella} % Dodati jos
-are now regularly used in all levels of education. Students use such
-systems to perform geometric constructions, and obtain diagrams that
-can be distored by moving free points. Such dynamic diagrams are
-better than static images, since moving free points can shed
-additional light to the problem, reveal degenerate cases, help student
-to determine if something is true only if some special order of points
-is considered (for example, some property could be true only if a
-point if between some other two points, and be false if that is not
-the case, some property could be true only for accute, and not for
-obtuse angles etc.).
+GeoGebra\footnote{\url{https://www.geogebra.org/}},
+Cinderella\footnote{\url{https://www.cinderella.de/tiki-index.php}},
+Geometer's Sketchpad\footnote{\url{http://www.dynamicgeometry.com/}},
+Cabri\footnote{\url{http://www.cabri.com/}},
+Eukleides\footnote{\url{http://www.eukleides.org/}} are now regularly used
+in all levels of education. Students use such systems to perform
+geometric constructions, and obtain diagrams that can be distored by
+moving free points. Such dynamic diagrams are better than static
+images, since moving free points can shed additional light to the
+problem, reveal degenerate cases, help student to determine if
+something is true only if some special order of points is considered
+(for example, some property could be true only if a point is between
+some other two points, and be false if that is not the case, some
+property could be true only for accute, and not for obtuse angles
+etc.).
 
 By doing extensive distortion of diagrams by moving free points,
 student can be pretty sure if a property is generaly true (i.e., true
@@ -86,25 +90,55 @@ usually algebraic (they perform calculations on symbolic coordinates
 of geometric objects).
 
 % reci zasto se u 3d prostoru svojstva ne vide golim oko toliko dobro koliko u 2d
+In our view, application of dynamic geometry software for three
+dimension space is even more important since it is often hard to
+determine some properties by observing diagram. This happens due to
+fact that three dimensional space is presented as two dimensional
+projection and thus measures cannot be given as in original diagram.
 
 % Ovde reci nesto o DGS za 3d - Geogebra, Cinderella, Stereos
+Some geometry systems started developing support for three dimension
+constructions. The new version of GeoGeobra have developed support for
+dynamic three dimension
+graphics\footnote{\url{https://wiki.geogebra.org/en/3D_Graphics_View}}. It
+is possible to create and dynamically change three dimension objects
+such as points, lines, polygons and spheres, as well as three
+dimension function graphics. However, this system does not support
+proving statements about three dimension objects. Both Cinderella and
+Cindy3D\footnote{\url{http://gagern.github.io/Cindy3D/}} have
+extensions for drawing three dimension objects using commands and
+formulas describing them.
 
 Most recent research in both dynamic geometry systems and automated
-theorem proving in geometry has been devoted only to two-dimensional
+theorem proving in geometry has been devoted only to two--dimensional
 Euclidean geometry (plane geometry). Although there have been some
 limited attempts to apply algebraic theorem proving methods to
-three-dimensional Euclidean space geometry (solid geometry), we are
+three--dimensional Euclidean space geometry (solid geometry), we are
 not aware that there are thorough descriptions of these methods, nor
 publicly available implementations of automated provers for solid
-geometry. In this paper we examine and compare several ways of
-applying algebraic theorem provers based on Gr\"obner bases and Wu's
-method to solid geometry problems and describe their integration with
-dynamic geometry systems for solid geometry. We provide an
-implementation of one dynamic geometry system for solid geometry,
-capable of proving statements about the properties of constructed
-objects. We also analyze a corpus of problems from solid geometry and
-evaluate methods to those problems. We discuss challenges and possible
-applications in the field of geometry education.
+geometry. 
+
+Having this in mind, this work tries to bridge several gaps that we
+feel are present in current state-of-the-art in the field of automatic
+proving in solid geometry.
+\begin{enumerate}
+\item In this paper we examine and compare several ways of applying
+  algebraic theorem provers based on Gr\"obner bases and Wu's method
+  to solid geometry problems.
+
+\item We describe integration of algebraic theorem provers with
+  dynamic geometry systems for solid geometry.
+
+\item We provide an implementation of one dynamic geometry system for
+  solid geometry, capable of proving statements about the properties
+  of constructed objects.
+
+\item We also analyze a corpus of problems from solid geometry and
+  evaluate methods to those problems.
+
+\item We discuss challenges and possible applications in the field of
+  geometry education.
+\end{enumerate}
 
 % \paragraph{Overview of the paper.}
 

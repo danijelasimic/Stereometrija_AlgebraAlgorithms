@@ -68,7 +68,7 @@
 
 @article{sana,
   title={Automated generation of machine verifiable and readable proofs: A case study of Tarski’s geometry},
-  author={\D ur\d evi{\'c}, Sana Stojanovi{\'c} and Narboux, Julien and Jani{\v{c}}i{\'c}, Predrag},
+  author={\D{}ur\d evi{\'c}, Sana Stojanovi{\'c} and Narboux, Julien and Jani{\v{c}}i{\'c}, Predrag},
   journal={Annals of Mathematics and Artificial Intelligence},
   volume={74},
   number={3-4},
@@ -129,4 +129,16 @@
   journal={International Archives of Photogrammetry, Remote Sensing and Spatial Information Sciences},
   volume={38},
   year={2009}
+}
+
+
+@article{botana2015automated,
+  title={Automated theorem proving in GeoGebra: current achievements},
+  author={Botana, Francisco and Hohenwarter, Markus and Jani{\v{c}}i{\'c}, Predrag and Kov{\'a}cs, Zolt{\'a}n and Petrovi{\'c}, Ivan and Recio, Tom{\'a}s and Weitzhofer, Simon},
+  journal={Journal of Automated Reasoning},
+  volume={55},
+  number={1},
+  pages={39--59},
+  year={2015},
+  publisher={Springer}
 }
