@@ -235,18 +235,17 @@ geometry.
 
 \section{Background}
 \subsection{Algebrization of geometry relations}
-We shall assume that geometry problems are given in terms terms of
-relations between the geometric object involved (points, lines,
-planes, circles, \ldots). Each theorem under consideration is given in
-form of an implication, and both hypothesis and conclusions are given
-as one or more geometric relations. In some cases, the properties of
-constructed geometric objects should be proved. The construction is
-usually specified by a series of construction steps, and each
-construction step is a function that builds new geometric objects out
-of the existing ones. However, the properties of the new object can
-usually be specified in terms of one or more relations, so without
-losing generality, it can be assumed that we are dealing only with
-relations.
+We shall assume that geometry problems are given in terms of relations
+between the geometric object involved (points, lines, planes, circles,
+\ldots). Each theorem under consideration is given in form of an
+implication, and both hypothesis and conclusions are given as one or
+more geometric relations. In some cases, the properties of constructed
+geometric objects should be proved. The construction is usually
+specified by a series of construction steps, and each construction
+step is a function that builds new geometric objects out of the
+existing ones. However, the properties of the new object can usually
+be specified in terms of one or more relations, so without losing
+generality, it can be assumed that we are dealing only with relations.
 
 The standard algebrization procedure introduces fresh symbolic
 variables for point coordinates and introduces (polynomial) equations
@@ -284,9 +283,9 @@ given objects.
 \subsection{Algebraic methods}
 
 Algebraic methods in geometry are well described in literature
-\cite{}.  In this section we give a brief account on algebraic methods
-in geometry, in order to explain some relevant steps needed in
-algebraization of solid objects. 
+\cite{wu, buchberger}. In this section we give a brief account on
+algebraic methods in geometry, in order to explain some relevant steps
+needed in algebraization of solid objects.
 
 
 Once the geometric theorem has been algebrized, it is possible to
@@ -299,10 +298,7 @@ side of equations) representing relation between objects width $f_i$,
 $i = 1, \ldots, k$, and lets denote relations to be proved with $g_j$,
 $j = 1, \ldots, l$, then proving theorem reduces to checking if for
 each $g_j$ it holds that
-\begin{tabbing}
-$\forall v_1, \ldots, v_n \in \mathbb{R}. \bigwedge_{i = 1}^{k} f_i(v_1,$ \= $\ldots, v_n) = 0 \Longrightarrow$ \\
-\> $g_j(v_1, \ldots, v_n) = 0$
-\end{tabbing}
+$$\forall v_1, \ldots, v_n \in \mathbb{R}. \bigwedge_{i = 1}^{k} f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
 
 As Tarski suggested, proving geometric properties can be done using
 quantifier elimination procedure for the reals, but this approach is
@@ -315,10 +311,7 @@ care should be taken, since, in some cases, the condition holds for
 $\mathbb{R}$, but not for $\mathbb{C}$, and in these cases methods
 fail due to counterexamples in $\mathbb{C}$. The statement to be
 proved is following:
-\begin{tabbing}
-$\forall v_1, \ldots, v_n \in \mathbb{C}. \bigwedge_{i = 1}^{k} f_i(v_1,$ \= $\ldots, v_n) = 0 \Longrightarrow$ \\
-\> $g_j(v_1, \ldots, v_n) = 0$
-\end{tabbing}
+$$\forall v_1, \ldots, v_n \in \mathbb{C}. \bigwedge_{i = 1}^{k} f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
 
 This is true when $g_j$ belongs to the radical ideal $I = \langle f_1,
 \ldots, f_k \rangle$, i.e. when exists an integer $r$ and polynomials
@@ -326,19 +319,19 @@ $h_1, \ldots, h_k$ such that $g_j^r = \sum_{i=1}^k h_if_i$.
 
 The two most significant algebraic methods that use a kind of
 Euclidean division to check the validity of an observed conjecture are
-Buchberger’s method consists in transforming the generating set into a
-Gr\"obner basis and the Wu’s method.
+Buchberger's method consists in transforming the generating set into a
+Gr\"obner basis and the Wu's method.
 
 \paragraph{Wu's method}
 
-The first step of simple Wu’s method \cite{} uses the pseudo--division
-operation to transform the polynomial system to triangular form, i.e.,
-to a system of equations where each successive equation introduces
-exactly one dependent variable. After that, the final reminder is
-calculated by pseudo dividing polynomial for the statements to be
-proved by each polynomial from triangular system.  Summarizing, Wu’s
-method, in its simplest form, allows to compute some polynomials $c,
-h_1, \ldots, h_k$ and $r$ such that
+The first step of simple Wu's method \cite{wu} uses the
+pseudo--division operation to transform the polynomial system to
+triangular form, i.e. to a system of equations where each successive
+equation introduces exactly one dependent variable. After that, the
+final reminder is calculated by pseudo dividing polynomial for the
+statements to be proved by each polynomial from triangular system.
+Summarizing, Wu's method, in its simplest form, allows to compute some
+polynomials $c, h_1, \ldots, h_k$ and $r$ such that
 $$cg_j = \sum_{i=1}^{k}h_if_i + r$$ If the final remainder $r$ is
 equal to zero, then the conjecture is considered to be proved. This
 simple method of Wu is not complete (in algebraic sense) and
@@ -365,10 +358,13 @@ respect to some monomial order using B-reduction.
 
 \subsection{Implementations of algebraic methods}
 
-For testing results of applied agrebaization we used two systems --
-GeoProver that uses simple Wu's method and Mathematica with
-implemented Gr\"obner basis method. Shortly, both systems are going to
-be presented here.
+For testing results of applied agrebaization we used three systems --
+GeoProver that uses simple Wu's method \cite{geoprover},
+Mathematica\footnote{\url{https://www.wolfram.com/mathematica/}} with
+implemented Gr\"obner basis method and
+Maple\footnote{\url{https://www.maplesoft.com/products/maple/}} with
+implemented Wu's method \cite{wsolve}. Shortly, all systems are going
+to be presented here.
 
 \paragraph{GeoProver}
 
@@ -386,15 +382,38 @@ theorem and with a list of NDG conditions obtained during proving
 process, transformed to a readable, geometry form.
 
 One of the main purposes of this Java implementation is integration
-with various dynamic geometry tools (including GeoGebra ) that
-currently don’t have support for proving geometry theorems. The
+with various dynamic geometry tools (including GeoGebra) that
+currently don't have support for proving geometry theorems. The
 architecture of GeoProver enables easy integration with other systems
 for interactive geometry and can be simply modified to accept various
 input formats for conjectures.
 
 \paragraph{Gr\"obner basis in Mathematica}
 
-??
+Mathematica is commercial software designed for technical
+computing. It has support for Gr\"obner basis and can be used for
+mechanical theorem proving. By $F = GroebnerBasis[\{poly_1\}, \{poly_2\},
+  \ldots]$ are computed Gr\"obner basis for given list of polynomials
+(representing premises of geometry conjecture). If
+$PolynomialReduce[poly_{concl}, F, V][[2]]$ is zero ($V$ is set of
+  variables), the geometry statement represented with polynomial
+  $poly_{concl}$ is true.
+
+\paragraph{Wu's method in Maple -- wsolve}
+
+The implemented algorithm is based on Wu's method and his theorems
+about the projection of quasi variety \cite{quasivarieties}. While
+proving geometry conjecture, weakest non--degenerate conditions can be
+obtained by computing the projection of a quasi variety. In fact, it
+is possible to get the sufficient and necessary condition for a
+geometric theorem to be false by computing the projection of a quasi
+variety.
+
+The method is easily invoked by key word \emph{wsolve(V, P, C)} where
+$V$ is a list of variables, $P$ is a list of polynomials representing
+premises of geometry statement and $C$ is polynomial representing
+statement.
+
 
 \section{Alegebrization of geometric relations in solid geometry}
 \label{polynomials}

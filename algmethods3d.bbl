@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{16}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{#1}}\fi
@@ -15,6 +15,11 @@ Botana, F., Hohenwarter, M., Jani{\v{c}}i{\'c}, P., Kov{\'a}cs, Z.,
 Buchberger, B., 2006. Bruno buchberger’s phd thesis 1965: An algorithm for
   finding the basis elements of the residue class ring of a zero dimensional
   polynomial ideal. Journal of symbolic computation 41~(3), 475--511.
+
+\bibitem[{Chen and Wang(2002)}]{wsolve}
+Chen, X., Wang, D., 2002. The projection of quasi variety and its application
+  on geometric theorem proving and formula deduction. In: International
+  Workshop on Automated Deduction in Geometry. Springer, pp. 21--30.
 
 \bibitem[{Chou(1984)}]{chou1984}
 Chou, S.-C., 1984. Proving elementary geometry theorems using wu's algorithm.
@@ -57,6 +62,10 @@ Loch-Dehbi, S., Pl{\"u}mer, L., 2009. Geometric reasoning in 3d building models
 Lord, N., 1985. A method for vector proofs in geometry. Mathematics Magazine
   58~(2), 84--89.
 
+\bibitem[{Petrovi{\'c} and Jani{\v{c}}i{\'c}(2012)}]{geoprover}
+Petrovi{\'c}, I., Jani{\v{c}}i{\'c}, P., 2012. Integration of opengeoprover
+  with geogebra.
+
 \bibitem[{Ritt(1950)}]{ritt}
 Ritt, J.~F., 1950. Differential algebra. Vol.~33. American Mathematical Soc.
 
@@ -68,5 +77,9 @@ Shao, C., Li, H., Huang, L., 2016. Challenging theorem provers with
 \bibitem[{Wu(1978)}]{wu}
 Wu, W.-t., 1978. On the decision problem and the mechanization of
   theorem-proving in elementary geometry. Scientia Sinica 21~(2), 159--172.
+
+\bibitem[{Wu(1990)}]{quasivarieties}
+Wu, W.-t., 1990. On a projection theorem of quasivarieties in elimination
+  theory. Chinese Annals of Mathematics 2, 008.
 
 \end{thebibliography}
