@@ -1,0 +1,1588 @@
+%=====================================================
+%  Template File for Journal of Symbolic Computation
+%=====================================================
+
+\documentclass[final,1p,times,authoryear]{elsarticle}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{acknowledgment}[]{Acknowledgment}
+\iffalse
+\newenvironment{proof}{\noindent{\em Proof:}}{$\Box$~\\}
+\fi
+
+
+\usepackage{comment}
+\usepackage{url}
+\def\d{{\fontencoding{T1}\selectfont\dj}}
+\def\D{{\fontencoding{T1}\selectfont\DJ}}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Title goes here.....\footnote{This work was partially supported by the Serbian Ministry of Science grant 174021}}
+
+\author{Filip Mari\' c}
+\address{School of Mathematics, University of Belgrade, Studentski trg 16, 11000, Belgrade, Serbia}
+\ead{filip@matf.bg.ac.rs}
+\ead[url]{http://www.matf.bg.ac.rs/~filip/}
+
+\author{Danijela Simi\' c}
+\address{School of Mathematics, University of Belgrade, Studentski trg 16, 11000, Belgrade, Serbia}
+\ead{danijela@matf.bg.ac.rs}
+\ead[url]{http://www.matf.bg.ac.rs/~danijela/}
+
+\begin{abstract}
+Abstract goes here.....
+\end{abstract}
+
+\begin{keyword}
+Keywords go here.... 
+\end{keyword}
+\end{frontmatter}
+
+
+\section{Introduction}
+For over two millennia, geometry has been one of the major topics in
+education all around the world. Since Euclid's ,,Elements'', geometry
+has been a central field for introducing students to deduction and
+rigorous argumentation. 
+
+In recent years, computers and technology have been intensively used
+to change how geometry is taught. Dynamic geometry systems such as
+GeoGebra\footnote{\url{https://www.geogebra.org/}},
+Cinderella\footnote{\url{https://www.cinderella.de/tiki-index.php}},
+Geometer's Sketchpad\footnote{\url{http://www.dynamicgeometry.com/}},
+Cabri\footnote{\url{http://www.cabri.com/}},
+Eukleides\footnote{\url{http://www.eukleides.org/}} are now regularly used
+in all levels of education. Students use such systems to perform
+geometric constructions, and obtain diagrams that can be distored by
+moving free points. Such dynamic diagrams are better than static
+images, since moving free points can shed additional light to the
+problem, reveal degenerate cases, help student to determine if
+something is true only if some special order of points is considered
+(for example, some property could be true only if a point is between
+some other two points, and be false if that is not the case, some
+property could be true only for accute, and not for obtuse angles
+etc.).
+
+By doing extensive distortion of diagrams by moving free points,
+student can be pretty sure if a property is generaly true (i.e., true
+in all, but a small number of degenerate cases), but still, that
+cannot be considered to be a proof, and is error prone. Therefore,
+recently dynamic geometry systems have been extended by automated
+reasoning systems, that can automatically prove statements about
+constructed objects \cite{geogebra-provers}. Such theorem provers are
+usually algebraic (they perform calculations on symbolic coordinates
+of geometric objects).
+
+% reci zasto se u 3d prostoru svojstva ne vide golim oko toliko dobro koliko u 2d
+In our view, application of dynamic geometry software for three
+dimension space is even more important since it is often hard to
+determine some properties by observing diagram. This happens due to
+fact that three dimensional space is presented as two dimensional
+projection and thus measures cannot be given as in original diagram.
+
+% Ovde reci nesto o DGS za 3d - Geogebra, Cinderella, Stereos
+Some geometry systems started developing support for three dimension
+constructions. The new version of GeoGeobra have developed support for
+dynamic three dimension
+graphics\footnote{\url{https://wiki.geogebra.org/en/3D_Graphics_View}}. It
+is possible to create and dynamically change three dimension objects
+such as points, lines, polygons and spheres, as well as three
+dimension function graphics. However, this system does not support
+proving statements about three dimension objects. Both Cinderella and
+Cindy3D\footnote{\url{http://gagern.github.io/Cindy3D/}} have
+extensions for drawing three dimension objects using commands and
+formulas describing them.
+
+Most recent research in both dynamic geometry systems and automated
+theorem proving in geometry has been devoted only to two--dimensional
+Euclidean geometry (plane geometry). Although there have been some
+limited attempts to apply algebraic theorem proving methods to
+three--dimensional Euclidean space geometry (solid geometry), we are
+not aware that there are thorough descriptions of these methods, nor
+publicly available implementations of automated provers for solid
+geometry. 
+
+Having this in mind, this work tries to bridge several gaps that we
+feel are present in current state-of-the-art in the field of automatic
+proving in solid geometry.
+\begin{enumerate}
+\item In this paper we examine and compare several ways of applying
+  algebraic theorem provers based on Gr\"obner bases and Wu's method
+  to solid geometry problems.
+
+\item We describe integration of algebraic theorem provers with
+  dynamic geometry systems for solid geometry.
+
+\item We provide an implementation of one dynamic geometry system for
+  solid geometry, capable of proving statements about the properties
+  of constructed objects.
+
+\item We also analyze a corpus of problems from solid geometry and
+  evaluate methods to those problems.
+
+\item We discuss challenges and possible applications in the field of
+  geometry education.
+\end{enumerate}
+
+% \paragraph{Overview of the paper.}
+
+\section{Related work}
+\paragraph{Automated reasoning in plane geometry.}
+Automated theorem proving has a history more than fifty years
+long. Most successful automated theorem methods are those for proving
+in geometry. Automated theorem provers for geometry are based either
+on the synthetic approach or on the algebraic approach (based on some
+coordinates).
+
+Major breakthrough in the algebraic approach was made by
+\cite{wu}. The geometric construction and the statement are first
+encoded as a set of polynomial equalities over their coordinates, and
+then the Wu's method uses algebraic techniques for dealing with these
+polynomials. In his paper \cite{ritt} described similar ideas as
+Wu, so nowdays this method is usually called Ritt-Wu's method. Many
+theorems were successfully proved using this method
+\cite{chou1984}. The success of the Wu's method motivated other
+researcher to develop new methods, and one of the most prominent is
+the Gr\"obner basis method based on Buchberger's algorithm
+\cite{buchberger}. Similar to Wu's method, the Gr\"obner basis also
+reasons representation in form of a set of polynomial
+equalities. There are many implementations of these algorithms and
+some are in commercial software (e.g. Matllab, Mathematica or
+Maple). However, both methods produce only yes or no answers instead
+of human understandable proofs and cannot deal with width inequality
+(therefore cannot reason about the order of points).
+
+Several coordinate-free methods that do not use coordinate
+representation of points are developed in the 1980's. The reason for
+their development was in the idea that it is possible to develop
+prover that would produce human readable proofs. Most prominent are
+the area method \cite{area} and the full angle method
+\cite{fullangle}, and those methods are usually referred to as
+semi--algebraic, since they involve reasoning over some special
+geometric quantities (e.g., signed area or Pythagora's
+differences). These methods are usually not as efficient as algebraic
+methods and have smaller scope than algebraic methods.
+
+One of the first synthetic provers, that uses method of resolution,
+was developed by \cite{gelertner} whose idea was to develop
+the proof that is similar to human proof. He successfully proved many
+problems taken from high--school textbooks. In modern times, synthetic
+provers are usually based on coherent (synthetic) logic --- a special
+fragment of first order logic convenient for geometric reasoning. For
+example, the prover ArgoCLP \cite{sana} uses coherent logic to produce
+human readable proofs.
+
+
+\paragraph{Automated reasoning in solid geometry.}
+\cite{volumemethod} at al.~presented volume method.  It is a
+semi--algebraic method that is extension of the area method for solid
+geometry. Hypotheses can be described constructively and conclusions
+are polynomial equations of several geometry quantities, such as
+volumes, ratios of line segments, ratios of areas, and Pythagoras
+differences. The key idea of the method is to eliminate points from
+the conclusion of a geometry statement using several basic
+propositions about volumes.
+
+\cite{shao2016challenging} used solid geometry problems from
+Mathematical Olympiad problems and exercises to evaluate different
+geometry provers.  In the paper are presented three different
+examples. For each example are given polynomials (derived using
+pen--and--paper) representing solid geometry conjecture. Using these
+examples is demonstrated that algebraic methods can be used for
+proving in solid geometry. For each example they used three different
+methods, characteristic set method \cite{wu}, Gr\"obner basis method
+\cite{buchberger} and vector algebra method \cite{lord1985method}.
+These methods are compered and they give conclusion that vector
+algebra method gives better geometry proof but derived equations can
+be long and difficult for manipulation and calculation. They tested
+these methods on 97 problems, but they derived all polynomials using
+pen--and--paper. Although Maple is used for Gr\"obner basis method,
+they do not present any automatic algebraization of solid geometric
+statements, e.g. how to transform geometric statements into
+polynomials.
+
+\cite{loch2009geometric} analyzed how algebraic methods could be
+applied for reducing constraints for 3D buildings. Focus was on
+analyzing existing city models and constraints such as parallelity,
+orthogonality and symmetry.  The goal was to determine witch
+constraints are subsumed by others and therefore can be omitted.  They
+presented polynomial equations for parallelity, orthogonality and
+incidence for point and plane and Wu's characteristic set method was
+successfully applied. Since polynomials were quite complex the key was
+to reduce the number of variables and to use miltilinear polynomials
+rather than quadratic. They also made a prototype of the system where
+user can manipulate with constraints.
+
+To the best of our knowledge, there are no papers that describe
+application of Wu's or Gr\"obner basis method into problems in solid
+geometry.
+
+\section{Background}
+\subsection{Algebrization of geometry relations}
+We shall assume that geometry problems are given in terms of relations
+between the geometric object involved (points, lines, planes, circles,
+\ldots). Each theorem under consideration is given in form of an
+implication, and both hypothesis and conclusions are given as one or
+more geometric relations. In some cases, the properties of constructed
+geometric objects should be proved. The construction is usually
+specified by a series of construction steps, and each construction
+step is a function that builds new geometric objects out of the
+existing ones. However, the properties of the new object can usually
+be specified in terms of one or more relations, so without losing
+generality, it can be assumed that we are dealing only with relations.
+
+The standard algebrization procedure introduces fresh symbolic
+variables for point coordinates and introduces (polynomial) equations
+that characterize every relation between objected observed.
+
+
+Each object can be given independently by adding its arbitrary
+parameters or it can be given using relationship with other, already
+introduced objects. In the second case, for each new object both the
+parameters and the polynomials that represent relationship between new
+object and other objects in the construction are
+introduced. Polynomials contain parameters of all objects in the
+construction rule and analytic identities. All polynomials are
+recorded in construction set which is later used in GeoProver.
+
+Beside construction rules, there are statement rules, rules used to
+express some condition that can be check using GeoProver. For each of
+these conditions are created polynomials which are recorded in the
+statement set. Although in most of the cases, there is only one
+statement polynomial, there were couple statement that generated more
+than one. As mentioned earlier, GeoProver can only have one statement
+rule. However, this not pose a problem, since for each polynomial in
+the statement set GeoProver was applied (always using the same
+construction set). The statement is considered to be true only if
+GeoProver returned true for all polynomials in the statement set.
+
+For the purpose of the further text we are going to assume that we
+have all the necessary data for each construction or statement rule
+(our system collects this data, but we are not going to explain
+technical side of the system since we fill this is not the scope of
+this paper). This means that we have all the parameters of already
+given objects.
+
+\subsection{Algebraic methods}
+
+Algebraic methods in geometry are well described in literature
+\cite{wu, buchberger}. In this section we give a brief account on
+algebraic methods in geometry, in order to explain some relevant steps
+needed in algebraization of solid objects.
+
+
+Once the geometric theorem has been algebrized, it is possible to
+apply algebraic theorem proving methods. During algebraization are
+gained polynomials equations describing objects of the form $p(v_1,
+\ldots, v_n) = q(v_1, \ldots, v_n)$. Before applying any
+algebraization method, these equations are transformed to $p(v_1,
+\ldots, v_n) - q(v_1, \ldots, v_n) = 0$. Lets denote polynomials (left
+side of equations) representing relation between objects width $f_i$,
+$i = 1, \ldots, k$, and lets denote relations to be proved with $g_j$,
+$j = 1, \ldots, l$, then proving theorem reduces to checking if for
+each $g_j$ it holds that
+$$\forall v_1, \ldots, v_n \in \mathbb{R}. \bigwedge_{i = 1}^{k} f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
+
+As Tarski suggested, proving geometric properties can be done using
+quantifier elimination procedure for the reals, but this approach is
+inefficient and proving nontrivial geometric properties would take too
+long. But, there is another approach. The main insight, given by Wu
+Wen-ts\"un in 1978, is that remarkably many geometrical theorems, when
+formulated as universal algebraic statements in terms of coordinates,
+are also true for all complex values of the “coordinates”. However, a
+care should be taken, since, in some cases, the condition holds for
+$\mathbb{R}$, but not for $\mathbb{C}$, and in these cases methods
+fail due to counterexamples in $\mathbb{C}$. The statement to be
+proved is following:
+$$\forall v_1, \ldots, v_n \in \mathbb{C}. \bigwedge_{i = 1}^{k} f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
+
+This is true when $g_j$ belongs to the radical ideal $I = \langle f_1,
+\ldots, f_k \rangle$, i.e. when exists an integer $r$ and polynomials
+$h_1, \ldots, h_k$ such that $g_j^r = \sum_{i=1}^k h_if_i$.
+
+The two most significant algebraic methods that use a kind of
+Euclidean division to check the validity of an observed conjecture are
+Buchberger's method consists in transforming the generating set into a
+Gr\"obner basis and the Wu's method.
+
+\paragraph{Wu's method}
+
+The first step of simple Wu's method \cite{wu} uses the
+pseudo--division operation to transform the polynomial system to
+triangular form, i.e. to a system of equations where each successive
+equation introduces exactly one dependent variable. After that, the
+final reminder is calculated by pseudo dividing polynomial for the
+statements to be proved by each polynomial from triangular system.
+Summarizing, Wu's method, in its simplest form, allows to compute some
+polynomials $c, h_1, \ldots, h_k$ and $r$ such that
+$$cg_j = \sum_{i=1}^{k}h_if_i + r$$ If the final remainder $r$ is
+equal to zero, then the conjecture is considered to be proved. This
+simple method of Wu is not complete (in algebraic sense) and
+sometimes the result of applying method is indecisive, i.e. the
+theorem can't be proved nor disproved. A more complex and complete
+version of the method uses ascending chains which are considered in
+the Ritt-Wu principle.
+
+\paragraph{Gr\"obner basis method}
+
+$G$ is gr\"obner basis for ideal $I = \langle f_1, \ldots, f_k
+\rangle$ if and only if multivariate division any polynomial belonging
+to ideal $I$ with $G$ gives $0$. This means that proving given
+conjecture consists of two steps. The first is determining the
+Gr\"obner basis for polynomials describing relation between objects,
+$f_1, \ldots, f_k$. The second step is multivariate division of
+polynomial describing relation to be proved, $g_j$ with $G$. If the
+result of division is $0$ then statement is proved, otherwise is
+disproved.
+
+For calculating Gr\"obner basis is used Buchberger's algorithm witch
+transforms a given set of polynomials into a Gr\"obner basis with
+respect to some monomial order using B-reduction.
+
+\subsection{Implementations of algebraic methods}
+
+For testing results of applied agrebaization we used three systems --
+GeoProver that uses simple Wu's method \cite{geoprover},
+Mathematica\footnote{\url{https://www.wolfram.com/mathematica/}} with
+implemented Gr\"obner basis method and
+Maple\footnote{\url{https://www.maplesoft.com/products/maple/}} with
+implemented Wu's method \cite{wsolve}. Shortly, all systems are going
+to be presented here.
+
+\paragraph{GeoProver}
+
+GeoProver is open source software implemented in Java providing
+support for algebraic theorem proving using Wu's method. GeoProver
+consists of two main modules: one provides support for algebraic
+methods and the other is a set of APIs from different geometric
+applications and formats to the prover.  
+
+GeoProver produces detailed reports with steps that are taken in
+proving process: transformation of input geometric problem to
+algebraic form, invoking a specified algebraic-based theorem prover,
+and presenting the result with time and space spent to prove the
+theorem and with a list of NDG conditions obtained during proving
+process, transformed to a readable, geometry form.
+
+One of the main purposes of this Java implementation is integration
+with various dynamic geometry tools (including GeoGebra) that
+currently don't have support for proving geometry theorems. The
+architecture of GeoProver enables easy integration with other systems
+for interactive geometry and can be simply modified to accept various
+input formats for conjectures.
+
+\paragraph{Gr\"obner basis in Mathematica}
+
+Mathematica is commercial software designed for technical
+computing. It has support for Gr\"obner basis and can be used for
+mechanical theorem proving. By $F = GroebnerBasis[\{poly_1\}, \{poly_2\},
+  \ldots]$ are computed Gr\"obner basis for given list of polynomials
+(representing premises of geometry conjecture). If
+$PolynomialReduce[poly_{concl}, F, V][[2]]$ is zero ($V$ is set of
+  variables), the geometry statement represented with polynomial
+  $poly_{concl}$ is true.
+
+\paragraph{Wu's method in Maple -- wsolve}
+
+The implemented algorithm is based on Wu's method and his theorems
+about the projection of quasi variety \cite{quasivarieties}. While
+proving geometry conjecture, weakest non--degenerate conditions can be
+obtained by computing the projection of a quasi variety. In fact, it
+is possible to get the sufficient and necessary condition for a
+geometric theorem to be false by computing the projection of a quasi
+variety.
+
+The method is easily invoked by key word \emph{wsolve(V, P, C)} where
+$V$ is a list of variables, $P$ is a list of polynomials representing
+premises of geometry statement and $C$ is polynomial representing
+statement.
+
+
+\section{Alegebrization of geometric relations in solid geometry}
+\label{polynomials}
+To apply algebraic methods we need to be able to represent various
+geometric relations between solid geometry objects using polynomial
+equations over their coordinates. In this section we are going to give
+examples how this could be done, for the most common relations (a
+richer set of relations can be represented using similar techniques,
+and a detailed description is given in an online
+appendix). % dodati url
+
+There are different approaches for encoding relations in terms of
+polynomial equations and the first question is what objects of 3d
+geometry are basic. % popraviti
+In the first approach, all objects are defined using points (e.g.,
+lines are defined by two different points, and planes are defined as
+three different, non-colinear points). The only variables used in
+polynomials are coordinates of the points. In the other approach, all
+types of objects are represented using their own coordinates (e.g., a
+line is defined by the coordinates of its one point, and the
+coordinates of its direction vector, and a plane is defined by the
+coefficients of the plane equation -- the coordinates of its normal
+vector, and its displacement wrt.~the origin). Polynomials include all
+those coordinate variables. We shall show how to encode relations
+using both of these approaches, and shall compare their efficiency.
+
+
+\subsection{Basic notions used for constructing polynomials}
+Most relations are expressed using the same set of notions which we
+introduce here.
+
+Each kind of object is represented by some tuple of parameters (we
+shall see that these could have either symbolic, or numeric values).
+
+Points will have three parameters, denoted by
+$({[\_]}^x, {[\_]}^y, {[\_]}^z)$ representing their coordinates. Every
+point is given either by its symbolic or numeric coordinates. To each
+new point introduced point fresh symbolic coordinates are assigned.
+
+Lines are represented differently, depending on the used approach.  In
+the first approach a line is given by two different given points, and
+a six-tuple of their coordinates. The first of the point of the line
+$p$ will be denoted by $p_A$ and the second point by $p_B$.
+
+In the other approach, a line is given by a given point $A$ and a
+given vector $v$. Vector of the line named $p$ will be denoted by
+$\overrightarrow{p_v}$ and the point of the line $p$ will be denoted by
+$p_A$. Therefore, lines in the second approach will also have six
+parameters denoted by
+$({[\_]}^{v_x}, {[\_]}^{v_y}, {[\_]}^{v_z}, {[\_]}^{A_x},
+{[\_]}^{A_y}, {[\_]}^{A_z})$,
+which represent the line given by the equation:
+$$x = k\cdot[\_]^{v_x} + {[\_]}^{A_x}\ \ y = k\cdot[\_]^{A_y} +
+{[\_]}^{A_y}\ \ z = k\cdot[\_]^{v_z} + {[\_]}^{A_z}.$$
+In the previous equation, $k$ denotes the line ratio, but this
+information is not present in the line specification (which is a
+six-tuple). Line ratio is going to be used in some polynomials that
+describe constructions involving lines, but it is going to be
+considered as a fresh symbolic variable.
+
+Planes are also represented differently, depending on the used
+approach. In the first approach a plane is given by three non-colinear
+points, and a nine-tuple of their coordinates. The first point of the
+plane $\pi$ will be denoted by $\pi_A$, the second one by $\pi_B$ and
+the third one by $\pi_C$.
+
+In the other approach, planes are determined by their normal vector
+$v$ and an additional parameter $d$ (displacement wrt.~the
+origin). Vector of the plane named $\pi$ will be denoted with
+$\overrightarrow{\pi_v}$ and free parameter for the plane will be
+denoted with $\pi_d$. Therefore, planes will have only four
+parameters, denoted by
+$({[\_]}^{v_x}, {[\_]}^{v_y}, {[\_]}^{v_z}, {[\_]}^{d})$, which
+represent the plane given by the following equation:
+$${[\_]}^{v_x}\cdot x + {[\_]}^{v_y}\cdot y + {[\_]}^{v_z}\cdot z +
+{[\_]}^{d} = 0.$$ 
+
+Vector determined by two points $A = (a^x, a^y, a^z)$ and
+$B = (b^x, b^y, b^z)$ is
+$\overrightarrow{AB} = (b^x- a^x, b^y - a^y, b^z - a^z)$. The standard
+notions of scalar product, cross product and triple product can be
+applied to vectors. Scalar product of vectors $v = (v^x, v^y, v^z)$
+and $u = (u^x, u^y, u^z)$ is
+$v\cdot u = v^x\cdot u^x+ v^y\cdot u^y + v^z\cdot u^z$, their vector
+product is determined by the matrix:
+$$ v\times u = \left|\begin{array}{ccc} \overrightarrow{i} & \overrightarrow{j} & \overrightarrow{k} \\ 
+                       v^x& v^y & v^z \\
+                       u^x& u^y & u^z \\
+\end{array}\right|,$$
+and their triple product with the vector $w = (w^x, w^y, w^z)$ is
+equal to $v\cdot (u \times w)$, and is determined by the matrix:
+$$\left|\begin{array}{ccc} v^x& v^y & v^z \\ u^x& u^y
+  & u^z \\ w^x& w^y & w^z \\
+\end{array}\right|.$$
+
+
+\subsection{Representing relations between geometry objects}
+In this section are given polynomials that arithmetically describe
+relations over constructed objects (for example, two points coincide,
+two lines are parallel, two planes are orthogonal).  Each kind of
+relation introduces some polynomial constraints of the coordinates of
+the objects that are involved, and are expressed differently depending
+on the chosen approach.
+
+Input parameters for given relation are parameters of all objects
+involved in it. For example, for the relation \mbox{{\tt congruent}
+  $A$ $B$ $C$ $D$} inputs are four points, $A$, $B$, $C$, and $D$, e.g
+their symbolic coordinates: $(a^x, a^y, a^z)$, $(b^x, b^y, b^z)$,
+$(c^x, c^y, c^z)$ and $(d^x, d^y, d^z)$.
+
+\begin{description}
+% ------------------------
+\item[$\triangleright$] {\tt congruent} $A$ $B$ $C$ $D$
+
+  {\em Description:} Two segments, $AB$ and $CD$ are
+  congruent.
+
+  %{\em Input:} Points $A$, $B$, $C$, and $D$.
+
+{\em Polynomials:} \\
+$\overrightarrow{AB} \cdot \overrightarrow{AB} = \overrightarrow{CD} \cdot \overrightarrow{CD}$. \\
+Note that this gives the polynomial equation $poly = 0$, where
+
+\begin{tabbing}
+$poly = $ \= $({a^x} - {b^x})^2 + ({a^y} - {b^y})^2 + ({a^z} - {b^z})^2 -$ \\ 
+          \> $({c^x} - {d^x})^2 - ({c^y} - {d^y})^2 - ({c^z} - {d^z})^2$
+\end{tabbing}
+
+{\em Explanation:} Squares of the distance between $A$ and $B$ must be
+equal to the square of the distance between $C$ and $D$.
+
+% ------------------------
+\item[$\triangleright$] {\tt segments\_in\_ratio} $A$ $B$ $C$ $D$
+  $m$ $n$ 
+
+  {\em Description:} The lengths of segments $AB$ and
+  $CD$ are in the given ratio $\frac{m}{n}$ i.e., that
+  $\frac{|AB|}{|CD|} = \frac{m}{n}$.
+
+{\em Polynomials:} \\
+$n^2 \cdot \overrightarrow{AB} \cdot \overrightarrow{AB} = m^2 \cdot \overrightarrow{CD} \cdot \overrightarrow{CD}$. \\
+
+
+{\em Explanation:} The squares of distances between $A$ and $B$ and
+between $C$ and $D$ must be in the ratio $\frac{m^2}{n^2}$. Note that
+this reduces to congruence when $m = n$.
+
+% ------------------------
+\item[$\triangleright$] {\tt is\_midpoint} $M$ $A$ $B$
+
+{\em Description:} Checks weather point $M$ is a midpoint of the
+segment determined with points $A$ and $B$.
+
+{\em Polynomials:} $\overrightarrow{MA} = \overrightarrow{MB}$.  Note
+that this yields three different polynomials $poly_1 = 0$,
+$poly_2 = 0$, $poly_3 = 0$:
+
+\begin{tabbing}
+$poly_1 = $ \= $2m^x - a^x - b^x$ \\ 
+$poly_2 = $ \= $2m^y - a^y - b^y$ \\ 
+$poly_3 = $ \= $2m^z - a^z - b^z$
+\end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_segment\_ratio} $M$ $A$ $B$ $p$ $q$
+
+{\em Description:} Checks weather the point $M$ divides segment
+determined with points $A$ and $B$ in ratio determined with $p$ and
+$q$, e.g. $\frac{|MA|}{|MB|} = \frac{p}{q}$.
+
+{\em Polynomials:} three polynomials derived from
+$q\cdot \overrightarrow{MA} = p\cdot \overrightarrow{MB}$.
+
+{\em Explanation:} Note that {\tt is\_midpoint $M$ $A$ $B$} can be
+also written using this rule as {\tt point\_segment\_ratio} $M$ $A$
+$B$ $1$ $1$.
+
+% ------------------------
+\item[$\triangleright$] {\tt equal\_points} $A$ $B$
+
+{\em Description:} Checks weather two points $A$ and $B$ have the same
+coordinates.
+
+{\em Polynomials:} three polynomials from the expression
+$\overrightarrow{AB} = 0$.
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_4points} $A$ $B$ $C$ $D$
+
+{\em Description:} Checks weather line determined with points $A$
+and $B$ is orthogonal on the line determined with points $C$ and
+$D$.
+
+{\em Polynomials:} $\overrightarrow{AB} \cdot \overrightarrow{CD} = 0$
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_lines} $p$ $q$
+% Dodati pricu o proveri mimoilaznosti
+
+{\em Description:} Two lines, $p$ and $q$ are orthogonal.
+
+{\em Polynomials:} If the first approach is used, then the lines are
+given by the points $(p_A, p_B)$ and $(q_A, q_B)$, so this reduces to
+the previous case and the polynomial is
+$\overrightarrow{p_Ap_B} \cdot \overrightarrow{q_Aq_B} = 0$. If the
+second approach is used, the direction vectors of the lines are given
+as the input, and the polynomial is
+$\overrightarrow{p_v} \cdot \overrightarrow{q_v} = 0.$
+
+% ------------------------
+\item[$\triangleright$] {\tt incident} $A$ $p$
+
+{\em Description:} Checks weather the point $A$ belongs to the line
+$p$.
+
+{\em Polynomials:} If the first approach is used, then the three
+polynomials are derived from
+$\overrightarrow{p_Ap_B} \times \overrightarrow{Ap_A} = 0$. If the
+second approach is used, then the three polynomials are derived from
+$\overrightarrow{p_v} \times \overrightarrow{Ap_A} = 0.$
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_lines} $p$ $q$
+
+{\em Description:} Checks weather two lines, $p$ and $q$ are parallel.
+
+{\em Polynomials:} The three polynomials are derived from
+$\overrightarrow{p_Ap_B} \times \overrightarrow{q_Aq_B}$ or
+$\overrightarrow{p_v} \times \overrightarrow{q_v}$ depending on the
+approach.
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_planes} $\alpha$ $\beta$
+
+{\em Description:} Checks weather two planes $\alpha$ and $\beta$ are
+parallel.
+
+{\em Polynomials:} If the second approach is used, the three
+polynomials are derived from
+$\overrightarrow{\alpha_v} \times \overrightarrow{\beta_v} = 0.$
+
+% Videti da li je moguce dobiti malo manje polinome ako se prvi pristup
+% ne primenjuje na isti nacin kao drugi.
+
+% Ovde raspisati da bi se videlo kako su ovi polinomi orgromni i ruzni
+
+$$\overrightarrow{\beta_A\beta_B}\cdot \overrightarrow{\alpha_A\alpha_C} \times \overrightarrow{\alpha_B\alpha_A} = 0$$
+$$\overrightarrow{\beta_A\beta_C}\cdot \overrightarrow{\alpha_A\alpha_C} \times \overrightarrow{\alpha_A\alpha_B} = 0$$
+
+$$(\overrightarrow{\beta_A\beta_C}\times\overrightarrow{\beta_A\beta_B}) \times (\overrightarrow{\alpha_A\alpha_C} \times \overrightarrow{\alpha_A\alpha_B}) = 0$$
+
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_planes} $\alpha$ $\beta$
+
+{\em Description:} Checks weather two planes, $\alpha$ and $\beta$ are
+orthogonal.
+
+{\em Polynomials:} 
+If the first approach is used ....
+If the second approach is used, the polynomial
+$\overrightarrow{\alpha_v} \cdot \overrightarrow{\beta_v} = 0$.
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_in\_plane} $A$ $\pi$
+
+{\em Description:} Checks weather the point $A$ belongs to the plane
+$\pi$.
+
+{\em Polynomials:} If the first approach is used, then the polynomial
+$$\overrightarrow{\pi_AA}\cdot (\overrightarrow{\pi_A\pi_B} \times \overrightarrow{\pi_A\pi_C}) = 0.$$
+If the second approach is used, then the polynomial
+$\overrightarrow{\pi_v} \cdot \overrightarrow{A} + \pi^{d} = 0$.
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_line\_plane} $p$ $\alpha$
+
+{\em Description:} Checks weather the line $p$ and plane $\alpha$ are
+parallel.
+
+{\em Polynomials:} 
+If the first approach is used ...
+If the second approach is used, then polynomial
+$\overrightarrow{p_v} \cdot \overrightarrow{\alpha_v} = 0$.
+
+{\em Note:} This statement also holds if line belongs to the plane.
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_line\_plane} $p$ $\alpha$
+
+{\em Description:} Checks weather the line $p$ and plane $\alpha$ are
+orthogonal.
+
+{\em Polynomials:} If the first approach is used ...
+
+If the second approach is used the three polynomials
+$\overrightarrow{p_v} \times \overrightarrow{\alpha_v} = 0$.
+
+% Dodati pravila za uglove 
+% Dodati pravila za pravilne objekte (tetraedar npr.)
+\end{description}
+
+\section{Simplification of polynomials (needed for Wu's method)}
+\label{simplification}
+
+The first problem when applying GeoProver onto generated sets of
+polynomials were reaching time and space limit. The reason for this is
+large number of variables and polynomials that were
+created. Furthermore, polynomials in solid geometry are more complex
+than corresponding polynomials in plane geometry. Thus, there was a
+need to simplify our system.
+
+We used approach proposed by Harrison, without lost of generality
+reasoning --- "wlog" \cite{harrison} by making a convenient choice of
+coordinate system since different choice of coordinate system could
+make algebraic calculations much less robust. 
+
+For three independently given points $A$, $B$ and $C$, it is possible
+to choose their coordinated in such a manner that $A(0, 0, 0)$ is in
+the origin, $B(0, 0, b^z)$ is on the $z$-axis and $C(0, c^y, c^z)$
+lies in plane $yOz$. With this choice of coordinates, the number of
+variables is reduced by six and the corresponding zeroes simplify
+polynomials. This approach is commonly used in algebraic methods. It
+does not affect the generality of statement and justification for its
+usage comes from the fact that rotations and translations can be used
+to transform points into its "canonical" position. Translation and
+rotation are isometries which means that they preserve distance, and
+then also the other geometric relations such as incidence,
+orthogonality, size of an angle and so on.
+
+We extended this approach and applied similar reasoning on lines and
+plains. In our list of constructions there exist one construction for
+arbitrary given line, {\tt line} $l$. With this construction rule, six
+variables are generated, vector of the line $(l^{v_1}, l^{v_2},
+l^{v_3})$ and the coordinates some point on the line $(p^x, p^y,
+p^z)$. However, it is possible to choose a more convenient
+coordinates, for vector $(0, 0, l^{v_3})$ and for point $(0, 0, 0)$,
+which means that as arbitrary line is chosen $z$-axis. Similarly goes
+for plains, and for arbitrary given plane, {\tt plane} $\pi$, it is
+possible to choose coordinates $\pi (0, 0, p^{v_3}, 0)$, which means
+that arbitrary chosen plain is plain $xOy$.
+
+Without applying this method, even the simplest statements could not
+be proved. Choosing convenient coordinates greatly improved simplicity
+of the system of polynomials and, by doing so, made the program more
+efficient. However, some polynomials become redundant, as they become
+$0$ and we just deleted them from the system. Also, some polynomials
+become a polynomial of one variable on some degree and they were also
+deleted from the system and the value of the corresponding variable
+was set to zero. Although, it was not necessary to delete these
+polynomials, the system was simplified a bit more when they were
+deleted.
+
+To simplify constructions even further, we choose appropriate
+coordinates for figures as we explained in \ref{objectconstruction}.
+
+Furthermore, polynomials whose structure is $x_i - x_j$ or $x_i + x_j$
+(assume $j < i$) were also deleted from the system, each appearance of
+$x_i$ was replaced with $x_j$, e.g. with $-x_j$, and $x_i$ was deleted
+from the set of variables. This simplification step was not very
+crucial, and most of the tested statements could be proved without
+adding this simplification. However, for some complex statements, it
+was very important to reduce the size of sets of polynomials
+(otherwise, space or time limit is reached) and this is a step into
+that direction.
+
+
+\subsection{Construction rules}
+
+
+Each construction starts from some given (free) objects and proceeds
+by introducing new (dependent) objects. We will allow introducing only
+free points (and all lines, planes, and solids are going to be
+constructed started from a given set of free points).
+
+Free points are determined by their fresh, symbolic coordinates, and
+are not restricted by any polynomials. Constructed objects are
+determined again by introducing their fresh symbolic parameters, but
+also polynomials that describe connections between those parameters
+and the symbolic parameters of the objects that were previously
+constructed. We shall denote the parameters of free points by
+upper-case letters, and the parameters of dependent points by
+lower-case letters. For example, the free point $A$ will have symbolic
+coordinates $({A}^x, {A}^y, {A}^z)$, and a constructed line $l$ will
+have symbolic parameters (${l}^{v_x}, {l}^{v_y}, {l}^{v_z}, {l}^{p_x},
+{l}^{p_y}, {l}^{p_z}$).
+
+
+\paragraph{Constructions of points}
+
+Next we shall describe some example construction steps and their
+corresponding polynomials. Each construction step yields a new
+point. Its name will be given by the first argument of the
+construction step (e.g., {\tt midpoint} $M$ $A$ $B$ constructs the
+point $M$ using given points $A$ $B$). In each such construction step,
+it is assumed that the symbolic parameters of given objects are
+already known, and the symbolic coordinates of the resulting point are
+introduced (as fresh variables).
+
+\begin{description}
+
+% ------------------------
+\item[$\triangleright$] {\tt point} $A$ \\
+  {\em Description:} This step introduces a free point $A$.\\
+  {\em Input:} none\\
+  {\em Objects and parameters:} A point $A$ with the three fresh parameters
+  $(A_x, A_y, A_z)$ \\
+  {\em Polynomials:} no polynomials are generated. \\
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_ratio} $M$ $A$ $B$ $p$ $q$ 
+
+  {\em Description:} Construction of a point that divides a segment in
+  a given ratio, i.e., for two given points $A$ and $B$ (these could
+  be either free or dependent points), and two integer numbers $p$ and
+  $q$, this step constructs the point $M$ so that
+  $\frac{|AM|}{|BM|} = \frac{p}{q}$ holds.
+
+  \marginpar{mislim da nema potrebe svuda stavljati "Input" i
+    "Output". Mozda u prvom primeru objasniti, ali deluje redudatno da
+    se svuda stavlja jer ce citaocu iz opisa biti jasno sta su dati, a
+    sta novi objekti, a ranije je receno da kada kazemo dat je novi
+    objekat da to znaci date su njegove koordinate. Ili dat je novi
+    objekat, znaci uvode se nove koordinate za taj objekat. Mislim da
+    je suvisno svuda pisati "ulaz", "izlaz".}
+
+  {\em Input:} Two given points $A$ and $B$ with symbolic
+  coordinates $(a^x, a^y, a^z)$ and $(b^x, b^y, b^z)$.
+
+  {\em Objects and parameters: } The point $M$ with three fresh
+  symbolic coordinates $(m^x, m^y, m^z)$.
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = p\cdot m^x + q\cdot m^x - p\cdot b^x - q\cdot a^x$ \\
+                   \> $poly_2 = p\cdot m^y + q\cdot m^y - p\cdot b^y - q\cdot a^y$ \\
+                   \> $poly_3 = p\cdot m^z + q\cdot m^z - p\cdot b^z - q\cdot a^z$ 
+\end{tabbing}
+
+{\em Explanation:} {\tt point\_ratio} $M$ $A$ $B$ $p$ $q$ = {\tt point\_segment\_ratio} $M$ $A$ $B$ $p$ $q$
+
+{\em Note:} Note that {\tt midpoint} is a special case of this
+construction, e.g. it is possible to determine midpoint in the
+following way \mbox{{\tt point\_ratio} $M$ $A$ $B$ $1$ $1$}. However,
+we also support the \mbox{{\tt midpoint} $M$ $A$ $B$} construction.
+
+% ------------------------
+\item[$\triangleright$] {\tt intersection\_lines} $A$ $l_1$ $l_2$
+
+  {\em Description:} This construction introduces the point $A$ that is
+  the intersection of the two given lines $l_1$ and $l_2$.
+
+  {\em Input:} The two given lines $l_1$ and $l_2$ with parameters
+  $l_1(l_1^{v_x}, l_1^{v_y}, l_1^{v_z}, l_1^{p_x}, l_1^{p_y},
+  l_1^{p_z})$ and $l_2(l_2^{v_x}, l_2^{v_y}, l_2^{v_z}, l_2^{p_x}
+  l_2^{p_y}, l_2^{p_z})$.
+
+  {\em Objects and parameters:} The point $A$ with three fresh
+  symbolic coordinates $(a^x, a^y, a^z)$.
+
+  {\em Polynomials:} We generate polynomials using rule:
+  {\tt intersection\_lines} $A$ $l_1$ $l_2$ = {\tt incident} $A$ $l_1$ and {\tt incident} $A$ $l_2$
+
+\begin{tabbing}
+{\em Polynomials for Wu's method:} \= $poly_1 = a^x - k_1\cdot l_1^{v_x} - l_1^{p_x}$ \\
+                   \> $poly_2 = a^y - k_1\cdot l_1^{v_y} - l_1^{p_y}$ \\
+                   \> $poly_3 = a^z - k_1\cdot l_1^{v_z} - l_1^{p_z}$ \\
+                   \> $poly_4 = a^x - k_2\cdot l_2^{v_x} - l_2^{p_x}$ \\
+                   \> $poly_5 = a^y - k_2\cdot l_2^{v_y} - l_2^{p_y}$ \\
+                   \> $poly_6 = a^z - k_2\cdot l_2^{v_z} - l_2^{p_z}$
+\end{tabbing}
+
+{\em Explanation:} 
+Since the point $a$ should belong to both lines $l_1$ (given by the
+point $\overrightarrow{l_1^p}$ and the vector
+$\overrightarrow{l_1^v}$) and $l_2$ (given by the point
+$\overrightarrow{l_2^p}$ and the vector $\overrightarrow{l_2^v}$) it
+must satisfy their parametric equations, i.e., it must hold that
+$\overrightarrow{A} = \overrightarrow{l_1^p} + k_1 \cdot
+\overrightarrow{l_1^v}$
+and
+$\overrightarrow{A} = \overrightarrow{l_2^p} + k_2 \cdot
+\overrightarrow{l_2^v}$.
+
+This is the most interesting case of point construction. In
+tree--dimensional space not all lines have intersection, some lines
+can be parallel, and others can be skew lines. Note that the
+polynomials use two unknown variables $k_1$ and $k_2$ that
+respectively represent line ratios for lines $l_1$ and
+$l_2$. Therefore, the total number of unknown variables is five, but
+there are six polynomials that this construction generates. If all six
+polynomials are included in the construction set, then it will not be
+possible to make triangular system since there will be more
+polynomials than unknown variables.\marginpar{Govori se o postupku
+  resavanja o kom nije jos bilo reci.} Five polynomials can be used to
+determine the solution of the system of equations and the remaining
+polynomial should be used to justify the solution. Any of the
+polynomials could be excluded and in our solution we always exclude
+$p_6$. If all five chosen polynomials have zero value for the
+calculated coordinates, then also the remaining polynomial must be
+zero (or otherwise, the lines will not always intersect). If the
+excluded polynomial is not considered, that could lead into wrong
+constructions and conclusions since now it is possible to (falsely)
+determine the intersection point of parallel or skew lines. So,
+instead of just deleting this last polynomial, is should be put it in
+the conclusion set.
+
+% ------------------------
+\item[$\triangleright$] {\tt intersection\_4points} $M$ $A$ $B$ $C$ $D$
+
+  {\em Description:} For four given point $A$, $B$, $C$ and $D$
+  determine the point $M$ which is intersection of line determined
+  with points $A$ and $B$ and line determined with points $C$ and
+  $D$. This is very similar to the construction we described above.
+
+  {\em Input:} Four points $A$, $B$, $C$ and $D$ with symbolic
+  coordinates $(a^x, a^y, a^z)$, $(b^x, b^y, b^z)$, $(c^x, c^y, c^z)$
+  and $(d^x, d^y, d^z)$.
+
+  {\em Objects and parameters:} The point $M$ with three fresh
+  symbolic coordinates $(m^x, m^y, m^z)$.
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = m^x - k^x\cdot b^x + k_1\cdot a^x - a^x$ \\
+                   \> $poly_2 = m^y - k^x\cdot b^y + k_1\cdot a^y - a^y$ \\
+                   \> $poly_3 = m^z - k^x\cdot b^z + k_1\cdot a^z - a^z$ \\
+                   \> $poly_4 = m^x - k^y\cdot d^x + k_2\cdot c^x - c^x$ \\
+                   \> $poly_5 = m^y - k^y\cdot d^y + k_2\cdot c^y - c^y$ \\
+                   \> $poly_6 = m^z - k^y\cdot d^z + k_2\cdot c^z - c^z$
+\end{tabbing}
+
+{\em Explanation:} The polynomials were generated using the following
+line equations: \\ $x = k_1\cdot (b^x - a^x) + a^x \ \ \ \ y =
+k_1\cdot (b^y - a^y) + a^y \ \ \ \ z = k_1\cdot (b^z - a^z) + a^z$ ---
+line determined with points $A$ and $B$ \\ $x = k_2\cdot (d^x - c^x) +
+c^x \ \ \ \ y = k_2\cdot (d^y - c^y) + c^y \ \ \ \ z = k_2\cdot (d^z -
+c^z) + c^z$ --- line determined with points $C$ and $D$.
+
+
+
+This construction could be performed by explicitly constructing lines
+$AB$ and $CD$ and then constructing their intersection using the
+previous rules. However, it turns out that this would introduce many
+new symbolic variables (parameters of the two lines), the system would
+become more complex, and the algebraic solver would have to work with
+a much more difficult task. Therefore, it is much more efficient to
+have this construction as an elementary step, especially, having in
+mind that this step is used very often in classic geometric problems. 
+
+Note that again there are six polynomials and five unknown
+variables. This problem is resolved in the same manner as above by
+putting polynomial $poly_6$ in the conclusion set. The reason is the
+same as in the previous construction rule and again it is possible not
+to have intersection since lines can be parallel or skew.
+\end{description}
+
+
+\paragraph{Constructions of lines}
+Although the construction of a free line could be easily introduced,
+for simplicity, we have chosen to support only free points (and a free
+line can be constructed as a line trough two free points).
+
+\begin{description}
+% ------------------------
+\item[$\triangleright$] {\tt line\_points} $l$ $A$ $B$
+
+  {\em Description} For two given points $A$ and $B$ determines the
+  line $l$ that goes through these points.
+
+
+  {\em Input:} Two points $A$ and $B$ with symbolic coordinates $(a^x,
+  a^y, a^z)$ and $(b^x, b^y, b^z)$.
+
+  {\em Objects and parameters:} The line $l$ with parameters
+  $(l^{v_x}, l^{v_y}, l^{v_z}, a^x, a^y, a^z)$ (new, fresh parameters
+  $(l^{v_x}, l^{v_y}, l^{v_z})$ are parameters of line vector).
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = l^{v_x} - a^x + b^x$ \\
+                   \> $poly_2 = l^{v_y} - a^y + b^y$ \\
+                   \> $poly_3 = l^{v_z} - a^z + b^z$ \\
+                   \> $\overrightarrow{l} = \overrightarrow{AB}$ \\
+                   \> {\tt line\_points} $l$ $A$ $B$ = {\tt incident} $A$ $l$ and {\tt incident} $B$ $l$
+\end{tabbing}
+
+{\em Explanation:} Each line is determined by a set of 6 parameters,
+but note that in this construction we have chosen to introduce only
+three. This is due to the fact that the parameters for the point on
+the line can be exactly the coordinates of the point $A$ (or $B$),
+that are already introduced symbolic variables, so there is no need to
+introduce new variables and polynomials (if the parameters $l^{p_x}$,
+$l^{p_y}$ and $l^{p_z}$ were introduced, they would need to satisfy
+the trivial polynomials $l^{p_x} - a_x$, $l^{p_y}-a_y$ and $l^{p_z} -
+a_z$). The parameters $(l^{v_x}, l^{v_y}, l^{v_z})$ that correspond to
+the vector of the line must satisfy $\overrightarrow{v} =
+\overrightarrow{BA}$, and the polynomials are generated from this
+equation (when written in symbolic coordinates).
+
+% ------------------------
+\item[$\triangleright$] {\tt line\_orth\_plane} $l$ $\pi$ $A$ \\
+
+{\em Description:} For a given plane $\pi$ and a point $A$ determines
+line $l$ witch is orhogonal on the given plane $\pi$ and incides with
+the point $A$.
+
+{\em Input:} Plane $\pi$ with symbolic parameters $(\pi^{v_x},
+\pi^{v_y}, \pi^{v_z}, \pi^{d})$ and point $A$ with symbolic
+coordinates $(a^x, a^y, a^z)$.
+
+{\em Objects and parameters:} Line $l$ with parameters $(\pi^{v_x},
+\pi^{v_y}, \pi^{v_z}, \pi^{d}, a^x, a^y, a^z)$ (no new parameters are
+generated).
+
+{\em Polynomials:} No polynomials are generated.
+                   {\tt line\_orth\_plane} $l$ $\pi$ $A$ = {\tt incident} $A$ $l$ and {\tt parallel\_line\_plane} $l$ $\pi$
+
+{\em Explanation:} Both the parameters for the point on the line and
+the vector of the line can be represented by the already introduced
+symbolic coordinates --- the point can be the point $A$ and the line
+vector could be equal to the normal vector of the plane. Therefore, it
+was not necessary to add neither new symbolic parameters, nor the new
+polynomials.
+\end{description}
+
+The construction of the line trough a given point that is parallel to
+the given line is performed similarly (the parameters of the point and
+the parameters of the vector of the given line can be reused, and no
+new parameters and polynomials need to be introduced).
+
+
+\paragraph{Constructions of the plane}
+Again, for simplicity, we have chosen to support only free points (and
+a free plane can be constructed as a plane trough three free points).
+
+\begin{description}
+% ------------------------
+\item[$\triangleright$] {\tt plane\_points} $\pi$ $A$ $B$ $C$
+
+{\em Description:} For three given points $A$, $B$ and $C$ determines
+the plane $\pi$ containing all of them.
+
+{\em Input:} Tree point $A$, $B$ and $C$ with symbolic coordinates
+$(a^x, a^y, a^z)$, $(b^x, b^y, b^z)$ and $(c^x, c^y, c^z)$.
+
+{\em Objects and parameters:} Plane $\pi$ with fresh parameters
+$(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$.
+
+\marginpar{ovo nije sasvim tacno, jer ovde imamo tri jednacine, a 4 nepoznate}
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = \pi^{v_x} - b^y\cdot c^z + b^y\cdot a^z + a^y\cdot c^z + b^z\cdot c^y - b^z\cdot a^y - a^z\cdot c^y$ \\
+                   \> $poly_2 = \pi^{v_y} - b^x\cdot c^z - b^x\cdot a^z - a^x\cdot c^z - b^z\cdot c^x + b^z\cdot a^x + a^z\cdot c^x$ \\
+                   \> $poly_3 = \pi^{v_z} - b^x\cdot c^y + b^x\cdot a^y + a^x\cdot c^y + b^y\cdot c^x - b^y\cdot a^x - a^y\cdot c^x$ \\
+                   \> $poly_4 = \pi^{d} + \pi^{v_x}\cdot a^x + \pi^{v_y}\cdot a^y + \pi^{v_z}\cdot a^z$ \\
+                   \> {\tt plane\_points} $\pi$ $A$ $B$ $C$ = \= {\tt point\_in\_plane} $A$ $\pi$ and \\
+                                                              \>\> {\tt point\_in\_plane} $B$ $\pi$ and \\
+                                                              \>\> {\tt point\_in\_plane} $C$ $\pi$ \\
+\end{tabbing}
+
+{\em Explanation:} The normal vector of the line can be obtained as a
+vector product of the vectors $\overrightarrow{AB}$ and
+$\overrightarrow{AC}$. Since $(b^x - a^x, b^y - a^y, b^z - a^z)$ and
+$(c^x - a^x, c^y - a^y, c^z - a^z)$ are vectors of two lines
+determined with points $A$ and $B$, and points $C$ and $D$, the first
+three polynomials are derived using the formula:
+$$(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}) = \begin{array}{ccc} i & j & k \\ b^x
+  - a^x & b^y - a^y & b^z - a^z \\ c^x - a^x & c^y - a^y & c^z - a^z
+\end{array}$$
+
+The last parameter of the plane $\pi^{d}$ is obtained from the
+condition that the point $A$ is in the plane $\pi$, and satisfies its
+equation. Note that this equation uses the symbolic parameters
+$\pi^{v_x}$, $\pi^{v_y}$ and $\pi^{v_z}$ that are introduced in this
+construction step.
+\end{description}
+
+Very similar methods can be used to construct the plane that contains
+the given line and is orthogonal or is parallel to the given plane.
+
+\paragraph{Solid construction}
+\label{objectconstruction}
+\marginpar{Da li uvesti izometrijske transformacije?}
+
+Many exercises in solid geometry have objects and usually start with a
+sentence of the form {\em "In a given cube..."}, {\em "In a given
+  pyramid..."}, {\em "In a given prism..."} and so on. The first
+approach was to construct such solids using construction rules
+presented above. This means that there were many rules (around 20)
+constructing only one cube and thus many new variables and polynomials
+which made polynomial systems very complex. Also, some important
+construction steps could be forgotten. Therefore, it is very natural
+to introduce solid constructions as elementary construction steps
+(instead of ten or twenty rules that construct their points, lines and
+planes). Such construction steps automatically introduce only the
+points of the solid, whereas lines (edges) and planes (faces) can be
+introduced by the previous construction rules only when necessary.
+
+
+We decide to support only the construction of solids placed in some
+{\em canonical} positions --- for example, when constructing a cube,
+one vertex is placed in the origin, and the other three are placed on
+the axes ($x$-axis, $y$-axis and $z$-axis). However, this approach has
+a drawback. For example, it is not possible to construct more than one
+different cube using the elementary cube construction step. The points
+of other cubes that are not in the canonical position can be
+constructed using point construction steps or by applying isometric
+transformations to the canonical cube. On the other hand, in most
+geometric problems encountered in education there is usually only one
+free solid, and without loss of generality it can be assumed that it
+is in the canonical position. When other solids are introduced in the
+problem text, they are usually dependent, so their points (vertices)
+have to be constructed. Therefore, supporting only canonical solid
+constructions was not the obstacle for the problems encountered in
+most exercises.
+
+\begin{description}
+% ------------------------
+\item[$\triangleright$] {\tt make\_cube} \\
+  {\em Description:} Construct the cube in the canonical position, with the edge length equal to $1$.\\
+  {\em Input}: none\\
+  {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
+  $C(1, 1, 0)$, $D(0, 1, 0)$, $A_1(0, 0, 1)$, $B_1(1, 0, 1)$,
+  $C_1(1, 1, 1)$ and $D(0, 1, 1)$.\\
+  {\em Polynomials:} No polynomials are generated. \\
+  {\em Explanation:} Since the cube is in the canonical position, no
+  symbolic variables are introduced.
+
+% ------------------------
+\item[$\triangleright$] {\tt make\_tetrahedron} \\
+  {\em Description: }Construct the tetrahedron in the canonical
+  position.\\
+  {\em Input: } none\\
+  {\em Objects and parameters:} The vertices of the tetrahedron have
+  the coordinates $A(0, 0, 0)$, $B(1, 0, 0)$, $C(c^x, c^y, 0)$ and
+  $D(c^x, d^y, d^z)$, with the four fresh parameters.
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = 2\cdot c^x - 1$ \\
+                   \> $poly_2 = 2\cdot {c^y}^2 - 3$ \\
+                   \> $poly_3 = 3\cdot d^y - c^y$ \\
+                   \> $poly_4 = 3\cdot {d^z}^2 - 2$
+\end{tabbing}
+
+{\em Explanation:} $c^x = \frac{1}{2}$, $c^y = \frac{\sqrt{3}}{2}$,
+$d^y = \frac{\sqrt{3}}{6} = \frac{c^y}{3}$, $d^z =
+\frac{\sqrt{2}}{\sqrt{3}}$. Note that all our objects always have
+either symbolic or integer parameters and polynomials must always have
+integer coefficients, so irrational values (and even fractions) must
+be introduced using polynomials.
+
+% ------------------------
+\item[$\triangleright$] {\tt make\_pyramid\_4side}
+
+  {\em Description:} Construct a regular pyramid in the canonical
+  position -- the base is a unit square in the $xOy$ plane, its
+  lateral edges are equal in length, and the height is not
+  constrained.
+  
+  {\em Input:} none
+
+  {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
+  $C(1, 1, 0)$, $D(0, 1, 0)$ and $S(s^x, s^y, s^z)$, for three fresh
+  parameters $s^x$, $s^y$ and $s^z$.
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = 2\cdot s^x - 1$ \\
+                   \> $poly_2 = 2\cdot s^y - 1$
+\end{tabbing}
+
+{\em Explanation:} The projection of the apes is $(s^x, s^y, 0)$ and
+it lies in the middle of the square, so $s^x = s^y =
+\frac{1}{2}$. Note that $s^z$ is not constrained.
+
+% ------------------------
+\item[$\triangleright$] {\tt make\_square}
+
+  {\em Description:} Construct a square in the canonical position --
+  the base is a unit square in the $xOy$ plane, its lateral edges are
+  equal in length, and the height is not constrained.
+  
+  {\em Input:} none
+
+  {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
+  $C(1, 1, 0)$, $D(0, 1, 0)$.
+
+\begin{tabbing}
+{\em Polynomials:} no new polynomials are created.
+\end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] {\tt make\_point\_on\_line} $A$ $l$
+
+  {\em Description:} Construct a point that belongs to the given line.
+  
+  {\em Input:} Line $l$ with symbolic parameters with parameters
+  $l(l^{v_x}, l^{v_y}, l^{v_z}, l^{p_x}, l^{p_y}, l^{p_z})$.
+
+  {\em Objects and parameters:} Point $A(a^x, a^y, a^z)$, for three
+  fresh parameters $a^x$, $a^y$ and $a^z$.
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = l^{p_x}\cdot l^{v_y} - a^x\cdot l^{v_y} - l^{p_y}\cdot l^{v_x} + a^y\cdot l^{v_x}$ \\
+                   \> $poly_2 = l^{p_x}\cdot l^{v_z} - a^x\cdot l^{v_z} - l^{p_z}\cdot l^{v_x} + a^z\cdot l^{v_x}$ \\
+                   \> $poly_3 = l^{p_y}\cdot l^{v_z} - a^y\cdot l^{v_z} - l^{p_z}\cdot l^{v_y} + a^z\cdot l^{v_y}$ \\
+                   \> {\tt make\_point\_on\_line $A$ $l$} = {\tt incident} $A$ $l$
+\end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] {\tt make\_point\_in\_plane} $A$ $\pi$ 
+
+  {\em Description:} Construct a point that belongs to the given
+  plane.
+  
+  {\em Input:} Plane $\pi$ with fresh parameters $(\pi^{v_x},
+  \pi^{v_y}, \pi^{v_z}, \pi^{d})$.
+
+  {\em Objects and parameters:} Point $A(a^x, a^y, a^z)$, for three
+  fresh parameters $a^x$, $a^y$ and $a^z$.
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly = \overrightarrow{\pi} \circ \overrightarrow{A} + \pi^{d}$ \\
+                   \> {\tt make\_point\_in\_plane} $A$ $\pi$  = {\tt point\_in\_plane} $A$ $\pi$
+
+\end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] {\tt translate\_z} $A$ $O$ $q$
+
+  {\em Description:} Construct a point given by translating another
+  point by some parameter along $z$-axis.
+  
+  {\em Input:} Point $O$ with symbolic coordinates $(o^x, o^y, o^z)$
+  and parameter $q$.
+
+  {\em Objects and parameters:} Point $A(o^x, o^y, a^z)$, for one
+  fresh parameter, $a^z$.
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly = a^z - q - o^z$ \\
+                   $\overrightarrow{AO} = (0, 0, q)$
+\end{tabbing}
+% ------------------------
+\item[$\triangleright$] {\tt equilateral\_triangle} $A$ $B$ $C$
+
+  {\em Description:} Construct a equilateral triangle in the canonical
+  position -- it is in $xOy$ plane, one point is in origin, and
+  another point is on $x$-axis.
+  
+  {\em Input:} none
+
+  {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
+  $C(c^x, c^y, 0)$, for two fresh parameters $c^x$ and $c^y$.
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = 2\cdot c^x - 1$ \\
+                   \> $poly_2 = 4\cdot c^y - 3$
+\end{tabbing}
+
+
+% ------------------------
+\item[$\triangleright$] {\tt regular\_hexagon} $A_1$ $A_2$ $A_3$ $A_4$ $A_5$ $A_6$
+
+  {\em Description:} Construct a regular hexagon in the canonical
+  position -- it is in $xOy$ plane, one point is in origin, and
+  another point is on $x$-axis. 
+  
+  {\em Input:} none
+
+  {\em Objects and parameters:} Points $A_1(0, 0, 0)$, $A_2(1, 0, 0)$,
+  $A_3(a_3^x, a_3^y, 0)$, $A_4(1, a_4^y, 0)$, $A_5(0, a_4^y, 0)$ and
+  $A_6(a_6^x, a_3^y, 0)$, for four fresh parameters $a_3^x$, $a_3^y$,
+  $a_4^y$, and $a_6^x$.
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = 2\cdot a_3^x - 3$ \\
+                   \> $poly_2 = 4(a_3^y)^2 - 3$ \\
+                   \> $poly_3 = a_4^y - 3$ \\
+                   \> $poly_4 = 2a_6^x - 1$
+\end{tabbing}
+
+\end{description}
+
+\section{Examples}
+
+In this section we are going to present results of testing
+algebraization methods using three different provers --- GeoProver,
+Maple's Wu's method and Mathematica's Gr\"obner basis method. We
+applied these methods on 38 different problems from various source
+(\cite{janicic1997zbirka, shao2016challenging, }).
+
+У овом поглављу ћемо представити резултате тестирања алгебраизације
+коришћењем система \emph{GeoProver} и Гребнерових база имплементираних
+у систему \emph{Mathematica}. Применили смо методе на двадесет и пет
+проблема из збирке задатака "?" \cite{}, на три задатка из "Збирке
+задатака из геометрије" \cite{janicic1997zbirka} и на проблем
+једнакости углова представљен у раду о примени аутоматских доказивача
+на проблеме са Олимпијада из математике \cite{shao2016challenging}.
+
+\paragraph{Пример нормала тетраедра.} \emph{Нека је $ABCS$ тетраедар и нека 
+су $h_a$, $h_b$, $h_c$ и $h_s$ редом висине из темена тетраедра $A$,
+$B$, $C$ и $S$ на одговарајуће наспрамне странице и нека је $H$ пресек
+$h_a$ и $h_b$. Тада $H$ припада и висинама $h_s$ и $h_c$. }
+
+\begin{figure}[hb]
+\begin{center}
+\input{presek_tetraedar.tkz}
+\end{center}
+\caption{Нормале тетраедра се секу у истој тачки}
+\end{figure}
+
+Тврђење се може записати на следећи начин:
+
+\begin{footnotesize}
+{\tt
+\begin{tabbing}
+make\_tetrahedron $A$ $B$ $C$ $S$ \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
+
+plane\_points $\alpha_1$ $A$ $B$ $C$ \> plane\_points $\alpha_2$ $B$ $C$ $S$ \\
+plane\_points $\alpha_3$ $A$ $C$ $S$ \> plane\_points $\alpha_4$ $A$ $B$ $S$ \\ \\
+
+line\_orth\_plane $h_1$ $\alpha_1$ $S$ \> line\_orth\_plane $h_2$ $\alpha_2$ $A$ \\
+line\_orth\_plane $h_3$ $\alpha_3$ $B$ \> line\_orth\_plane $h_4$ $\alpha_4$ $C$ \\ \\
+
+intersection\_lines $H_1$ $h_1$ $h_2$ \> intersection\_lines $H_2$ $h_2$ $h_3$ \\
+intersection\_lines $H_3$ $h_2$ $h_4$ \\ \\
+
+equal\_points $H_1$ $H_2$ \\
+equal\_points $H_1$ $H_3$ \\
+\end{tabbing}
+}
+\end{footnotesize}
+
+Како је тетраедар у канонском положају према самој конструкцији,
+координате тачака су $A(0, 0, 0)$, $B(0, 0, 1)$, $C(x_1, x_2, 0)$ и
+$S(x_3, x_4, x_5)$ при чему су $x_1$, $x_2$, $x_3$, $x_4$ и $x_5$
+зависне променљиве и налазе се у полиномима који описују тетраедар
+(погледати у ранијем поглављу полиноме за тетраедар
+\ref{tetraedar_6glava}).
+
+Када се изврши алгебраизација коришћењем другог приступа, добија се
+$38$ полинома који описују релације међу објектима, $6$ полинома за
+које треба доказати да су једнаки нули (односно ти полиноми су
+полиноми који изражавају својство да се висине секу у једној тачки) и
+$41$ променљива. Потом иде поступак симплификације и анализе добијених
+полинома. Број полинома који описују релације се смањи на $29$, a и
+број променљивих се смањи на $29$. Број полинома за које треба
+доказати да су нула је $9$. Може бити чудно да се број полинома за
+које треба доказати да су нула увећао, али то увећање се добија због
+пресека правих. Наиме, тачке $H_1$, $H_2$ и $H_3$ (за које треба
+доказати да су једна иста тачка) се добијају као пресек правих,
+односно одговарајућих висина. Како за пресек правих треба доказати да
+оне нису мимоилазне, већ да се заиста и секу, за један или више
+полинома пресека је потребно доказати да они под датим условима су
+такође нула. О овом проблему је говорено раније
+\ref{presekPravih_6glava}. Полиноми добијени након симплификације су
+знантно краћи и најчеће се састоје од само два монома (у почетном
+скупу су били знатно комплекснији и у просеку су се састојали од $7$
+монома). Оба алгебарска доказивача (\emph{GeoProver} и метод
+Гребнерових база имплементираних у систему \emph{Mathematica}) су били
+успешни у доказивању да су свих девет полинома једнаки нули. Просечно
+време потребно за доказ у систему \emph{GeoProver} је $0.0862$
+секунде.
+
+Када се изврши алгебраизација коришћењем првог приступа, добија се
+$34$ полинома који описују релације међу објектима, $6$ полинома за
+које треба доказати да су једнаки нули и $33$ променљиве. Након
+симплификације добија се $22$ полинома који описују релације међу
+објектима, $9$ полинома за које треба доказати да су једнаки нули
+(исти разлог као и у другом приступу) и $25$ различитих
+променљивих. Полиноми су за нијансу комплекснији него у првом приступу
+и у просеку имају $4$ монома. Оба алгебарска доказивача
+(\emph{GeoProver} и метод Гребнерових база имплементираних у систему
+\emph{Mathematica}) су били успешни у доказивању да су свих девет
+полинома једнаки нули. Просечно време потребно за доказ у систему
+\emph{GeoProver} је $0.1132$ секунде. \\
+
+\begin{table}[hb]
+\begin{center}
+\begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{2cm}|R{1.5cm}}
+\                   &  број полинома & број полинома доказа & просечан број монома & број променљивих & време \\
+\hline
+\hline
+\textbf{први приступ} & $22$ & $9$ & $4$ & $25$ & $0.1132s$ \\
+\hline
+\textbf{други приступ} & $29$ & $9$ & $7$ & $22$ & $0.0862s$
+\end{tabular}
+\caption{Упоредни приказ успешности алгебризације у односу на изабрани приступ}
+\end{center}
+\end{table}
+
+\paragraph{Пример једнаки углови.} \emph{Нека је $ABCD$ тетраедар и нека 
+је тачка $O$ центар описаног круга тетраедра $ABCD$. Нека су тачке
+$K$, $L$ и $M$ редом средине страница $AB$, $BC$ и $CA$. Доказати да
+је $\angle KOL = \angle LOM = \angle MOK$.}
+
+\begin{figure}[hb]
+\begin{center}
+\input{jednaki_uglovi.tkz}
+\end{center}
+\caption{Тврђење о једнаким угловима између датих дужи}
+\end{figure}
+
+Тврђење се може записати на следећи начин:
+
+\begin{footnotesize}
+{\tt
+\begin{tabbing}
+make\_tetrahedron $A$ $B$ $C$ $D$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
+
+line\_orth\_plane\_4points $l_1$ $A$ $B$ $C$ $D$ \\
+line\_orth\_plane\_4points $l_2$ $A$ $C$ $D$ $B$ \\ \\
+
+intersection\_lines $O$ $l_1$ $l_2$ \\ \\
+
+midpoint $K$ $A$ $B$ \\
+midpoint $L$ $B$ $C$ \\
+midpoint $M$ $C$ $A$ \\ \\
+
+equal\_angles  $K$ $O$ $L$ $L$ $O$ $M$
+\end{tabbing}
+}
+\end{footnotesize}
+
+Као и у претходном примеру тетраедар је у канонском положају према
+самој конструкцији, координате тачака су $A(0, 0, 0)$, $B(0, 0, 1)$,
+$C(x_1, x_2, 0)$ и $S(x_3, x_4, x_5)$ при чему су $x_1$, $x_2$, $x_3$,
+$x_4$ и $x_5$ зависне променљиве и налазе се у полиномима који описују
+тетраедар (погледати у ранијем поглављу полиноме за тетраедар
+\ref{tetraedar_6glava}).
+
+Коришћењем првог приступа добија се $31$ полином који представља
+релације међу објектима, $1$ полином за који је потребно доказати да
+је једнак нули и $36$ променљивих. Након симплификације, добија се $4$
+полинома за које треба доказати да су једнаки нули ($3$ полинома
+сслуже као провера да ли се праве заиста секу, а један полином служи
+за проверу углова), $24$ који описују релације међу објектима и $18$
+различитих променљивих. Међу добијеним полинома, $15$ полинома је
+прилично једноставно и састоје се од два монома. Ипак, преостали
+полиноми су комплексни и састоје се у просеку од осам монома. Метод
+Гребнерових база имплементираних у систему \emph{Mathematica}) су били
+успешни у доказивању да су свих девет полинома једнаки нули. Систем
+\emph{GeoProver} није био успешан и након $0.481$ секунде пријавио је
+грешку да је досегао предвиђени меморијски лимит због полинома који
+има 3339 монома (енг.~ \emph{Space limit exceeded in pseudo
+  division. Obtained polynomial with 3339 terms}). Просечно време
+потребно за доказ да су полиноми који проверавају да ли има пресека
+једнаки нули је у систему \emph{GeoProver} је $0.377$ секунду.
+
+Коришћењем другог приступа, број добијених полинома је $28$ и један
+полином за који је потребно доказати да је нула, број променљивих је
+$32$. Након сређивања и анализе полинома пресека добија се $24$
+полинома и два полинома за које је потребно доказати да су нула и $24$
+различите променљиве. У овом приступу $18$ полинома је било
+једноставно и састојало се из два монома, док је преосталих $6$
+полинома комплексније и састоје се у просеку од $8$ монома. Оба
+алгебарска доказивача (\emph{GeoProver} и метод Гребнерових база
+имплементираних у систему \emph{Mathematica}) су били успешни у
+доказивању да су свих девет полинома једнаки нули. Време потребно за
+доказ да је полином који проверава да ли има пресека једнак нули је у
+систему \emph{GeoProver} једнака $0.081$ секунду, а време за доказ да
+је полином који проверава једнакост углова једнак нули у систему
+\emph{GeoProver} је $0.835$ секунде.
+
+\begin{table}[hb]
+\begin{center}
+\begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{2cm}|R{1.5cm}}
+\                   &  број полинома & број полинома доказа & просечан број монома & број променљивих & време \\
+\hline
+\hline
+\textbf{први приступ} & $24$ & $4$ & $7.2$ & $18$ & \emph{Меморијски лимит} \\
+\hline
+\textbf{други приступ} & $24$ & $2$ & $3.5$ & $24$ & $0.835s$
+\end{tabular}
+\caption{Упоредни приказ успешности алгебризације у односу на изабрани приступ}
+\end{center}
+\end{table}
+
+
+Оно што се може приметити након ова два једноставна примера је да први
+пруступ генерише мање променљивих, али да други приступ генерише
+једноставније полиноме. Како ће се показати даљим тестирањем,
+коришћеним алгебарским доказивачима више одговара када су полиноми
+једноставнији и зато су били успешнији када је коришћен други приступ.
+
+
+\paragraph{Резултати методе Гребнерових база имплементираних у систему \emph{Mathematica}.}
+Метод Гребнерових база када је коришћен први приступ над $29$ проблема
+је био успешан $23$ пута и није докaзао тврђења након $5$ минута за $6$
+посматраних проблема.
+
+Када је коришћен метод Гребнерових база али када је алгебризација
+рађена другим приступом, метод Гребнерових база је био успешан у свих
+$29$ посматраних проблема.
+
+
+\paragraph{Резултати система \emph{GeoProver}.}
+Систем \emph{GeoProver} када је коришћен први приступ је био успешан
+само $13$ пута. У различитим проблемима долазило је до различитих
+грешака због којих није успешно доказ завшен: достигнут је временски
+лимит (енг.~\emph{Time limit reached.}), достигнут је меморијски лимит
+(енг.~\emph{Space limit reached.}) или се догодила генерална грешка
+(енг.~\emph{General error occured.}). Последња грешка означава да
+доказивач није био у могућности да направи троугаони систем
+једначина. То, на даље значи да је потребно додатно истражити ову
+ситуацију и потенцијално изменити улазне полиноме да би се ова грешка
+избегла. Ипак, за сада нисмо у могућности да овакво понашење спречимо
+јер ако се током тријангулације појави полином $0=0$ доказивач ће
+пријавити грешку. У почетном систему је лако могуће регистровати да ли
+такав полином постоји, али није лако могуће одредити да ли ће се у
+процесу тријангулације такав полином створити јер је потребно испитати
+односе међу датим променљивима и задатим полиномима, што је доста
+комплексно питање.
+
+Коришћењем другог приступа у алгебризацији, систем \emph{GeoProver} је
+био нешто успешнији, од $29$ посматраних проблема, систем је био
+успешан $22$ пута. Грешке због којих није успео да заврши доказе су:
+времески лимит је досегнут или се догодила генерална грешка.
+
+\begin{table}[hb]
+\begin{center}
+\begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{2cm}}
+\                      & \emph{GeoProver} успех & \emph{GeoProver} неуспех & \emph{Гребнерове базе} успех & \emph{Гребнерове базе} неуспех \\
+\hline
+\hline
+\textbf{први приступ}  &  $13$                  & $16$                     &  $23$                        & $6$  \\
+\hline
+\textbf{други приступ} &  $22$                  & $7$                      &  $29$                        & $0$ \\
+\end{tabular}
+
+\caption{Упоредни приказ успешности доказивача и приступа алгебризације}
+\end{center}
+\end{table}
+
+
+\section{Non-degeneracy conditions}
+
+\section{Conclusion and future work}
+
+To the best of our knowledge there does not exist automated theorem
+prover for solid geometry. Automated methods (such as Wu's method or
+Gr\"obner basis method) can prove solid geometry statements, but using
+these methods requires transforming geometry statements into
+polynomial equations.
+
+We studied two different algebraization methods for geometry
+statements. The first approach introduces only coordinates of the
+points involved in the construction, whereas the second approach
+introduces coordinates of the objects involved in the geometry
+statements such as lines, planes and objects. By comparing these two
+approaches on the same set of problems, we concluded that algebraic
+provers are more efficient if their input is obtained using second
+approach. While testing, we noticed that the significant property is
+the complexity of the polynomials in the set. The simpler polynomials
+leads to better efficiency. It is especially important (if possible)
+to avoid quadratic polynomials --- better approach is to substitute
+complex quadratic polynomial with two or more simpler ones. Though the
+smaller number of polynomials and the smaller number of variables also
+help in better productivity, these two properties are not the key ones
+and their impact is less obvious. Using second approach, obtained
+polynomials are less complex and that is the reason why the second
+approach was more convenient for algebraic provers.
+
+During this research, we also examined different implementations of
+algebraic provers. GeoProver's Wu's method required to be possible to
+transform polynomials in the premises into triangular system. However,
+this property is hard to secure and special care should be taken for
+intersection of two lines. Thus, we felt more comfortable using the
+other two provers, Maple's Wu's method and Mathematica's Gr\"oebner
+basis method.
+
+
+
+\bibliographystyle{elsarticle-harv}
+% Include the ".bib" file (generated by bibtex) right here.
+\bibliography{algmethods3d}
+
+\end{document}

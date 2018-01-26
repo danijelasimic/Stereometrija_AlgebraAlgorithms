@@ -251,7 +251,7 @@ The standard algebrization procedure introduces fresh symbolic
 variables for point coordinates and introduces (polynomial) equations
 that characterize every relation between objected observed.
 
-\begin{comment}
+
 Each object can be given independently by adding its arbitrary
 parameters or it can be given using relationship with other, already
 introduced objects. In the second case, for each new object both the
@@ -278,7 +278,6 @@ have all the necessary data for each construction or statement rule
 technical side of the system since we fill this is not the scope of
 this paper). This means that we have all the parameters of already
 given objects.
-\end{comment}
 
 \subsection{Algebraic methods}
 
@@ -1291,7 +1290,46 @@ it lies in the middle of the square, so $s^x = s^y =
 \end{tabbing}
 
 \end{description}
+
+\section{Examples}
+
+
+\section{Non-degeneracy conditions}
+
 \section{Conclusion and future work}
+
+To the best of our knowledge there does not exist automated theorem
+prover for solid geometry. Automated methods (such as Wu's method or
+Gr\"obner basis method) can prove solid geometry statements, but using
+these methods requires transforming geometry statements into
+polynomial equations.
+
+We studied two different algebraization methods for geometry
+statements. The first approach introduces only coordinates of the
+points involved in the construction, whereas the second approach
+introduces coordinates of the objects involved in the geometry
+statements such as lines, planes and objects. By comparing these two
+approaches on the same set of problems, we concluded that algebraic
+provers are more efficient if their input is obtained using second
+approach. While testing, we noticed that the significant property is
+the complexity of the polynomials in the set. The simpler polynomials
+leads to better efficiency. It is especially important (if possible)
+to avoid quadratic polynomials --- better approach is to substitute
+complex quadratic polynomial with two or more simpler ones. Though the
+smaller number of polynomials and the smaller number of variables also
+help in better productivity, these two properties are not the key ones
+and their impact is less obvious. Using second approach, obtained
+polynomials are less complex and that is the reason why the second
+approach was more convenient for algebraic provers.
+
+During this research, we also examined different implementations of
+algebraic provers. GeoProver's Wu's method required to be possible to
+transform polynomials in the premises into triangular system. However,
+this property is hard to secure and special care should be taken for
+intersection of two lines. Thus, we felt more comfortable using the
+other two provers, Maple's Wu's method and Mathematica's Gr\"oebner
+basis method.
+
 
 
 \bibliographystyle{elsarticle-harv}
