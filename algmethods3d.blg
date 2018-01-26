@@ -4,45 +4,46 @@ The top-level auxiliary file: algmethods3d.aux
 The style file: elsarticle-harv.bst
 Database file #1: algmethods3d.bib
 Warning--I didn't find a database entry for "harrison"
-You've used 16 entries,
+Warning--to sort, need author or key in arhzbirka
+You've used 19 entries,
             2821 wiz_defined-function locations,
-            731 strings with 7171 characters,
-and the built_in function-call counts, 7658 in all, are:
-= -- 818
-> -- 321
-< -- 14
-+ -- 125
-- -- 105
-* -- 610
-:= -- 1360
-add.period$ -- 51
-call.type$ -- 16
-change.case$ -- 120
-chr.to.int$ -- 16
-cite$ -- 16
-duplicate$ -- 305
-empty$ -- 557
-format.name$ -- 145
-if$ -- 1579
+            744 strings with 7558 characters,
+and the built_in function-call counts, 8561 in all, are:
+= -- 913
+> -- 341
+< -- 16
++ -- 136
+- -- 111
+* -- 661
+:= -- 1524
+add.period$ -- 59
+call.type$ -- 19
+change.case$ -- 136
+chr.to.int$ -- 19
+cite$ -- 22
+duplicate$ -- 350
+empty$ -- 639
+format.name$ -- 153
+if$ -- 1769
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 15
-newline$ -- 55
-num.names$ -- 64
-pop$ -- 106
+missing$ -- 18
+newline$ -- 64
+num.names$ -- 72
+pop$ -- 125
 preamble$ -- 1
-purify$ -- 99
+purify$ -- 113
 quote$ -- 0
-skip$ -- 254
+skip$ -- 295
 stack$ -- 0
-substring$ -- 451
-swap$ -- 52
+substring$ -- 488
+swap$ -- 55
 text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 141
-warning$ -- 0
-while$ -- 74
+type$ -- 165
+warning$ -- 1
+while$ -- 80
 width$ -- 0
-write$ -- 182
-(There was 1 warning)
+write$ -- 210
+(There were 2 warnings)

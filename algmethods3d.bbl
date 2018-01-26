@@ -1,20 +1,25 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{19}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{#1}}\fi
 \expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
 
+\bibitem[{arh(2001)}]{arhzbirka}
+, 2001. Zbirka zadataka iz geometrije prostora za pripremu prijemnog ispita na
+  arhitektonskom fakultetu.
+
 \bibitem[{Botana et~al.(2015)Botana, Hohenwarter, Jani{\v{c}}i{\'c},
   Kov{\'a}cs, Petrovi{\'c}, Recio, and Weitzhofer}]{geogebra-provers}
 Botana, F., Hohenwarter, M., Jani{\v{c}}i{\'c}, P., Kov{\'a}cs, Z.,
   Petrovi{\'c}, I., Recio, T., Weitzhofer, S., 2015. Automated theorem proving
-  in geogebra: current achievements. Journal of Automated Reasoning 55~(1),
+  in {GeoGebra}: current achievements. Journal of Automated Reasoning 55~(1),
   39--59.
 
 \bibitem[{Buchberger(2006)}]{buchberger}
-Buchberger, B., 2006. Bruno buchberger’s phd thesis 1965: An algorithm for
-  finding the basis elements of the residue class ring of a zero dimensional
-  polynomial ideal. Journal of symbolic computation 41~(3), 475--511.
+Buchberger, B., 2006. Bruno {Buchberger’s} {PhD} thesis 1965: {An} algorithm
+  for finding the basis elements of the residue class ring of a zero
+  dimensional polynomial ideal. Journal of symbolic computation 41~(3),
+  475--511.
 
 \bibitem[{Chen and Wang(2002)}]{wsolve}
 Chen, X., Wang, D., 2002. The projection of quasi variety and its application
@@ -22,7 +27,7 @@ Chen, X., Wang, D., 2002. The projection of quasi variety and its application
   Workshop on Automated Deduction in Geometry. Springer, pp. 21--30.
 
 \bibitem[{Chou(1984)}]{chou1984}
-Chou, S.-C., 1984. Proving elementary geometry theorems using wu's algorithm.
+Chou, S.-C., 1984. Proving elementary geometry theorems using {Wu's} algorithm.
   Master's thesis, University of Texas at Austin.
 
 \bibitem[{Chou et~al.(1993)Chou, Gao, and Zhang}]{area}
@@ -44,17 +49,21 @@ Chou, S.-C., Gao, X.-S., Zhang, J.-Z., 1996. Automated generation of readable
 \bibitem[{\D{}ur\d~evi{\'c} et~al.(2015)\D{}ur\d~evi{\'c}, Narboux, and
   Jani{\v{c}}i{\'c}}]{sana}
 \D{}ur\d~evi{\'c}, S.~S., Narboux, J., Jani{\v{c}}i{\'c}, P., 2015. Automated
-  generation of machine verifiable and readable proofs: A case study of
-  tarski’s geometry. Annals of Mathematics and Artificial Intelligence
+  generation of machine verifiable and readable proofs: {A} case study of
+  {Tarski’s} geometry. Annals of Mathematics and Artificial Intelligence
   74~(3-4), 249--269.
 
 \bibitem[{Gelernter(1959)}]{gelertner}
 Gelernter, H., 1959. Realization of a geometry theorem proving machine. In:
   IFIP Congress. pp. 273--281.
 
+\bibitem[{Janicic(1997)}]{janicic1997zbirka}
+Janicic, P., 1997. Zbirka zadataka iz geometrije. Skripta Internacional,
+  Beograd,.
+
 \bibitem[{Loch-Dehbi and Pl{\"u}mer(2009)}]{loch2009geometric}
-Loch-Dehbi, S., Pl{\"u}mer, L., 2009. Geometric reasoning in 3d building models
-  using multivariate polynomials and characteristic sets. International
+Loch-Dehbi, S., Pl{\"u}mer, L., 2009. Geometric reasoning in {3D} building
+  models using multivariate polynomials and characteristic sets. International
   Archives of Photogrammetry, Remote Sensing and Spatial Information Sciences
   38.
 
@@ -63,8 +72,8 @@ Lord, N., 1985. A method for vector proofs in geometry. Mathematics Magazine
   58~(2), 84--89.
 
 \bibitem[{Petrovi{\'c} and Jani{\v{c}}i{\'c}(2012)}]{geoprover}
-Petrovi{\'c}, I., Jani{\v{c}}i{\'c}, P., 2012. Integration of opengeoprover
-  with geogebra.
+Petrovi{\'c}, I., Jani{\v{c}}i{\'c}, P., 2012. Integration of {OpenGeoProver}
+  with {GeoGebra}.
 
 \bibitem[{Ritt(1950)}]{ritt}
 Ritt, J.~F., 1950. Differential algebra. Vol.~33. American Mathematical Soc.
@@ -81,5 +90,9 @@ Wu, W.-t., 1978. On the decision problem and the mechanization of
 \bibitem[{Wu(1990)}]{quasivarieties}
 Wu, W.-t., 1990. On a projection theorem of quasivarieties in elimination
   theory. Chinese Annals of Mathematics 2, 008.
+
+\bibitem[{Wu~Z.(2002)}]{kinknjiga}
+Wu~Z., Wang~L., L.~Y., 2002. The Dictionary of International Mathematical
+  Olympiads, Volume of Geometry. Hebei Children Press.
 
 \end{thebibliography}
