@@ -44,24 +44,28 @@
 
 \begin{frontmatter}
 
-\title{Title goes here.....\footnote{This work was partially supported by the Serbian Ministry of Science grant 174021}}
-
-\author{Filip Mari\' c}
-\address{School of Mathematics, University of Belgrade, Studentski trg 16, 11000, Belgrade, Serbia}
-\ead{filip@matf.bg.ac.rs}
-\ead[url]{http://www.matf.bg.ac.rs/~filip/}
+\title{Integrating algebraic theorem provers with dynamic geometry
+  systems for solid geometry\footnote{This work was partially
+    supported by the Serbian Ministry of Science grant 174021}}
 
 \author{Danijela Simi\' c}
 \address{School of Mathematics, University of Belgrade, Studentski trg 16, 11000, Belgrade, Serbia}
 \ead{danijela@matf.bg.ac.rs}
 \ead[url]{http://www.matf.bg.ac.rs/~danijela/}
 
+\author{Filip Mari\' c}
+\address{School of Mathematics, University of Belgrade, Studentski trg 16, 11000, Belgrade, Serbia}
+\ead{filip@matf.bg.ac.rs}
+\ead[url]{http://www.matf.bg.ac.rs/~filip/}
 \begin{abstract}
-Abstract goes here.....
+We describe algebraic methods for automated theorem proving in 3d
+solid geometry and their integration with a geometry language and
+system Stereos. Several methods for transforming statements into
+algebraic form are introduced and compared on a corpus of problems.
 \end{abstract}
 
 \begin{keyword}
-Keywords go here.... 
+algebraic methods, solid geometry
 \end{keyword}
 \end{frontmatter}
 
@@ -73,13 +77,13 @@ has been a central field for introducing students to deduction and
 rigorous argumentation. 
 
 In recent years, computers and technology have been intensively used
-to change how geometry is taught. Dynamic geometry systems such as
-GeoGebra\footnote{\url{https://www.geogebra.org/}},
+to change how geometry is taught. \emph{Dynamic geometry systems} such
+as GeoGebra\footnote{\url{https://www.geogebra.org/}},
 Cinderella\footnote{\url{https://www.cinderella.de/tiki-index.php}},
 Geometer's Sketchpad\footnote{\url{http://www.dynamicgeometry.com/}},
 Cabri\footnote{\url{http://www.cabri.com/}},
-Eukleides\footnote{\url{http://www.eukleides.org/}} are now regularly used
-in all levels of education. Students use such systems to perform
+Eukleides\footnote{\url{http://www.eukleides.org/}} are now regularly
+used in all levels of education. Students use such systems to perform
 geometric constructions, and obtain diagrams that can be distored by
 moving free points. Such dynamic diagrams are better than static
 images, since moving free points can shed additional light to the
@@ -96,38 +100,40 @@ in all, but a small number of degenerate cases), but still, that
 cannot be considered to be a proof, and is error prone. Therefore,
 recently dynamic geometry systems have been extended by automated
 reasoning systems, that can automatically prove statements about
-constructed objects \cite{geogebra-provers}. Such theorem provers are
-usually algebraic (they perform calculations on symbolic coordinates
-of geometric objects).
+constructed objects (\cite{geogebra-provers}). Such theorem provers
+are usually algebraic (they perform calculations on symbolic
+coordinates of geometric objects).
 
-% reci zasto se u 3d prostoru svojstva ne vide golim oko toliko dobro koliko u 2d
-In our view, application of dynamic geometry software for three
-dimension space is even more important since it is often hard to
-determine some properties by observing diagram. This happens due to
-fact that three dimensional space is presented as two dimensional
-projection and thus measures cannot be given as in original diagram.
+Most research in both dynamic geometry systems and automated theorem
+proving in geometry has been devoted only to two-dimensional Euclidean
+geometry (plane geometry). However, in our view, application of
+dynamic geometry software for three-dimension space (solid geometry)
+is even more important since it is often hard to determine geometric
+properties of spatial objects only by observing diagrams, since three
+dimensional space is presented only by its two-dimensional projections
+and thus measures of distances and angles are not directly
+preserved. It is much easier to see that two lines in plane geometry
+are perpendicular, then to see if two intersecting lines in space are
+perpendicular, even if the viewpoint is moved and the object is
+rotated and looked from many angles.
 
-% Ovde reci nesto o DGS za 3d - Geogebra, Cinderella, Stereos
-Some geometry systems started developing support for three dimension
+Some geometry systems developed support for three-dimensional
 constructions. The new version of GeoGeobra have developed support for
 dynamic three dimension
 graphics\footnote{\url{https://wiki.geogebra.org/en/3D_Graphics_View}}. It
 is possible to create and dynamically change three dimension objects
-such as points, lines, polygons and spheres, as well as three
-dimension function graphics. However, this system does not support
-proving statements about three dimension objects. Both Cinderella and
+such as points, lines, polygons and spheres, as well as graphics of
+two-variable functions that are surfaces in 3d. However, up to the
+best of our knowledge, this system does not yet support proving
+statements about three-dimension objects. Both Cinderella and
 Cindy3D\footnote{\url{http://gagern.github.io/Cindy3D/}} have
 extensions for drawing three dimension objects using commands and
-formulas describing them.
-
-Most recent research in both dynamic geometry systems and automated
-theorem proving in geometry has been devoted only to two--dimensional
-Euclidean geometry (plane geometry). Although there have been some
-limited attempts to apply algebraic theorem proving methods to
-three--dimensional Euclidean space geometry (solid geometry), we are
+formulas describing them. Although there have been some limited
+attempts to apply algebraic theorem proving methods to
+three-dimensional Euclidean space geometry (solid geometry), we are
 not aware that there are thorough descriptions of these methods, nor
 publicly available implementations of automated provers for solid
-geometry. 
+geometry.
 
 Having this in mind, this work tries to bridge several gaps that we
 feel are present in current state-of-the-art in the field of automatic
@@ -154,7 +160,7 @@ proving in solid geometry.
 % \paragraph{Overview of the paper.}
 
 \section{Related work}
-\paragraph{Automated reasoning in plane geometry.}
+\paragraph{Automated reasoning in plane geometry}
 Automated theorem proving has a history more than fifty years
 long. Most successful automated theorem methods are those for proving
 in geometry. Automated theorem provers for geometry are based either
@@ -162,16 +168,16 @@ on the synthetic approach or on the algebraic approach (based on some
 coordinates).
 
 Major breakthrough in the algebraic approach was made by
-\cite{wu}. The geometric construction and the statement are first
+(\cite{wu}). The geometric construction and the statement are first
 encoded as a set of polynomial equalities over their coordinates, and
 then the Wu's method uses algebraic techniques for dealing with these
-polynomials. In his paper \cite{ritt} described similar ideas as
-Wu, so nowdays this method is usually called Ritt-Wu's method. Many
+polynomials. In his paper (\cite{ritt}) described similar ideas as Wu,
+so nowdays this method is usually called Ritt-Wu's method. Many
 theorems were successfully proved using this method
-\cite{chou1984}. The success of the Wu's method motivated other
+(\cite{chou1984}). The success of the Wu's method motivated other
 researcher to develop new methods, and one of the most prominent is
 the Gr\"obner basis method based on Buchberger's algorithm
-\cite{buchberger}. Similar to Wu's method, the Gr\"obner basis also
+(\cite{buchberger}). Similar to Wu's method, the Gr\"obner basis also
 reasons representation in form of a set of polynomial
 equalities. There are many implementations of these algorithms and
 some are in commercial software (e.g. Matllab, Mathematica or
@@ -183,26 +189,25 @@ Several coordinate-free methods that do not use coordinate
 representation of points are developed in the 1980's. The reason for
 their development was in the idea that it is possible to develop
 prover that would produce human readable proofs. Most prominent are
-the area method \cite{area} and the full angle method
-\cite{fullangle}, and those methods are usually referred to as
+the area method (\cite{area}) and the full angle method
+(\cite{fullangle}), and those methods are usually referred to as
 semi--algebraic, since they involve reasoning over some special
 geometric quantities (e.g., signed area or Pythagora's
 differences). These methods are usually not as efficient as algebraic
 methods and have smaller scope than algebraic methods.
 
 One of the first synthetic provers, that uses method of resolution,
-was developed by \cite{gelertner} whose idea was to develop
-the proof that is similar to human proof. He successfully proved many
+was developed by (\cite{gelertner}) whose idea was to develop the
+proof that is similar to human proof. He successfully proved many
 problems taken from high--school textbooks. In modern times, synthetic
 provers are usually based on coherent (synthetic) logic --- a special
 fragment of first order logic convenient for geometric reasoning. For
-example, the prover ArgoCLP \cite{sana} uses coherent logic to produce
-human readable proofs.
+example, the prover ArgoCLP (\cite{sana}) uses coherent logic to
+produce human readable proofs.
 
-
-\paragraph{Automated reasoning in solid geometry.}
-\cite{volumemethod} at al.~presented volume method.  It is a
-semi--algebraic method that is extension of the area method for solid
+\paragraph{Automated reasoning in solid geometry}
+Chou et al. presented volume method (\cite{volumemethod}). It is a
+semi-algebraic method that is extension of the area method for solid
 geometry. Hypotheses can be described constructively and conclusions
 are polynomial equations of several geometry quantities, such as
 volumes, ratios of line segments, ratios of areas, and Pythagoras
@@ -210,15 +215,15 @@ differences. The key idea of the method is to eliminate points from
 the conclusion of a geometry statement using several basic
 propositions about volumes.
 
-\cite{shao2016challenging} used solid geometry problems from
-Mathematical Olympiad problems and exercises to evaluate different
-geometry provers.  In the paper are presented three different
-examples. For each example are given polynomials (derived using
-pen--and--paper) representing solid geometry conjecture. Using these
-examples is demonstrated that algebraic methods can be used for
+Shao et al. used solid geometry problems from Mathematical Olympiad
+problems and exercises to evaluate different geometry provers
+(\cite{shao2016challenging}). In the paper are presented three
+different examples. For each example are given polynomials (derived
+using pen--and--paper) representing solid geometry conjecture. Using
+these examples is demonstrated that algebraic methods can be used for
 proving in solid geometry. For each example they used three different
-methods, characteristic set method \cite{wu}, Gr\"obner basis method
-\cite{buchberger} and vector algebra method \cite{lord1985method}.
+methods, characteristic set method (\cite{wu}), Gr\"obner basis method
+(\cite{buchberger}) and vector algebra method (\cite{lord1985method}).
 These methods are compered and they give conclusion that vector
 algebra method gives better geometry proof but derived equations can
 be long and difficult for manipulation and calculation. They tested
@@ -228,24 +233,21 @@ they do not present any automatic algebraization of solid geometric
 statements, e.g. how to transform geometric statements into
 polynomials.
 
-\cite{loch2009geometric} analyzed how algebraic methods could be
-applied for reducing constraints for 3D buildings. Focus was on
-analyzing existing city models and constraints such as parallelity,
-orthogonality and symmetry.  The goal was to determine witch
-constraints are subsumed by others and therefore can be omitted.  They
-presented polynomial equations for parallelity, orthogonality and
-incidence for point and plane and Wu's characteristic set method was
-successfully applied. Since polynomials were quite complex the key was
-to reduce the number of variables and to use miltilinear polynomials
-rather than quadratic. They also made a prototype of the system where
-user can manipulate with constraints.
-
-To the best of our knowledge, there are no papers that describe
-application of Wu's or Gr\"obner basis method into problems in solid
-geometry.
+Loch and Pl{\"u}mer analyzed how algebraic methods could be applied
+for reducing constraints for 3D buildings
+(\cite{loch2009geometric}). Focus was on analyzing existing city
+models and constraints such as parallelity, orthogonality and
+symmetry. The goal was to determine which constraints are subsumed by
+others and therefore can be omitted.  They presented polynomial
+equations for parallelism, orthogonality and incidence for point and
+plane and Wu's characteristic set method was successfully
+applied. Since polynomials were quite complex the key was to reduce
+the number of variables and to use multilinear polynomials rather than
+quadratic. They also made a prototype of the system where user can
+manipulate with constraints.
 
 \section{Background}
-\subsection{Algebrization of geometry relations}
+\subsection{Algebraization of geometry relations}
 We shall assume that geometry problems are given in terms of relations
 between the geometric object involved (points, lines, planes, circles,
 \ldots). Each theorem under consideration is given in form of an
@@ -258,10 +260,9 @@ existing ones. However, the properties of the new object can usually
 be specified in terms of one or more relations, so without losing
 generality, it can be assumed that we are dealing only with relations.
 
-The standard algebrization procedure introduces fresh symbolic
+The standard algebraization procedure introduces fresh symbolic
 variables for point coordinates and introduces (polynomial) equations
 that characterize every relation between objected observed.
-
 
 Each object can be given independently by adding its arbitrary
 parameters or it can be given using relationship with other, already
@@ -293,34 +294,39 @@ given objects.
 \subsection{Algebraic methods}
 
 Algebraic methods in geometry are well described in literature
-\cite{wu, buchberger}. In this section we give a brief account on
+(\cite{wu, buchberger}). In this section we give a brief account on
 algebraic methods in geometry, in order to explain some relevant steps
 needed in algebraization of solid objects.
 
+Algebraization introduces variables $v_i$ that denote coordinates of
+free and constructed points. Geometric relations between points are
+described by polynomial equations of the form $p_1(v_1, \ldots, v_n) =
+p_2(v_1, \ldots, v_n)$, that are trivially transformed to the form
+$p(v_1, \ldots, v_n) = 0$. 
+
+If polynomials representing relations between objects given by the
+construction and theorem assumptions are denoted by $f_i$, $i = 1,
+\ldots, k$, and if the polynomials representing relations to be proved
+are denoted by $g_j$, $j = 1, \ldots, l$, then proving reduces to
+checking if for each $g_j$ it holds that
+$$\forall v_1, \ldots, v_n \in \mathbb{R}. \bigwedge_{i = 1}^{k}
+f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
+Polynomials $f_i$ are sometimes called \emph{construction polynomials}
+and $g_j$ are called \emph{statement polynomials}.
 
 Once the geometric theorem has been algebrized, it is possible to
-apply algebraic theorem proving methods. During algebraization are
-gained polynomials equations describing objects of the form $p(v_1,
-\ldots, v_n) = q(v_1, \ldots, v_n)$. Before applying any
-algebraization method, these equations are transformed to $p(v_1,
-\ldots, v_n) - q(v_1, \ldots, v_n) = 0$. Lets denote polynomials (left
-side of equations) representing relation between objects width $f_i$,
-$i = 1, \ldots, k$, and lets denote relations to be proved with $g_j$,
-$j = 1, \ldots, l$, then proving theorem reduces to checking if for
-each $g_j$ it holds that
-$$\forall v_1, \ldots, v_n \in \mathbb{R}. \bigwedge_{i = 1}^{k} f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
-
-As Tarski suggested, proving geometric properties can be done using
-quantifier elimination procedure for the reals, but this approach is
-inefficient and proving nontrivial geometric properties would take too
-long. But, there is another approach. The main insight, given by Wu
-Wen-ts\"un in 1978, is that remarkably many geometrical theorems, when
-formulated as universal algebraic statements in terms of coordinates,
-are also true for all complex values of the “coordinates”. However, a
-care should be taken, since, in some cases, the condition holds for
-$\mathbb{R}$, but not for $\mathbb{C}$, and in these cases methods
-fail due to counterexamples in $\mathbb{C}$. The statement to be
-proved is following:
+apply algebraic theorem proving methods.  As Tarski suggested, proving
+geometric properties can be done using quantifier elimination
+procedure for the reals, but this approach is inefficient and proving
+nontrivial geometric properties would take too long. But, there is
+another approach. The main insight, given by Wu Wen-ts\"un in 1978, is
+that remarkably many geometrical theorems, when formulated as
+universal algebraic statements in terms of coordinates, are also true
+for all complex values of the “coordinates”. However, a care should be
+taken, since, in some cases, the condition holds for $\mathbb{R}$, but
+not for $\mathbb{C}$, and in these cases methods fail due to
+counterexamples in $\mathbb{C}$. Statements to be proved are of
+following form:
 $$\forall v_1, \ldots, v_n \in \mathbb{C}. \bigwedge_{i = 1}^{k} f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
 
 This is true when $g_j$ belongs to the radical ideal $I = \langle f_1,
@@ -334,7 +340,7 @@ Gr\"obner basis and the Wu's method.
 
 \paragraph{Wu's method}
 
-The first step of simple Wu's method \cite{wu} uses the
+The first step of simple Wu's method (\cite{wu}) uses the
 pseudo--division operation to transform the polynomial system to
 triangular form, i.e. to a system of equations where each successive
 equation introduces exactly one dependent variable. After that, the
@@ -349,6 +355,7 @@ sometimes the result of applying method is indecisive, i.e. the
 theorem can't be proved nor disproved. A more complex and complete
 version of the method uses ascending chains which are considered in
 the Ritt-Wu principle.
+\marginpar{Dodati referencu za Ritt-Wu}
 
 \paragraph{Gr\"obner basis method}
 
@@ -365,24 +372,25 @@ disproved.
 For calculating Gr\"obner basis is used Buchberger's algorithm witch
 transforms a given set of polynomials into a Gr\"obner basis with
 respect to some monomial order using B-reduction.
+\marginpar{Dodati referencu na Buchbergerov algoritam}
 
 \subsection{Implementations of algebraic methods}
 
 For testing results of applied agrebaization we used three systems --
-GeoProver that uses simple Wu's method \cite{geoprover},
+GeoProver that uses simple Wu's method (\cite{geoprover}),
 Mathematica\footnote{\url{https://www.wolfram.com/mathematica/}} with
 implemented Gr\"obner basis method and
 Maple\footnote{\url{https://www.maplesoft.com/products/maple/}} with
-implemented Wu's method \cite{wsolve}. Shortly, all systems are going
-to be presented here.
+implemented Wu's method (\cite{wsolve}). Shortly, all systems are
+going to be presented here.
 
 \paragraph{GeoProver}
 
 GeoProver is open source software implemented in Java providing
-support for algebraic theorem proving using Wu's method. GeoProver
-consists of two main modules: one provides support for algebraic
-methods and the other is a set of APIs from different geometric
-applications and formats to the prover.  
+support for algebraic theorem proving using Wu's method. It consists
+of two main modules: one provides support for algebraic methods and
+the other is a set of APIs from different geometric applications and
+formats to the prover.
 
 GeoProver produces detailed reports with steps that are taken in
 proving process: transformation of input geometric problem to
@@ -398,21 +406,20 @@ architecture of GeoProver enables easy integration with other systems
 for interactive geometry and can be simply modified to accept various
 input formats for conjectures.
 
-\paragraph{Gr\"obner basis in Mathematica}
+\paragraph{Gr\"obner bases in Mathematica}
 
 Mathematica is commercial software designed for technical
 computing. It has support for Gr\"obner basis and can be used for
-mechanical theorem proving. By $F = GroebnerBasis[\{poly_1\}, \{poly_2\},
-  \ldots]$ are computed Gr\"obner basis for given list of polynomials
-(representing premises of geometry conjecture). If
-$PolynomialReduce[poly_{concl}, F, V][[2]]$ is zero ($V$ is set of
-  variables), the geometry statement represented with polynomial
-  $poly_{concl}$ is true.
+automated theorem proving. $F = GroebnerBasis[\{poly_1\}, \{poly_2\},
+  \ldots]$ computes a Gr\"obner basis for the given list of
+construction polynomials. If $PolynomialReduce[poly, F, V][[2]]$ is
+zero ($V$ is the set of variables), the geometry statement represented
+by polynomial $poly$ is true.
 
 \paragraph{Wu's method in Maple -- wsolve}
 
 The implemented algorithm is based on Wu's method and his theorems
-about the projection of quasi variety \cite{quasivarieties}. While
+about the projection of quasi variety (\cite{quasivarieties}). While
 proving geometry conjecture, weakest non--degenerate conditions can be
 obtained by computing the projection of a quasi variety. In fact, it
 is possible to get the sufficient and necessary condition for a
@@ -420,10 +427,8 @@ geometric theorem to be false by computing the projection of a quasi
 variety.
 
 The method is easily invoked by key word \emph{wsolve(V, P, C)} where
-$V$ is a list of variables, $P$ is a list of polynomials representing
-premises of geometry statement and $C$ is polynomial representing
-statement.
-
+$V$ is a list of variables, $P$ is a list of construction polynomials
+and $C$ is a statement polynomial.
 
 \section{Alegebrization of geometric relations in solid geometry}
 \label{polynomials}
@@ -432,8 +437,8 @@ geometric relations between solid geometry objects using polynomial
 equations over their coordinates. In this section we are going to give
 examples how this could be done, for the most common relations (a
 richer set of relations can be represented using similar techniques,
-and a detailed description is given in an online
-appendix). % dodati url
+and a detailed description is given in an online appendix). \marginpar{dodati url}
+
 
 There are different approaches for encoding relations in terms of
 polynomial equations and the first question is what objects of 3d
@@ -737,9 +742,9 @@ than corresponding polynomials in plane geometry. Thus, there was a
 need to simplify our system.
 
 We used approach proposed by Harrison, without lost of generality
-reasoning --- "wlog" \cite{harrison} by making a convenient choice of
-coordinate system since different choice of coordinate system could
-make algebraic calculations much less robust. 
+reasoning --- "wlog" (\cite{harrison}) by making a convenient choice
+of coordinate system since different choice of coordinate system could
+make algebraic calculations much less robust.
 
 For three independently given points $A$, $B$ and $C$, it is possible
 to choose their coordinated in such a manner that $A(0, 0, 0)$ is in
@@ -1434,7 +1439,7 @@ basis method.
 
 
 \begin{comment}
-\paragraph{Пример једнаки углови.} \emph{Нека је $ABCD$ тетраедар и нека 
+\paragraph{Пример једнаки углови} \emph{Нека је $ABCD$ тетраедар и нека 
 је тачка $O$ центар описаног круга тетраедра $ABCD$. Нека су тачке
 $K$, $L$ и $M$ редом средине страница $AB$, $BC$ и $CA$. Доказати да
 је $\angle KOL = \angle LOM = \angle MOK$.}
@@ -1529,7 +1534,7 @@ $32$. Након сређивања и анализе полинома прес�
 једноставнији и зато су били успешнији када је коришћен други приступ.
 
 
-\paragraph{Резултати методе Гребнерових база имплементираних у систему \emph{Mathematica}.}
+\paragraph{Резултати методе Гребнерових база имплементираних у систему \emph{Mathematica}}
 Метод Гребнерових база када је коришћен први приступ над $29$ проблема
 је био успешан $23$ пута и није докaзао тврђења након $5$ минута за $6$
 посматраних проблема.
@@ -1539,7 +1544,7 @@ $32$. Након сређивања и анализе полинома прес�
 $29$ посматраних проблема.
 
 
-\paragraph{Резултати система \emph{GeoProver}.}
+\paragraph{Резултати система \emph{GeoProver}}
 Систем \emph{GeoProver} када је коришћен први приступ је био успешан
 само $13$ пута. У различитим проблемима долазило је до различитих
 грешака због којих није успешно доказ завшен: достигнут је временски
