@@ -437,169 +437,184 @@ geometric relations between solid geometry objects using polynomial
 equations over their coordinates. In this section we are going to give
 examples how this could be done, for the most common relations (a
 richer set of relations can be represented using similar techniques,
-and a detailed description is given in an online appendix). \marginpar{dodati url}
+and a detailed description is given in an online
+appendix). \marginpar{dodati url}
+
+\subsection{Representation of basic objects -- points, lines and planes}
+One of the first questions in the algebraization process is what
+objects of 3d geometry are basic and what variables are used to
+express geometric relations. We shall consider two different
+approaches. In both approaches, each kind of object is represented by
+some tuple of parameters (we shall see that these could have either
+symbolic, or numeric values).
+
+In the first approach points are the only basic objects and all other
+objects are defined using only points (e.g., lines are defined by two
+different points, and planes are defined as three different,
+non-colinear points). The only variables used in polynomials are
+coordinates of the points.
+
+In the second approach, all types of objects are represented using
+their own parameters (e.g., a line is defined by the coordinates of
+its one point, and the coordinates of its direction vector, and a
+plane is defined by the coefficients of the plane equation -- the
+coordinates of its normal vector, and its displacement wrt.~the
+origin). Polynomials can include variables for all those
+parameters.
+
+We shall show how to encode relations using both of these approaches,
+and shall compare their efficiency.
+
+\paragraph{Points and vectors}
 
 
-There are different approaches for encoding relations in terms of
-polynomial equations and the first question is what objects of 3d
-geometry are basic. % popraviti
-In the first approach, all objects are defined using points (e.g.,
-lines are defined by two different points, and planes are defined as
-three different, non-colinear points). The only variables used in
-polynomials are coordinates of the points. In the other approach, all
-types of objects are represented using their own coordinates (e.g., a
-line is defined by the coordinates of its one point, and the
-coordinates of its direction vector, and a plane is defined by the
-coefficients of the plane equation -- the coordinates of its normal
-vector, and its displacement wrt.~the origin). Polynomials include all
-those coordinate variables. We shall show how to encode relations
-using both of these approaches, and shall compare their efficiency.
+Points will have three parameters, representing their
+coordinates. They will be denoted by superscripts $({\_}^x, {\_}^y,
+{\_}^z)$. For example, point $A$ will be parametrized by the triple of
+$(A^x, A^y, A^z)$. Coordinates can be either symbolic (variables or
+expressions) or numeric (when the exact position of some points is
+known or can be directly calculated).
 
+For describing relations we shall use vectors. Vector determined by
+two points $A = (A^x, A^y, A^z)$ and $B = (B^x, B^y, B^z)$ is
+$\overrightarrow{AB} = (B^x- A^x, B^y - A^y, B^z - A^z)$. The standard
+notions of scalar product, cross product and triple product can be
+applied to vectors.
 
-\subsection{Basic notions used for constructing polynomials}
-Most relations are expressed using the same set of notions which we
-introduce here.
+%% Scalar product of vectors $v = (v^x, v^y, v^z)$ and $u = (u^x, u^y,
+%% u^z)$ is $v\cdot u = v^x\cdot u^x+ v^y\cdot u^y + v^z\cdot u^z$, their
+%% vector product is determined by the matrix:
+%% $$ v\times u = \left|\begin{array}{ccc} \overrightarrow{i} & \overrightarrow{j} & \overrightarrow{k} \\ 
+%%                        v^x& v^y & v^z \\
+%%                        u^x& u^y & u^z \\
+%% \end{array}\right|,$$
+%% and their triple product with the vector $w = (w^x, w^y, w^z)$ is
+%% equal to $v\cdot (u \times w)$, and is determined by the matrix:
+%% $$\left|\begin{array}{ccc} v^x& v^y & v^z \\ u^x& u^y
+%%   & u^z \\ w^x& w^y & w^z \\
+%% \end{array}\right|.$$
 
-Each kind of object is represented by some tuple of parameters (we
-shall see that these could have either symbolic, or numeric values).
+\paragraph{Lines and planes}
 
-Points will have three parameters, denoted by
-$({[\_]}^x, {[\_]}^y, {[\_]}^z)$ representing their coordinates. Every
-point is given either by its symbolic or numeric coordinates. To each
-new point introduced point fresh symbolic coordinates are assigned.
+Representation of lines depends on approach used.
 
-Lines are represented differently, depending on the used approach.  In
-the first approach a line is given by two different given points, and
-a six-tuple of their coordinates. The first of the point of the line
-$p$ will be denoted by $p_A$ and the second point by $p_B$.
+In the first approach a line is represented by two different given
+points, i.e., a six-tuple of their coordinates. The first of the point
+of the line $l$ will be denoted by $l_A$ and the second point by
+$l_B$.
 
 In the other approach, a line is given by a given point $A$ and a
-given vector $v$. Vector of the line named $p$ will be denoted by
-$\overrightarrow{p_v}$ and the point of the line $p$ will be denoted by
-$p_A$. Therefore, lines in the second approach will also have six
-parameters denoted by
-$({[\_]}^{v_x}, {[\_]}^{v_y}, {[\_]}^{v_z}, {[\_]}^{A_x},
-{[\_]}^{A_y}, {[\_]}^{A_z})$,
-which represent the line given by the equation:
-$$x = k\cdot[\_]^{v_x} + {[\_]}^{A_x}\ \ y = k\cdot[\_]^{A_y} +
-{[\_]}^{A_y}\ \ z = k\cdot[\_]^{v_z} + {[\_]}^{A_z}.$$
-In the previous equation, $k$ denotes the line ratio, but this
-information is not present in the line specification (which is a
-six-tuple). Line ratio is going to be used in some polynomials that
-describe constructions involving lines, but it is going to be
-considered as a fresh symbolic variable.
+direction vector $v$. Direction vector of the line $l$ will be denoted
+by $\overrightarrow{l_v}$ and the point of the line $l$ will be
+denoted by $l_A$. Therefore, lines in the second approach will also
+have six parameters denoted by superscripts. For example, the line $l$
+will have the parameters $(l^{v_x}, l^{v_y}, l^{v_z}, l^{A_x},
+l^{A_y}, l^{A_z})$, which represent the line given by the equation:
+$$x = k_l\cdot l^{v_x} + l^{A_x},\quad y = k_l\cdot l^{A_y} +
+l^{A_y},\quad z = k_l\cdot l^{v_z} + l^{A_z}.$$ In the previous
+equations, $k_l$ denotes the line ratio, not present in the line
+specification (which is a six-tuple). Line ratio is going to be used
+in some polynomials that describe constructions involving lines, and
+in that case it is to be introduced as a fresh symbolic variable.
 
 Planes are also represented differently, depending on the used
-approach. In the first approach a plane is given by three non-colinear
-points, and a nine-tuple of their coordinates. The first point of the
-plane $\pi$ will be denoted by $\pi_A$, the second one by $\pi_B$ and
-the third one by $\pi_C$.
+approach.
+
+In the first approach a plane is given by three different,
+non-colinear points, and a nine-tuple of their coordinates. The first
+point of the plane $\pi$ will be denoted by $\pi_A$, the second one by
+$\pi_B$ and the third one by $\pi_C$.
 
 In the other approach, planes are determined by their normal vector
-$v$ and an additional parameter $d$ (displacement wrt.~the
+$v$ and an additional parameter $d$ (displacement from the
 origin). Vector of the plane named $\pi$ will be denoted with
 $\overrightarrow{\pi_v}$ and free parameter for the plane will be
 denoted with $\pi_d$. Therefore, planes will have only four
-parameters, denoted by
-$({[\_]}^{v_x}, {[\_]}^{v_y}, {[\_]}^{v_z}, {[\_]}^{d})$, which
-represent the plane given by the following equation:
-$${[\_]}^{v_x}\cdot x + {[\_]}^{v_y}\cdot y + {[\_]}^{v_z}\cdot z +
-{[\_]}^{d} = 0.$$ 
+parameters. For example, the plane $\pi$, will be represented by the
+tuple $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$ that satisfies
+$$\pi^{v_x}\cdot x + \pi^{v_y}\cdot y + \pi^{v_z}\cdot z + \pi^{d} =
+0.$$
 
-Vector determined by two points $A = (a^x, a^y, a^z)$ and
-$B = (b^x, b^y, b^z)$ is
-$\overrightarrow{AB} = (b^x- a^x, b^y - a^y, b^z - a^z)$. The standard
-notions of scalar product, cross product and triple product can be
-applied to vectors. Scalar product of vectors $v = (v^x, v^y, v^z)$
-and $u = (u^x, u^y, u^z)$ is
-$v\cdot u = v^x\cdot u^x+ v^y\cdot u^y + v^z\cdot u^z$, their vector
-product is determined by the matrix:
-$$ v\times u = \left|\begin{array}{ccc} \overrightarrow{i} & \overrightarrow{j} & \overrightarrow{k} \\ 
-                       v^x& v^y & v^z \\
-                       u^x& u^y & u^z \\
-\end{array}\right|,$$
-and their triple product with the vector $w = (w^x, w^y, w^z)$ is
-equal to $v\cdot (u \times w)$, and is determined by the matrix:
-$$\left|\begin{array}{ccc} v^x& v^y & v^z \\ u^x& u^y
-  & u^z \\ w^x& w^y & w^z \\
-\end{array}\right|.$$
 
 
 \subsection{Representing relations between geometry objects}
 In this section are given polynomials that arithmetically describe
 relations over constructed objects (for example, two points coincide,
 two lines are parallel, two planes are orthogonal).  Each kind of
-relation introduces some polynomial constraints of the coordinates of
-the objects that are involved, and are expressed differently depending
-on the chosen approach.
+relation introduces some polynomial constraints over the parameters of
+the objects that are involved, and can be expressed differently
+depending on the chosen approach.
 
 Input parameters for given relation are parameters of all objects
 involved in it. For example, for the relation \mbox{{\tt congruent}
   $A$ $B$ $C$ $D$} inputs are four points, $A$, $B$, $C$, and $D$, e.g
-their symbolic coordinates: $(a^x, a^y, a^z)$, $(b^x, b^y, b^z)$,
-$(c^x, c^y, c^z)$ and $(d^x, d^y, d^z)$.
+their symbolic or numeric parameters: $(a^x, a^y, a^z)$, $(b^x, b^y,
+b^z)$, $(c^x, c^y, c^z)$ and $(d^x, d^y, d^z)$.
 
 \begin{description}
 % ------------------------
-\item[$\triangleright$] {\tt congruent} $A$ $B$ $C$ $D$
+\item[$\triangleright$] {\tt equal\_points} $A$ $B$ --- two points $A$
+  and $B$ have the same coordinates.
 
-  {\em Description:} Two segments, $AB$ and $CD$ are
-  congruent.
+  {\em Polynomials:} The vector equation $\overrightarrow{AB} = 0$
+  yields the following three polynomial equations:
+  \begin{tabbing}
+    $A^x - B^x = 0$\\
+    $A^y - B^y = 0$\\
+    $A^z - B^z = 0$
+  \end{tabbing}
+
+\marginpar{Zar nije ovde bolje samo uvesti iste simbolicke promenljive i uvrstiti nego uvoditi nove polinome?}  
+  
+% ------------------------
+
+\item[$\triangleright$] {\tt congruent} $A$ $B$ $C$ $D$ --- Two
+  segments, $AB$ and $CD$ are congruent.
 
   %{\em Input:} Points $A$, $B$, $C$, and $D$.
 
-{\em Polynomials:} \\
+{\em Polynomials:}
 $\overrightarrow{AB} \cdot \overrightarrow{AB} = \overrightarrow{CD} \cdot \overrightarrow{CD}$. \\
-Note that this gives the polynomial equation $poly = 0$, where
+Note that this gives the polynomial equation:
 
-\begin{tabbing}
-$poly = $ \= $({a^x} - {b^x})^2 + ({a^y} - {b^y})^2 + ({a^z} - {b^z})^2 -$ \\ 
-          \> $({c^x} - {d^x})^2 - ({c^y} - {d^y})^2 - ({c^z} - {d^z})^2$
-\end{tabbing}
+$$({a^x} - {b^x})^2 + ({a^y} - {b^y})^2 + ({a^z} - {b^z})^2 - ({c^x} - {d^x})^2 - ({c^y} - {d^y})^2 - ({c^z} - {d^z})^2 = 0$$
 
 {\em Explanation:} Squares of the distance between $A$ and $B$ must be
 equal to the square of the distance between $C$ and $D$.
 
 % ------------------------
 \item[$\triangleright$] {\tt segments\_in\_ratio} $A$ $B$ $C$ $D$
-  $m$ $n$ 
-
-  {\em Description:} The lengths of segments $AB$ and
+  $m$ $n$ --- the lengths of segments $AB$ and
   $CD$ are in the given ratio $\frac{m}{n}$ i.e., that
   $\frac{|AB|}{|CD|} = \frac{m}{n}$.
 
-{\em Polynomials:} \\
-$n^2 \cdot \overrightarrow{AB} \cdot \overrightarrow{AB} = m^2 \cdot \overrightarrow{CD} \cdot \overrightarrow{CD}$. \\
-
+{\em Polynomials:} A single equation obtained from the condition
+$n^2 \cdot \overrightarrow{AB} \cdot \overrightarrow{AB} = m^2 \cdot \overrightarrow{CD} \cdot \overrightarrow{CD}$.
 
 {\em Explanation:} The squares of distances between $A$ and $B$ and
 between $C$ and $D$ must be in the ratio $\frac{m^2}{n^2}$. Note that
 this reduces to congruence when $m = n$.
 
 % ------------------------
-\item[$\triangleright$] {\tt is\_midpoint} $M$ $A$ $B$
+\item[$\triangleright$] {\tt is\_midpoint} $M$ $A$ $B$ --- the point
+  $M$ is the midpoint of the segment determined by points $A$ and
+  $B$.
 
-{\em Description:} Checks weather point $M$ is a midpoint of the
-segment determined with points $A$ and $B$.
-
-{\em Polynomials:} $\overrightarrow{MA} = \overrightarrow{MB}$.  Note
-that this yields three different polynomials $poly_1 = 0$,
-$poly_2 = 0$, $poly_3 = 0$:
+{\em Polynomials:} The three polynomial equations derived from $\overrightarrow{MA} = \overrightarrow{MB}$:
 
 \begin{tabbing}
-$poly_1 = $ \= $2m^x - a^x - b^x$ \\ 
-$poly_2 = $ \= $2m^y - a^y - b^y$ \\ 
-$poly_3 = $ \= $2m^z - a^z - b^z$
+$2m^x - a^x - b^x = 0$ \\ 
+$2m^y - a^y - b^y = 0$ \\ 
+$2m^z - a^z - b^z = 0$
 \end{tabbing}
 
 % ------------------------
-\item[$\triangleright$] {\tt point\_segment\_ratio} $M$ $A$ $B$ $p$ $q$
+\item[$\triangleright$] {\tt point\_segment\_ratio} $M$ $A$ $B$ $p$
+  $q$ --- checks weather the point $M$ divides segment determined by
+  points $A$ and $B$ in ratio determined by $p$ and $q$,
+  e.g. $\frac{|MA|}{|MB|} = \frac{p}{q}$.
 
-{\em Description:} Checks weather the point $M$ divides segment
-determined with points $A$ and $B$ in ratio determined with $p$ and
-$q$, e.g. $\frac{|MA|}{|MB|} = \frac{p}{q}$.
-
-{\em Polynomials:} three polynomials derived from
+{\em Polynomials:} The three polynomial equations derived from
 $q\cdot \overrightarrow{MA} = p\cdot \overrightarrow{MB}$.
 
 {\em Explanation:} Note that {\tt is\_midpoint $M$ $A$ $B$} can be
@@ -607,28 +622,15 @@ also written using this rule as {\tt point\_segment\_ratio} $M$ $A$
 $B$ $1$ $1$.
 
 % ------------------------
-\item[$\triangleright$] {\tt equal\_points} $A$ $B$
-
-{\em Description:} Checks weather two points $A$ and $B$ have the same
-coordinates.
-
-{\em Polynomials:} three polynomials from the expression
-$\overrightarrow{AB} = 0$.
-
-% ------------------------
-\item[$\triangleright$] {\tt orthogonal\_4points} $A$ $B$ $C$ $D$
-
-{\em Description:} Checks weather line determined with points $A$
-and $B$ is orthogonal on the line determined with points $C$ and
-$D$.
+\item[$\triangleright$] {\tt orthogonal\_4points} $A$ $B$ $C$ $D$ ---
+  the line determined by points $A$ and $B$ is orthogonal on the line
+  determined by points $C$ and $D$.
 
 {\em Polynomials:} $\overrightarrow{AB} \cdot \overrightarrow{CD} = 0$
 
 % ------------------------
-\item[$\triangleright$] {\tt orthogonal\_lines} $p$ $q$
-% Dodati pricu o proveri mimoilaznosti
-
-{\em Description:} Two lines, $p$ and $q$ are orthogonal.
+\item[$\triangleright$] {\tt orthogonal\_lines} $p$ $q$ --- the lines $p$ and $q$ are orthogonal.
+\marginpar{Dodati pricu o proveri mimoilaznosti}
 
 {\em Polynomials:} If the first approach is used, then the lines are
 given by the points $(p_A, p_B)$ and $(q_A, q_B)$, so this reduces to
@@ -639,10 +641,8 @@ as the input, and the polynomial is
 $\overrightarrow{p_v} \cdot \overrightarrow{q_v} = 0.$
 
 % ------------------------
-\item[$\triangleright$] {\tt incident} $A$ $p$
-
-{\em Description:} Checks weather the point $A$ belongs to the line
-$p$.
+\item[$\triangleright$] {\tt incident} $A$ $p$ --- point $A$ belongs
+  to the line $p$.
 
 {\em Polynomials:} If the first approach is used, then the three
 polynomials are derived from
@@ -651,9 +651,8 @@ second approach is used, then the three polynomials are derived from
 $\overrightarrow{p_v} \times \overrightarrow{Ap_A} = 0.$
 
 % ------------------------
-\item[$\triangleright$] {\tt parallel\_lines} $p$ $q$
-
-{\em Description:} Checks weather two lines, $p$ and $q$ are parallel.
+\item[$\triangleright$] {\tt parallel\_lines} $p$ $q$ --- lines $p$
+  and $q$ are parallel.
 
 {\em Polynomials:} The three polynomials are derived from
 $\overrightarrow{p_Ap_B} \times \overrightarrow{q_Aq_B}$ or
@@ -661,14 +660,14 @@ $\overrightarrow{p_v} \times \overrightarrow{q_v}$ depending on the
 approach.
 
 % ------------------------
-\item[$\triangleright$] {\tt parallel\_planes} $\alpha$ $\beta$
-
-{\em Description:} Checks weather two planes $\alpha$ and $\beta$ are
-parallel.
+\item[$\triangleright$] {\tt parallel\_planes} $\alpha$ $\beta$ ---
+  planes $\alpha$ and $\beta$ are parallel.
 
 {\em Polynomials:} If the second approach is used, the three
 polynomials are derived from
 $\overrightarrow{\alpha_v} \times \overrightarrow{\beta_v} = 0.$
+
+\marginpar{Ovde obavezno razjasniti i prvi pristup.}
 
 % Videti da li je moguce dobiti malo manje polinome ako se prvi pristup
 % ne primenjuje na isti nacin kao drugi.
@@ -682,21 +681,18 @@ $$(\overrightarrow{\beta_A\beta_C}\times\overrightarrow{\beta_A\beta_B}) \times 
 
 
 % ------------------------
-\item[$\triangleright$] {\tt orthogonal\_planes} $\alpha$ $\beta$
+\item[$\triangleright$] {\tt orthogonal\_planes} $\alpha$ $\beta$ ---
+  checks weather two planes, $\alpha$ and $\beta$ are orthogonal.
 
-{\em Description:} Checks weather two planes, $\alpha$ and $\beta$ are
-orthogonal.
-
-{\em Polynomials:} 
+{\em Polynomials:}
+\marginpar{Dopunitii}
 If the first approach is used ....
 If the second approach is used, the polynomial
 $\overrightarrow{\alpha_v} \cdot \overrightarrow{\beta_v} = 0$.
 
 % ------------------------
-\item[$\triangleright$] {\tt point\_in\_plane} $A$ $\pi$
-
-{\em Description:} Checks weather the point $A$ belongs to the plane
-$\pi$.
+\item[$\triangleright$] {\tt point\_in\_plane} $A$ $\pi$ --- the point
+  $A$ belongs to the plane $\pi$.
 
 {\em Polynomials:} If the first approach is used, then the polynomial
 $$\overrightarrow{\pi_AA}\cdot (\overrightarrow{\pi_A\pi_B} \times \overrightarrow{\pi_A\pi_C}) = 0.$$
@@ -704,10 +700,8 @@ If the second approach is used, then the polynomial
 $\overrightarrow{\pi_v} \cdot \overrightarrow{A} + \pi^{d} = 0$.
 
 % ------------------------
-\item[$\triangleright$] {\tt parallel\_line\_plane} $p$ $\alpha$
-
-{\em Description:} Checks weather the line $p$ and plane $\alpha$ are
-parallel.
+\item[$\triangleright$] {\tt parallel\_line\_plane} $p$ $\alpha$ ---
+  line $p$ and plane $\alpha$ are parallel.
 
 {\em Polynomials:} 
 If the first approach is used ...
@@ -717,18 +711,16 @@ $\overrightarrow{p_v} \cdot \overrightarrow{\alpha_v} = 0$.
 {\em Note:} This statement also holds if line belongs to the plane.
 
 % ------------------------
-\item[$\triangleright$] {\tt orthogonal\_line\_plane} $p$ $\alpha$
-
-{\em Description:} Checks weather the line $p$ and plane $\alpha$ are
-orthogonal.
+\item[$\triangleright$] {\tt orthogonal\_line\_plane} $p$ $\alpha$ ---
+  the line $p$ and plane $\alpha$ are orthogonal.
 
 {\em Polynomials:} If the first approach is used ...
 
 If the second approach is used the three polynomials
 $\overrightarrow{p_v} \times \overrightarrow{\alpha_v} = 0$.
 
-% Dodati pravila za uglove 
-% Dodati pravila za pravilne objekte (tetraedar npr.)
+\marginpar{Dodati pravila za uglove}
+\marginpar{Dodati pravila za pravilne objekte (tetraedar npr.)}
 \end{description}
 
 \section{Simplification of polynomials (needed for Wu's method)}
@@ -940,7 +932,7 @@ the conclusion set.
 
   {\em Description:} For four given point $A$, $B$, $C$ and $D$
   determine the point $M$ which is intersection of line determined
-  with points $A$ and $B$ and line determined with points $C$ and
+  by points $A$ and $B$ and line determined by points $C$ and
   $D$. This is very similar to the construction we described above.
 
   {\em Input:} Four points $A$, $B$, $C$ and $D$ with symbolic
@@ -962,9 +954,9 @@ the conclusion set.
 {\em Explanation:} The polynomials were generated using the following
 line equations: \\ $x = k_1\cdot (b^x - a^x) + a^x \ \ \ \ y =
 k_1\cdot (b^y - a^y) + a^y \ \ \ \ z = k_1\cdot (b^z - a^z) + a^z$ ---
-line determined with points $A$ and $B$ \\ $x = k_2\cdot (d^x - c^x) +
+line determined by points $A$ and $B$ \\ $x = k_2\cdot (d^x - c^x) +
 c^x \ \ \ \ y = k_2\cdot (d^y - c^y) + c^y \ \ \ \ z = k_2\cdot (d^z -
-c^z) + c^z$ --- line determined with points $C$ and $D$.
+c^z) + c^z$ --- line determined by points $C$ and $D$.
 
 
 
@@ -1090,7 +1082,7 @@ $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$.
 vector product of the vectors $\overrightarrow{AB}$ and
 $\overrightarrow{AC}$. Since $(b^x - a^x, b^y - a^y, b^z - a^z)$ and
 $(c^x - a^x, c^y - a^y, c^z - a^z)$ are vectors of two lines
-determined with points $A$ and $B$, and points $C$ and $D$, the first
+determined by points $A$ and $B$, and points $C$ and $D$, the first
 three polynomials are derived using the formula:
 $$(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}) = \begin{array}{ccc} i & j & k \\ b^x
   - a^x & b^y - a^y & b^z - a^z \\ c^x - a^x & c^y - a^y & c^z - a^z
