@@ -870,73 +870,7 @@ provers and it had to be dissembled onto more simpler ones.
 \marginpar{Danijela: Ima dole, u construction rules}
 \end{description}
 
-\section{Simplification of polynomials (needed for Wu's method)}
-\marginpar{Danijela: ja bih ovo poglavlje pomerila na kraj.}
-\label{simplification}
-
-The first problem when applying GeoProver onto generated sets of
-polynomials were reaching time and space limit. The reason for this is
-large number of variables and polynomials that were
-created. Furthermore, polynomials in solid geometry are more complex
-than corresponding polynomials in plane geometry. Thus, there was a
-need to simplify our system.
-
-We used approach proposed by Harrison, without lost of generality
-reasoning --- "wlog" (\cite{harrison}) by making a convenient choice
-of coordinate system since different choice of coordinate system could
-make algebraic calculations much less robust.
-
-For three independently given points $A$, $B$ and $C$, it is possible
-to choose their coordinated in such a manner that $A(0, 0, 0)$ is in
-the origin, $B(0, 0, b^z)$ is on the $z$-axis and $C(0, c^y, c^z)$
-lies in plane $yOz$. With this choice of coordinates, the number of
-variables is reduced by six and the corresponding zeroes simplify
-polynomials. This approach is commonly used in algebraic methods. It
-does not affect the generality of statement and justification for its
-usage comes from the fact that rotations and translations can be used
-to transform points into its "canonical" position. Translation and
-rotation are isometries which means that they preserve distance, and
-then also the other geometric relations such as incidence,
-orthogonality, size of an angle and so on.
-
-We extended this approach and applied similar reasoning on lines and
-plains. In our list of constructions there exist one construction for
-arbitrary given line, {\tt line} $l$. With this construction rule, six
-variables are generated, vector of the line $(l^{v_1}, l^{v_2},
-l^{v_3})$ and the coordinates some point on the line $(p^x, p^y,
-p^z)$. However, it is possible to choose a more convenient
-coordinates, for vector $(0, 0, l^{v_3})$ and for point $(0, 0, 0)$,
-which means that as arbitrary line is chosen $z$-axis. Similarly goes
-for plains, and for arbitrary given plane, {\tt plane} $\pi$, it is
-possible to choose coordinates $\pi (0, 0, p^{v_3}, 0)$, which means
-that arbitrary chosen plain is plain $xOy$.
-
-Without applying this method, even the simplest statements could not
-be proved. Choosing convenient coordinates greatly improved simplicity
-of the system of polynomials and, by doing so, made the program more
-efficient. However, some polynomials become redundant, as they become
-$0$ and we just deleted them from the system. Also, some polynomials
-become a polynomial of one variable on some degree and they were also
-deleted from the system and the value of the corresponding variable
-was set to zero. Although, it was not necessary to delete these
-polynomials, the system was simplified a bit more when they were
-deleted.
-
-To simplify constructions even further, we choose appropriate
-coordinates for figures as we explained in \ref{objectconstruction}.
-
-Furthermore, polynomials whose structure is $x_i - x_j$ or $x_i + x_j$
-(assume $j < i$) were also deleted from the system, each appearance of
-$x_i$ was replaced with $x_j$, e.g. with $-x_j$, and $x_i$ was deleted
-from the set of variables. This simplification step was not very
-crucial, and most of the tested statements could be proved without
-adding this simplification. However, for some complex statements, it
-was very important to reduce the size of sets of polynomials
-(otherwise, space or time limit is reached) and this is a step into
-that direction.
-
-
-\subsection{Construction rules}
+\section{Construction rules}
 
 
 Each construction starts from some given (free) objects and proceeds
@@ -1466,6 +1400,80 @@ $\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
 \end{tabbing}
 \end{description}
 
+
+\section{Simplification of polynomials}
+\label{simplification}
+
+In order to test proposed algebraization we used three tools,
+GeoProver, Maple and Mathematica. The first problem we encountered was
+often reaching time and space limit due to complexity of polynomial
+sets. The reason for this is large number of variables and polynomials
+that were created. It should be noted that polynomials in solid
+geometry are more complex than corresponding polynomials in plane
+geometry. Thus, there was a need to simplify our system.
+
+We used approach proposed by Harrison, without lost of generality
+reasoning --- "wlog" (\cite{harrison}) by making a convenient choice
+of coordinate system since different choice of coordinate system could
+make algebraic calculations much less robust.
+
+For three independently given points $A$, $B$ and $C$, it is possible
+to choose their coordinated in such a manner that $A(0, 0, 0)$ is in
+the origin, $B(0, 0, b^z)$ is on the $z$-axis and $C(0, c^y, c^z)$
+lies in plane $yOz$. With this choice of coordinates, the number of
+variables is reduced by six and the corresponding zeroes simplify
+polynomials. This approach is commonly used in algebraic methods. It
+does not affect the generality of statement and justification for its
+usage comes from the fact that rotations and translations can be used
+to transform points into its "canonical" position. Translation and
+rotation are isometries which means that they preserve distance, and
+then also the other geometric relations such as incidence,
+orthogonality, size of an angle and so on.
+
+Without applying this method, even the simplest statements could not
+be proved. Choosing convenient coordinates greatly improved simplicity
+of the system of polynomials and, by doing so, made the program more
+efficient. However, some polynomials become redundant, as they become
+$0$ and we just deleted them from the system. Also, some polynomials
+become a polynomial of one variable on some degree and they were also
+deleted from the system and the value of the corresponding variable
+was set to zero. Although, it was not necessary to delete these
+polynomials, the system was simplified a bit more when they were
+deleted. Besides, GeoProver cannot transform polynomial system
+containing $0 = 0$ into triangular system.
+
+To simplify constructions even further, we choose appropriate
+coordinates for figures as we explained in \ref{objectconstruction}.
+
+Furthermore, polynomials whose structure is $x_i - x_j$ or $x_i + x_j$
+(assume $j < i$) were also deleted from the system, each appearance of
+$x_i$ was replaced with $x_j$, e.g. with $-x_j$, and $x_i$ was deleted
+from the set of variables. This simplification step was not very
+crucial, and most of the tested statements could be proved without
+adding this simplification. However, for some complex statements, it
+was very important to reduce the size of sets of polynomials
+(otherwise, space or time limit is reached) and this is a step into
+that direction.
+
+Relation {\tt equal\_angles} produces very complex polynomial. Non of
+the three algebraic provers (GeoProver, Maple or Mathematica) were
+successful proving geometry conjecture with this relation. GeoProver
+arrived to the memory limit after couple of steps, whereas Mathematica
+and Maple worked for couple of hours without reaching conclusion (and
+were violently interrupted). The solution was to dismantle large
+polynomial into simpler ones: \\
+$scalar_1 = \overrightarrow{AO}\cdot\overrightarrow{BO}$ \\
+$scalar_2 = \overrightarrow{CK}\cdot\overrightarrow{DK}$ \\
+$dist_{CK} = |CK|$ \\
+$dist_{DK} = |DK|$ \\
+$dist_{AO} = |AO|$ \\
+$dist_{BO} = |BO|$ \\
+$poly = scalar_1 * scalar_1 * dist_{CK} * dist_{DK} - scalar_2 * scalar_2 * dist_{AO} * dist_{BO}$ \\
+
+Basically, the set of polynomials and variables are increased but
+substituted polynomials are far less complex. With this change, non of
+the three algebraic provers had problems and they reached conclusions
+within a second.
 \section{Examples}
 
 In this section we are going to present results of testing
