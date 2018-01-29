@@ -1401,7 +1401,9 @@ $\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
 \end{description}
 
 
+%-------------------------------------------------------------------------------
 \section{Simplification of polynomials}
+%-------------------------------------------------------------------------------
 \label{simplification}
 
 In order to test proposed algebraization we used three tools,
@@ -1474,7 +1476,10 @@ Basically, the set of polynomials and variables are increased but
 substituted polynomials are far less complex. With this change, non of
 the three algebraic provers had problems and they reached conclusions
 within a second.
-\section{Examples}
+
+%-------------------------------------------------------------------------------
+\section{Examples and testing}
+%-------------------------------------------------------------------------------
 
 In this section we are going to present results of testing
 algebraization methods using three different provers --- GeoProver,
@@ -1488,10 +1493,9 @@ perpendicular lines from vertices $A$, $B$, $C$ and $S$ onto
 appropriate opposite sides. Let $H$ be intersection of lines $h_a$ and
 $h_b$. Prove that $H$ is also incident with lines $h_s$ and $h_c$.
 
-%Fali slika!!! Nece nesto
-\begin{figure}[hb]
+\begin{figure}[!hb]
 \begin{center}
-\input{presek_tetraedar.pic}
+\input{presek_tetraedar.tkz}
 \end{center}
 \caption{Tetrahedron altitudes intersect in one point}
 \end{figure}
@@ -1543,21 +1547,127 @@ and usually have only two monomials. All three provers were
 successful, but average time was smaller, for GeoProver it was
 $0.0862$ seconds.
 
-\begin{table}[hb]
+\marginpar{Izmeniti tacan prosecan broj monoma, ovo je bilo otprilike}
+\begin{table}[!hb]
 \begin{center}
 \begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{1.5cm}}
 \                   &  number of polynomials & average number of monomials & number of variables & time \\
 \hline
 \hline
-\textbf{first approach} & $22$ & $4$ & $25$ & $0.1132s$ \\
+\textbf{first approach} & $22$ & $?$ & $25$ & $0.1132s$ \\
 \hline
-\textbf{second approach} & $29$ & $2$ & $22$ & $0.0862s$
+\textbf{second approach} & $29$ & $?$ & $22$ & $0.0862s$
 \end{tabular}
 \caption{Comparison of two algebraization approaches}
 \end{center}
 \end{table}
 
 \end{example}
+
+\begin{example}[Angles and tetrahedron, example from (\cite{shao2016challenging})]\label{primer2}
+Let $ABCD$ be a tetrahedron, $O$ be the circumcenter of $ABCD$, and
+$K$, $L$, $M$ be the middle points of edges $AB$, $BC$, $CA$
+respectively. If $|AB|=|CD|$, $|AC|=|BD|$, $|AD|= |BC|$, then $\angle
+KOL = \angle LOM = \angle MOK$.
+
+\begin{figure}[!hb]
+\begin{center}
+\input{jednaki_uglovi.tkz}
+\end{center}
+\caption{Example \ref{primer2}, $\angle KOL = \angle LOM = \angle MOK$}
+\end{figure}
+
+Term representation of geometry statement:
+
+\begin{footnotesize}
+{\tt
+\begin{tabbing}
+make\_tetrahedron $A$ $B$ $C$ $D$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
+
+line\_orth\_plane $l_1$ $A$ $B$ $C$ $D$ \\
+line\_orth\_plane $l_2$ $A$ $C$ $D$ $B$ \\ \\
+
+intersection\_lines $O$ $l_1$ $l_2$ \\ \\
+
+midpoint $K$ $A$ $B$ \\
+midpoint $L$ $B$ $C$ \\
+midpoint $M$ $C$ $A$ \\ \\
+
+equal\_angles  $K$ $O$ $L$ $L$ $O$ $M$
+\end{tabbing}
+}
+\end{footnotesize}
+
+As in the previous example, tetrahedron is in the canonical position
+by the construction, so coordinates of the points are $A(0, 0, 0)$,
+$B(0, 0, 1)$, $C(x_1, x_2, 0)$ and $S(x_3, x_4, x_5)$ where $x_1$,
+$x_2$, $x_3$, $x_4$ and $x_5$ are dependent variables and occur in
+polynomials describing tetrahedron (\ref{tetrahedron}).
+
+By using first approach are obtained $18$ different variables, $24$
+polynomials defining premises, $4$ polynomials defining conclusion of
+the geometry conjecture. Obtained polynomials are bit more complex
+than in a previous example. Maple and Mathematica were successful, but
+GeoProver reached memory limit after $0.481$ seconds (e.g. Space limit
+exceeded in pseudo division. Obtained polynomial with 3339 terms).
+
+By using second approach, number of obtained polynomials are equal as
+above, $24$, but polynomials are less complex. All three provers were
+successful and GeoProver reached conclusion after $0.835$ seconds.
+
+\begin{table}[!hb]
+\begin{center}
+\begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{1.5cm}}
+\                   &  number of polynomials & average number of monomials & number of variables & time \\
+\hline
+\hline
+\textbf{first approach} & $24$ & $7.2$ & $18$ & \emph{memory limit} \\
+\hline
+\textbf{second approach} & $24$ & $3.5$ & $24$ & $0.835s$
+\end{tabular}
+\caption{Comparison of two algebraization approaches}
+\end{center}
+\end{table}
+\end{example}
+
+Observing these two simple examples leads to the conclusion that first
+approach generates less variables, but the second approach generates
+less complex polynomials. As we shall see by testing, algebraic
+theorem provers are more efficient if the polynomials are simpler, and
+so algebraic provers were more successful when second approach is
+used.
+
+\paragraph{Results of testing algebraic provers}
+Maple and Mathematica were more successful than GeoProver. Mathematica
+and Maple were tested over $38$ problems using first approach. Both
+systems were successful for $28$ problems (physically interrupted
+after $5$ minutes of not reaching conclusion). If the second approach
+is used, bot provers were successful for $36$ problems. For two
+problems, provers did not reach conclusion within two hours. The
+complexity of polynomials for both problems was large.
+
+GeoProver was also more successful when second approach is
+used. However, this system more often failed due to different
+problems: time limit reached, space limit reached and general error
+occured. General error occured when the polynomial system could not be
+transformed into triangular system and it is, in our view, very
+complex to avoid this problem by analyzing polynomials and deleting
+redundant ones.
+
+\begin{table}[!hb]
+\begin{center}
+\begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}}
+\                      & \emph{GeoProver}  success & \emph{Mathematica} success & \emph{Maple} success \\
+\hline
+\hline
+\textbf{first approach}  &  $13$  & $28$ & $28$  \\
+\hline
+\textbf{second approach} &  $22$  & $36$ & $36$ \\
+\end{tabular}
+\caption{Comparison of algebraic provers over $38$ problems}
+\end{center}
+\end{table}
+
 
 \section{Non-degeneracy conditions}
 
@@ -1606,146 +1716,7 @@ basis method.
 
 
 \begin{comment}
-\paragraph{Пример једнаки углови} \emph{Нека је $ABCD$ тетраедар и нека 
-је тачка $O$ центар описаног круга тетраедра $ABCD$. Нека су тачке
-$K$, $L$ и $M$ редом средине страница $AB$, $BC$ и $CA$. Доказати да
-је $\angle KOL = \angle LOM = \angle MOK$.}
-
-\begin{figure}[hb]
-\begin{center}
-\input{jednaki_uglovi.tkz}
-\end{center}
-\caption{Тврђење о једнаким угловима између датих дужи}
-\end{figure}
-
-Тврђење се може записати на следећи начин:
-
-\begin{footnotesize}
-{\tt
-\begin{tabbing}
-make\_tetrahedron $A$ $B$ $C$ $D$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
-
-line\_orth\_plane\_4points $l_1$ $A$ $B$ $C$ $D$ \\
-line\_orth\_plane\_4points $l_2$ $A$ $C$ $D$ $B$ \\ \\
-
-intersection\_lines $O$ $l_1$ $l_2$ \\ \\
-
-midpoint $K$ $A$ $B$ \\
-midpoint $L$ $B$ $C$ \\
-midpoint $M$ $C$ $A$ \\ \\
-
-equal\_angles  $K$ $O$ $L$ $L$ $O$ $M$
-\end{tabbing}
-}
-\end{footnotesize}
-
-Као и у претходном примеру тетраедар је у канонском положају према
-самој конструкцији, координате тачака су $A(0, 0, 0)$, $B(0, 0, 1)$,
-$C(x_1, x_2, 0)$ и $S(x_3, x_4, x_5)$ при чему су $x_1$, $x_2$, $x_3$,
-$x_4$ и $x_5$ зависне променљиве и налазе се у полиномима који описују
-тетраедар (погледати у ранијем поглављу полиноме за тетраедар
-\ref{tetraedar_6glava}).
-
-Коришћењем првог приступа добија се $31$ полином који представља
-релације међу објектима, $1$ полином за који је потребно доказати да
-је једнак нули и $36$ променљивих. Након симплификације, добија се $4$
-полинома за које треба доказати да су једнаки нули ($3$ полинома
-сслуже као провера да ли се праве заиста секу, а један полином служи
-за проверу углова), $24$ који описују релације међу објектима и $18$
-различитих променљивих. Међу добијеним полинома, $15$ полинома је
-прилично једноставно и састоје се од два монома. Ипак, преостали
-полиноми су комплексни и састоје се у просеку од осам монома. Метод
-Гребнерових база имплементираних у систему \emph{Mathematica}) су били
-успешни у доказивању да су свих девет полинома једнаки нули. Систем
-\emph{GeoProver} није био успешан и након $0.481$ секунде пријавио је
-грешку да је досегао предвиђени меморијски лимит због полинома који
-има 3339 монома (енг.~ \emph{Space limit exceeded in pseudo
-  division. Obtained polynomial with 3339 terms}). Просечно време
-потребно за доказ да су полиноми који проверавају да ли има пресека
-једнаки нули је у систему \emph{GeoProver} је $0.377$ секунду.
-
-Коришћењем другог приступа, број добијених полинома је $28$ и један
-полином за који је потребно доказати да је нула, број променљивих је
-$32$. Након сређивања и анализе полинома пресека добија се $24$
-полинома и два полинома за које је потребно доказати да су нула и $24$
-различите променљиве. У овом приступу $18$ полинома је било
-једноставно и састојало се из два монома, док је преосталих $6$
-полинома комплексније и састоје се у просеку од $8$ монома. Оба
-алгебарска доказивача (\emph{GeoProver} и метод Гребнерових база
-имплементираних у систему \emph{Mathematica}) су били успешни у
-доказивању да су свих девет полинома једнаки нули. Време потребно за
-доказ да је полином који проверава да ли има пресека једнак нули је у
-систему \emph{GeoProver} једнака $0.081$ секунду, а време за доказ да
-је полином који проверава једнакост углова једнак нули у систему
-\emph{GeoProver} је $0.835$ секунде.
-
-\begin{table}[hb]
-\begin{center}
-\begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{2cm}|R{1.5cm}}
-\                   &  број полинома & број полинома доказа & просечан број монома & број променљивих & време \\
-\hline
-\hline
-\textbf{први приступ} & $24$ & $4$ & $7.2$ & $18$ & \emph{Меморијски лимит} \\
-\hline
-\textbf{други приступ} & $24$ & $2$ & $3.5$ & $24$ & $0.835s$
-\end{tabular}
-\caption{Упоредни приказ успешности алгебризације у односу на изабрани приступ}
-\end{center}
-\end{table}
 
 
-Оно што се може приметити након ова два једноставна примера је да први
-пруступ генерише мање променљивих, али да други приступ генерише
-једноставније полиноме. Како ће се показати даљим тестирањем,
-коришћеним алгебарским доказивачима више одговара када су полиноми
-једноставнији и зато су били успешнији када је коришћен други приступ.
 
-
-\paragraph{Резултати методе Гребнерових база имплементираних у систему \emph{Mathematica}}
-Метод Гребнерових база када је коришћен први приступ над $29$ проблема
-је био успешан $23$ пута и није докaзао тврђења након $5$ минута за $6$
-посматраних проблема.
-
-Када је коришћен метод Гребнерових база али када је алгебризација
-рађена другим приступом, метод Гребнерових база је био успешан у свих
-$29$ посматраних проблема.
-
-
-\paragraph{Резултати система \emph{GeoProver}}
-Систем \emph{GeoProver} када је коришћен први приступ је био успешан
-само $13$ пута. У различитим проблемима долазило је до различитих
-грешака због којих није успешно доказ завшен: достигнут је временски
-лимит (енг.~\emph{Time limit reached.}), достигнут је меморијски лимит
-(енг.~\emph{Space limit reached.}) или се догодила генерална грешка
-(енг.~\emph{General error occured.}). Последња грешка означава да
-доказивач није био у могућности да направи троугаони систем
-једначина. То, на даље значи да је потребно додатно истражити ову
-ситуацију и потенцијално изменити улазне полиноме да би се ова грешка
-избегла. Ипак, за сада нисмо у могућности да овакво понашење спречимо
-јер ако се током тријангулације појави полином $0=0$ доказивач ће
-пријавити грешку. У почетном систему је лако могуће регистровати да ли
-такав полином постоји, али није лако могуће одредити да ли ће се у
-процесу тријангулације такав полином створити јер је потребно испитати
-односе међу датим променљивима и задатим полиномима, што је доста
-комплексно питање.
-
-Коришћењем другог приступа у алгебризацији, систем \emph{GeoProver} је
-био нешто успешнији, од $29$ посматраних проблема, систем је био
-успешан $22$ пута. Грешке због којих није успео да заврши доказе су:
-времески лимит је досегнут или се догодила генерална грешка.
-
-\begin{table}[hb]
-\begin{center}
-\begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{2cm}}
-\                      & \emph{GeoProver} успех & \emph{GeoProver} неуспех & \emph{Гребнерове базе} успех & \emph{Гребнерове базе} неуспех \\
-\hline
-\hline
-\textbf{први приступ}  &  $13$                  & $16$                     &  $23$                        & $6$  \\
-\hline
-\textbf{други приступ} &  $22$                  & $7$                      &  $29$                        & $0$ \\
-\end{tabular}
-
-\caption{Упоредни приказ успешности доказивача и приступа алгебризације}
-\end{center}
-\end{table}
 \end{comment}
