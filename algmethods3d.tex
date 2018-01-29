@@ -442,32 +442,40 @@ appendix). \marginpar{dodati url}
 
 \subsection{Representation of basic objects -- points, lines and planes}
 One of the first questions in the algebraization process is what
-objects of 3d geometry are basic and what variables are used to
-express geometric relations. We shall consider two different
-approaches. In both approaches, each kind of object is represented by
-some tuple of parameters (we shall see that these could have either
-symbolic, or numeric values).
+objects of 3d geometry are basic and can be used in our statements and
+what variables are used to express geometric relations. We shall
+consider two different approaches. In both approaches, each kind of
+object is represented by some tuple of parameters (we shall see that
+these could have either symbolic, or numeric values).
 
 In the first approach points are the only basic objects and all other
 objects are defined using only points (e.g., lines are defined by two
 different points, and planes are defined as three different,
-non-colinear points). The only variables used in polynomials are
-coordinates of the points.
+non-colinear points). For example, instead of lines, one must always
+use pairs of points. For example, the fact that the point $A$ belongs
+to the line $PQ$, is expressed by the relation $incident\ A\ P\ Q$.
+The only variables used in polynomials are coordinates of the points.
 
-In the second approach, all types of objects are represented using
-their own parameters (e.g., a line is defined by the coordinates of
-its one point, and the coordinates of its direction vector, and a
-plane is defined by the coefficients of the plane equation -- the
-coordinates of its normal vector, and its displacement wrt.~the
-origin). Polynomials can include variables for all those
+In the second approach, all three types of objects are allowed. For
+example, statements can explicitly mention lines and $incident\ A\ l$
+expressed that the point $A$ belongs to the line $l$. All objects are
+represented using their own parameters (e.g., a line is defined by the
+coordinates of its one point, and the coordinates of its direction
+vector, and a plane is defined by the coefficients of the plane
+equation -- the coordinates of its normal vector, and its displacement
+wrt.~the origin). Polynomials can include variables for all those
 parameters.
 
-We shall show how to encode relations using both of these approaches,
-and shall compare their efficiency.
+Note that we could also allow using lines and planes in the first
+approach, as a syntactic sugar. Although the user can use them in the
+relations, the system internally maps all line names to pairs of
+points and plane names to triple of points and encodes all relations
+as polynomial equations over only the coordinates of points.
+
+We shall show describe how to encode relations using both of these
+approaches, and shall compare their efficiency.
 
 \paragraph{Points and vectors}
-
-
 Points will have three parameters, representing their
 coordinates. They will be denoted by superscripts $({\_}^x, {\_}^y,
 {\_}^z)$. For example, point $A$ will be parametrized by the triple of
@@ -551,6 +559,9 @@ involved in it. For example, for the relation \mbox{{\tt congruent}
 their symbolic or numeric parameters: $(a^x, a^y, a^z)$, $(b^x, b^y,
 b^z)$, $(c^x, c^y, c^z)$ and $(d^x, d^y, d^z)$.
 
+We start with some relations that involve only points, and therefore
+are equally encoded using both approaches.
+
 \begin{description}
 % ------------------------
 \item[$\triangleright$] {\tt equal\_points} $A$ $B$ --- two points $A$
@@ -564,7 +575,8 @@ b^z)$, $(c^x, c^y, c^z)$ and $(d^x, d^y, d^z)$.
     $A^z - B^z = 0$
   \end{tabbing}
 
-\marginpar{Zar nije ovde bolje samo uvesti iste simbolicke promenljive i uvrstiti nego uvoditi nove polinome?}  
+\marginpar{Zar nije ovde bolje samo uvesti iste simbolicke promenljive
+  i uvrstiti nego uvoditi nove polinome?}
   
 % ------------------------
 
@@ -609,46 +621,116 @@ $2m^z - a^z - b^z = 0$
 \end{tabbing}
 
 % ------------------------
-\item[$\triangleright$] {\tt point\_segment\_ratio} $M$ $A$ $B$ $p$
-  $q$ --- checks weather the point $M$ divides segment determined by
-  points $A$ and $B$ in ratio determined by $p$ and $q$,
-  e.g. $\frac{|MA|}{|MB|} = \frac{p}{q}$.
+\item[$\triangleright$] {\tt point\_segment\_ratio} $M$ $A$ $B$ $m$
+  $n$ --- checks weather the point $M$ divides segment determined by
+  points $A$ and $B$ in ratio determined by $m$ and $n$,
+  e.g. $\frac{|MA|}{|MB|} = \frac{m}{n}$.
+\marginpar{Ovo zapravo znaci da su segmenti $MA$ i $MB$ u odnosu $m$ prema $n$ -- deluje mi da je ovo visak.}
 
 {\em Polynomials:} The three polynomial equations derived from
-$q\cdot \overrightarrow{MA} = p\cdot \overrightarrow{MB}$.
+$n\cdot \overrightarrow{MA} = m\cdot \overrightarrow{MB}$.
 
 {\em Explanation:} Note that {\tt is\_midpoint $M$ $A$ $B$} can be
 also written using this rule as {\tt point\_segment\_ratio} $M$ $A$
 $B$ $1$ $1$.
 
-% ------------------------
-\item[$\triangleright$] {\tt orthogonal\_4points} $A$ $B$ $C$ $D$ ---
-  the line determined by points $A$ and $B$ is orthogonal on the line
-  determined by points $C$ and $D$.
+\bigskip
 
-{\em Polynomials:} $\overrightarrow{AB} \cdot \overrightarrow{CD} = 0$
+Next we describe some relations that involve both points and lines (if
+the first approach is used, then lines are represented using pairs of
+distinct points, either explicitly by the user, or implicitly, by the
+system).
+
+\marginpar{Narednih nekoliko primera pokazuju opsti sablon --- kada
+  god imamo relaciju koja radi sa pravom, mozemo imati i odgovarajucu
+  relaciju koja koristi dve tacke -- relacija sa pravom se u prvom
+  pristupu onda svodi na tu varijantu sa tackama, dok u drugom
+  pristupu ne mora. Mislim da to treba jednom prodiskutovati, a onda
+  kasnije preskociti da uvodimo duple varijante.}
 
 % ------------------------
-\item[$\triangleright$] {\tt orthogonal\_lines} $p$ $q$ --- the lines $p$ and $q$ are orthogonal.
+\item[$\triangleright$] {\tt incident} $A$ $P$ $Q$ --- point $A$ belongs
+  to the line $P$ $Q$.
+
+{\em Polynomials:} The three polynomials are derived from
+$\overrightarrow{PQ} \times \overrightarrow{Al_A} = 0$.
+
+\item[$\triangleright$] {\tt incident} $A$ $l$ --- point $A$ belongs
+  to the line $l$.
+
+{\em Polynomials:} If the first approach is used, then this reduces to
+$incident\ A\ l_A\ l_B$ described above. If the second approach is
+used, then the three polynomials are derived from
+$\overrightarrow{l_v} \times \overrightarrow{Al_A} = 0$.
+
+\marginpar{Premestiti celu ovu diskusiju u gornji slucaj A P Q -- isto
+  vazi tamo, samo malo formule treba prilagoditi.} Note that although
+there are three polynomial equations, one can always be derived from
+the other two. For example, if the second approach is used, the three
+polynomials are:
+
+\begin{eqnarray*}
+  poly_1 = (A^y - l_A^y)\cdot l_v^z - (A^z - l_A^z)\cdot l_v^y = 0\\
+  poly_2 = (A^z - l_A^z)\cdot l_v^x - (A^x - l_A^x)\cdot l_v^z = 0\\
+  poly_3 = (A^x - l_A^x)\cdot l_v^y - (A^y - l_A^y)\cdot l_v^x = 0
+\end{eqnarray*}
+
+Then it holds that $l_v^x \cdot poly_1 + l_v^y \cdot poly_2 + l_v^z
+\cdot poly_3 = 0$. If $l_v^z \neq 0$, then $poly_1 = 0$ and $poly_2 =
+0$ imply that $poly_3 = 0$. However, if $l_v^z = 0$, then $poly_1 =
+0$, and $poly_2 = 0$ only imply that $A^z = l_A^z$, and it need not
+automatically hold that $poly_3 = 0$. Generally, one of the
+coefficients $l_v^x$, $l_v^y$ and $l_v^z$ must different from zero (as
+the line director vector must be nonzero) and that determines the two
+equations which imply the third, but since these three coefficients
+are symbollic, we always explicitly check all three equations.
+\marginpar{Ovo je osnova svih onih kasnijih problema sa viskom
+  jednacina}
+
+Note that if the relation $incident\ A\ l$ occurs in the assumptions
+of the theorem, then, due to the dependence of the three polynomials,
+some variants of the Wu's method might have problem in the
+triangulation phase (for example, GeoProver exibited this behaviour).
+
+% ------------------------
+\item[$\triangleright$] {\tt intersection\_lines} $A$ $P$ $Q$ $M$ $N$
+  --- point $A$ is the intersection of lines $PQ$ and $MN$.
+
+  {\em Polynomials:} Six polynomials are derived from the conditions
+$incident\ A\ l_1$ and $incident\ A\ l_2$.
+
+Note again that the first three and the second three polynomials are
+dependent, so Wu's method might again have problems triangulating the
+system, and in those cases two out of six polynomials must be
+excluded.
+
+\item[$\triangleright$] {\tt intersection\_lines} $A$ $l_1$ $l_2$ ---
+  point $A$ is the intersection of lines $l_1$ and $l_2$.
+
+  {\em Polynomials:} If the first approach is used then this reduces
+  to $incident\ A\ l_A\ l_B\ m_A\ m_B$. If the second approach is
+  used, six polynomials are derived from the conditions
+  $incident\ A\ l_1$ and $incident\ A\ l_2$.
+
+
+\item[$\triangleright$] {\tt orthogonal\_lines} $A$ $B$ $C$ $D$ ---
+  the line $AB$ is orthogonal on the line $CD$.
+
+{\em Polynomials:} A polynomial derived from $\overrightarrow{AB}
+\cdot \overrightarrow{CD} = 0$
+
 \marginpar{Dodati pricu o proveri mimoilaznosti}
 
-{\em Polynomials:} If the first approach is used, then the lines are
-given by the points $(p_A, p_B)$ and $(q_A, q_B)$, so this reduces to
-the previous case and the polynomial is
-$\overrightarrow{p_Ap_B} \cdot \overrightarrow{q_Aq_B} = 0$. If the
-second approach is used, the direction vectors of the lines are given
-as the input, and the polynomial is
-$\overrightarrow{p_v} \cdot \overrightarrow{q_v} = 0.$
-
 % ------------------------
-\item[$\triangleright$] {\tt incident} $A$ $p$ --- point $A$ belongs
-  to the line $p$.
+\item[$\triangleright$] {\tt orthogonal\_lines} $l$ $m$ --- the lines
+  $l$ and $m$ are orthogonal.
 
-{\em Polynomials:} If the first approach is used, then the three
-polynomials are derived from
-$\overrightarrow{p_Ap_B} \times \overrightarrow{Ap_A} = 0$. If the
-second approach is used, then the three polynomials are derived from
-$\overrightarrow{p_v} \times \overrightarrow{Ap_A} = 0.$
+{\em Polynomials:} If the first approach is used, then the lines are
+given by the points $(l_A, l_B)$ and $(l_A, l_B)$, so this reduces to
+the previous case of $orthogonal\_lines\ l_A\ l_B\ m_A\ m_B$. If the
+second approach is used, the direction vectors of the lines are given
+as the input, and the polynomial is $\overrightarrow{l_v} \cdot
+\overrightarrow{m_v} = 0$.
 
 % ------------------------
 \item[$\triangleright$] {\tt parallel\_lines} $p$ $q$ --- lines $p$
@@ -808,58 +890,46 @@ coordinates $({A}^x, {A}^y, {A}^z)$, and a constructed line $l$ will
 have symbolic parameters (${l}^{v_x}, {l}^{v_y}, {l}^{v_z}, {l}^{p_x},
 {l}^{p_y}, {l}^{p_z}$).
 
+Construction steps correspond to functions of the form $o = f(i_1,
+\ldots, i_n)$, where $o$ is the constructed (output) object and $i_1$,
+\ldots, $i_n$ are the input objects (either free or dependent,
+described by either numeric or symbolic parameters). In most cases the
+algebraization introduces new fresh parameters for the object $o$, and
+then constructs the polynomials based on the relation $R(i_1, \ldots,
+i_n, o)$, where $R$ is the relation corresponding to the function $f$.
+For example, constructing the midpoint $m = midpoint\ A\ B$, reduces
+to introducing variables $m_x$ and $m_y$ and constructing polynomials
+from the condition $is\_midpoint\ m\ A\ B$. \marginpar{Razmisliti sta
+  se desava ako su $A$ i $B$ tacke sa numerickim koordinatama. Da li
+  tada uvodimo i numericke koordinate za $m$? Da li to radimo odmah
+  ili u posebnoj fazi simplifikacije?} However, in some construction
+steps we can introduce less parameters, and we describe those cases.
 
 \paragraph{Constructions of points}
 
-Next we shall describe some example construction steps and their
-corresponding polynomials. Each construction step yields a new
-point. Its name will be given by the first argument of the
-construction step (e.g., {\tt midpoint} $M$ $A$ $B$ constructs the
-point $M$ using given points $A$ $B$). In each such construction step,
-it is assumed that the symbolic parameters of given objects are
-already known, and the symbolic coordinates of the resulting point are
-introduced (as fresh variables).
+Its name will be given by the first argument of the construction step
+(e.g., {\tt midpoint} $M$ $A$ $B$ constructs the point $M$ using given
+points $A$ $B$). In each such construction step, it is assumed that
+the numeric or symbolic parameters of given objects are already known,
+and the symbolic coordinates of the resulting point are introduced (as
+fresh variables).
 
 \begin{description}
 
 % ------------------------
-\item[$\triangleright$] {\tt point} $A$ \\
-  {\em Description:} This step introduces a free point $A$.\\
-  {\em Input:} none\\
+\item[$\triangleright$] {\tt point} $A$ --- introduces a free point $A$.
   {\em Objects and parameters:} A point $A$ with the three fresh parameters
   $(A_x, A_y, A_z)$ \\
   {\em Polynomials:} no polynomials are generated. \\
 
 % ------------------------
-\item[$\triangleright$] {\tt point\_ratio} $M$ $A$ $B$ $p$ $q$ 
-
-  {\em Description:} Construction of a point that divides a segment in
-  a given ratio, i.e., for two given points $A$ and $B$ (these could
-  be either free or dependent points), and two integer numbers $p$ and
-  $q$, this step constructs the point $M$ so that
+\item[$\triangleright$] {\tt point\_ratio} $M$ $A$ $B$ $p$ $q$ ---
+  construction of a point that divides a segment in a given ratio,
+  i.e., for two given points $A$ and $B$, and two integer numbers $p$
+  and $q$, this step constructs the point $M$ so that
   $\frac{|AM|}{|BM|} = \frac{p}{q}$ holds.
 
-  \marginpar{mislim da nema potrebe svuda stavljati "Input" i
-    "Output". Mozda u prvom primeru objasniti, ali deluje redudatno da
-    se svuda stavlja jer ce citaocu iz opisa biti jasno sta su dati, a
-    sta novi objekti, a ranije je receno da kada kazemo dat je novi
-    objekat da to znaci date su njegove koordinate. Ili dat je novi
-    objekat, znaci uvode se nove koordinate za taj objekat. Mislim da
-    je suvisno svuda pisati "ulaz", "izlaz".}
-
-  {\em Input:} Two given points $A$ and $B$ with symbolic
-  coordinates $(a^x, a^y, a^z)$ and $(b^x, b^y, b^z)$.
-
-  {\em Objects and parameters: } The point $M$ with three fresh
-  symbolic coordinates $(m^x, m^y, m^z)$.
-
-\begin{tabbing}
-{\em Polynomials:} \= $poly_1 = p\cdot m^x + q\cdot m^x - p\cdot b^x - q\cdot a^x$ \\
-                   \> $poly_2 = p\cdot m^y + q\cdot m^y - p\cdot b^y - q\cdot a^y$ \\
-                   \> $poly_3 = p\cdot m^z + q\cdot m^z - p\cdot b^z - q\cdot a^z$ 
-\end{tabbing}
-
-{\em Explanation:} {\tt point\_ratio} $M$ $A$ $B$ $p$ $q$ = {\tt point\_segment\_ratio} $M$ $A$ $B$ $p$ $q$
+  {\tt point\_ratio} $M$ $A$ $B$ $p$ $q$ = {\tt point\_segment\_ratio} $M$ $A$ $B$ $p$ $q$
 
 {\em Note:} Note that {\tt midpoint} is a special case of this
 construction, e.g. it is possible to determine midpoint in the
@@ -867,9 +937,8 @@ following way \mbox{{\tt point\_ratio} $M$ $A$ $B$ $1$ $1$}. However,
 we also support the \mbox{{\tt midpoint} $M$ $A$ $B$} construction.
 
 % ------------------------
-\item[$\triangleright$] {\tt intersection\_lines} $A$ $l_1$ $l_2$
-
-  {\em Description:} This construction introduces the point $A$ that is
+\item[$\triangleright$] {\tt intersection\_lines} $A$ $l_1$ $l_2$ ---
+  this construction introduces the point $A$ that is
   the intersection of the two given lines $l_1$ and $l_2$.
 
   {\em Input:} The two given lines $l_1$ and $l_2$ with parameters
@@ -882,6 +951,7 @@ we also support the \mbox{{\tt midpoint} $M$ $A$ $B$} construction.
 
   {\em Polynomials:} We generate polynomials using rule:
   {\tt intersection\_lines} $A$ $l_1$ $l_2$ = {\tt incident} $A$ $l_1$ and {\tt incident} $A$ $l_2$
+
 
 \begin{tabbing}
 {\em Polynomials for Wu's method:} \= $poly_1 = a^x - k_1\cdot l_1^{v_x} - l_1^{p_x}$ \\
@@ -928,12 +998,10 @@ instead of just deleting this last polynomial, is should be put it in
 the conclusion set.
 
 % ------------------------
-\item[$\triangleright$] {\tt intersection\_4points} $M$ $A$ $B$ $C$ $D$
-
-  {\em Description:} For four given point $A$, $B$, $C$ and $D$
-  determine the point $M$ which is intersection of line determined
-  by points $A$ and $B$ and line determined by points $C$ and
-  $D$. This is very similar to the construction we described above.
+\item[$\triangleright$] {\tt intersection\_4points} $M$ $A$ $B$ $C$
+  $D$ --- for four given point $A$, $B$, $C$ and $D$ determine the
+  point $M$ which is intersection of line determined by points $A$ and
+  $B$ and line determined by points $C$ and $D$.
 
   {\em Input:} Four points $A$, $B$, $C$ and $D$ with symbolic
   coordinates $(a^x, a^y, a^z)$, $(b^x, b^y, b^z)$, $(c^x, c^y, c^z)$
