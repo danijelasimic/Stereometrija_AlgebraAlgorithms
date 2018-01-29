@@ -354,8 +354,7 @@ simple method of Wu is not complete (in algebraic sense) and
 sometimes the result of applying method is indecisive, i.e. the
 theorem can't be proved nor disproved. A more complex and complete
 version of the method uses ascending chains which are considered in
-the Ritt-Wu principle.
-\marginpar{Dodati referencu za Ritt-Wu}
+the Ritt-Wu principle (\cite{ritt}).
 
 \paragraph{Gr\"obner basis method}
 
@@ -369,10 +368,9 @@ polynomial describing relation to be proved, $g_j$ with $G$. If the
 result of division is $0$ then statement is proved, otherwise is
 disproved.
 
-For calculating Gr\"obner basis is used Buchberger's algorithm witch
-transforms a given set of polynomials into a Gr\"obner basis with
-respect to some monomial order using B-reduction.
-\marginpar{Dodati referencu na Buchbergerov algoritam}
+For calculating Gr\"obner basis is used Buchberger's algorithm
+(\cite{buchberger}) witch transforms a given set of polynomials into a
+Gr\"obner basis with respect to some monomial order using B-reduction.
 
 \subsection{Implementations of algebraic methods}
 
@@ -472,7 +470,7 @@ relations, the system internally maps all line names to pairs of
 points and plane names to triple of points and encodes all relations
 as polynomial equations over only the coordinates of points.
 
-We shall show describe how to encode relations using both of these
+We shall describe how to encode relations using both of these
 approaches, and shall compare their efficiency.
 
 \paragraph{Points and vectors}
@@ -577,7 +575,14 @@ are equally encoded using both approaches.
 
 \marginpar{Zar nije ovde bolje samo uvesti iste simbolicke promenljive
   i uvrstiti nego uvoditi nove polinome?}
-  
+\marginpar{Danijela odogovor: Smatram da ne. Naime, mi ovu relaciju
+  koristimo da dokazemo da su dve tacke jednake. Samim tim, mi imamo
+  tacku $A$ i tacku $B$ o treba da se pokaze (primenom metoda) da su
+  ovi polinomi 0 --- oni idu u set za zakljucivanje. Sa druge strane,
+  da ja koristim ovu equal\_points da napravim novu tacku, onda bih
+  uzela iste simbolicke koordinate i samo ih dodelila, recimo, tacki
+  $B$ (ali nekako nema poente praviti novu tacku istih koordinata, pa
+  ovo i ne koristimo za konstrukciju, vec samo za dokaze). }
 % ------------------------
 
 \item[$\triangleright$] {\tt congruent} $A$ $B$ $C$ $D$ --- Two
@@ -626,6 +631,7 @@ $2m^z - a^z - b^z = 0$
   points $A$ and $B$ in ratio determined by $m$ and $n$,
   e.g. $\frac{|MA|}{|MB|} = \frac{m}{n}$.
 \marginpar{Ovo zapravo znaci da su segmenti $MA$ i $MB$ u odnosu $m$ prema $n$ -- deluje mi da je ovo visak.}
+\marginpar{Danijela: Slazem se. Ovo se jako cesto javlja pa sam ja izdvojila u posebnu konstrukciju. Mislim da moze da ostane, ali da ide u appendix svakako.}
 
 {\em Polynomials:} The three polynomial equations derived from
 $n\cdot \overrightarrow{MA} = m\cdot \overrightarrow{MB}$.
@@ -647,6 +653,9 @@ system).
   pristupu onda svodi na tu varijantu sa tackama, dok u drugom
   pristupu ne mora. Mislim da to treba jednom prodiskutovati, a onda
   kasnije preskociti da uvodimo duple varijante.}
+\marginpar{Danijela: Da, slazem se. Varijata sa tackama je uvedene jer
+  se opet jako cesto javlja u zadacima, ali su polinomi prakticno
+  isti.}
 
 % ------------------------
 \item[$\triangleright$] {\tt incident} $A$ $P$ $Q$ --- point $A$ belongs
@@ -717,9 +726,13 @@ excluded.
   the line $AB$ is orthogonal on the line $CD$.
 
 {\em Polynomials:} A polynomial derived from $\overrightarrow{AB}
-\cdot \overrightarrow{CD} = 0$
+\cdot \overrightarrow{CD} = 0$.
 
-\marginpar{Dodati pricu o proveri mimoilaznosti}
+However, this conditions is not enough since it is only checked
+weather the appropriate vectors of the lines are orthogonal but lines
+itself could be skew. So, one more condition must be added in order to
+ensure that lines really intersect: $\overrightarrow{AC} \times
+(\overrightarrow{AB} \cdot \overrightarrow{CD} = 0$
 
 % ------------------------
 \item[$\triangleright$] {\tt orthogonal\_lines} $l$ $m$ --- the lines
@@ -730,7 +743,9 @@ given by the points $(l_A, l_B)$ and $(l_A, l_B)$, so this reduces to
 the previous case of $orthogonal\_lines\ l_A\ l_B\ m_A\ m_B$. If the
 second approach is used, the direction vectors of the lines are given
 as the input, and the polynomial is $\overrightarrow{l_v} \cdot
-\overrightarrow{m_v} = 0$.
+\overrightarrow{m_v} = 0$. Similarly for intersection condition,
+polynomial are derived from $\overrightarrow{m_Am_B} \times
+(\overrightarrow{l_v} \cdot \overrightarrow{m_v}) = 0$.
 
 % ------------------------
 \item[$\triangleright$] {\tt parallel\_lines} $p$ $q$ --- lines $p$
@@ -745,31 +760,42 @@ approach.
 \item[$\triangleright$] {\tt parallel\_planes} $\alpha$ $\beta$ ---
   planes $\alpha$ and $\beta$ are parallel.
 
-{\em Polynomials:} If the second approach is used, the three
-polynomials are derived from
-$\overrightarrow{\alpha_v} \times \overrightarrow{\beta_v} = 0.$
-
-\marginpar{Ovde obavezno razjasniti i prvi pristup.}
-
-% Videti da li je moguce dobiti malo manje polinome ako se prvi pristup
-% ne primenjuje na isti nacin kao drugi.
-
-% Ovde raspisati da bi se videlo kako su ovi polinomi orgromni i ruzni
+{\em Polynomials:} If the first approach is used, polynomials are
+derived from:
 
 $$\overrightarrow{\beta_A\beta_B}\cdot \overrightarrow{\alpha_A\alpha_C} \times \overrightarrow{\alpha_B\alpha_A} = 0$$
 $$\overrightarrow{\beta_A\beta_C}\cdot \overrightarrow{\alpha_A\alpha_C} \times \overrightarrow{\alpha_A\alpha_B} = 0$$
 
-$$(\overrightarrow{\beta_A\beta_C}\times\overrightarrow{\beta_A\beta_B}) \times (\overrightarrow{\alpha_A\alpha_C} \times \overrightarrow{\alpha_A\alpha_B}) = 0$$
+These two equations are derived from conditions that vectors of lines
+in $\beta$ plane are orthogonal to the vector determine the plane
+$\beta$. Since $\beta$ and $\alpha$ should be parallel, vectors of
+lines in $\beta$ should be orthogonal to the vector determine plane
+$\alpha$, e.g. to the $\overrightarrow{\alpha_A\alpha_C} \times
+\overrightarrow{\alpha_B\alpha_A}$. However, polynomials gained from
+these equations are quite complex (which we shall see is important
+property for algebraic theorem provers). For example, first polynomial
+is:
+$$(\beta_{A_X} - \beta_{B_X})(\alpha_{A_y} - \alpha_{B_y})(\alpha_{A_z} - \alpha_{C_z}) + (\alpha_{A_x} - \alpha_{B_x})(\alpha_{A_y} - \alpha_{C_y})(\beta_{A_z} - \beta_{B_z}) +$$
+$$(\beta_{A_x} - \beta_{B_y})(\alpha_{A_z} - \alpha_{B_z})(\alpha_{A_x} - \alpha_{C_x}) - (\beta_{A_z} - \beta_{B_z})(\alpha_{A_y} - \alpha_{B_y})(\alpha_{A_x} - \alpha_{C_x}) -$$
+$$(\alpha_{A_z} - \alpha_{B_z})(\alpha_{A_y} - \alpha_{C_y})(\beta_{A_x} - \beta_{B_x}) - (\beta_{A_x} - \beta_{B_y})(\alpha_{A_x} - \alpha_{B_x})(\alpha_{A_z} - \alpha_{C_z}) = 0$$
+
+If the second approach is used, the three polynomials are derived from
+$\overrightarrow{\alpha_v} \times \overrightarrow{\beta_v} = 0.$
+For the comparison, one of the polynomials derived using this approach is:
+$$\alpha_{v_y}\beta_{v_z} - \alpha_{v_z}\beta_{v_y} = 0$$
 
 
 % ------------------------
 \item[$\triangleright$] {\tt orthogonal\_planes} $\alpha$ $\beta$ ---
   checks weather two planes, $\alpha$ and $\beta$ are orthogonal.
 
-{\em Polynomials:}
-\marginpar{Dopunitii}
-If the first approach is used ....
-If the second approach is used, the polynomial
+{\em Polynomials:} If the first approach is used, the polynomial is
+derived from $(\overrightarrow{\alpha_A\alpha_B} \times
+\overrightarrow{\alpha_A\alpha_B}) \cdot
+(\overrightarrow{\beta_A\beta_B} \times
+\overrightarrow{\beta_A\beta_B}) = 0$.
+
+If the second approach is used, the polynomial is
 $\overrightarrow{\alpha_v} \cdot \overrightarrow{\beta_v} = 0$.
 
 % ------------------------
@@ -786,7 +812,8 @@ $\overrightarrow{\pi_v} \cdot \overrightarrow{A} + \pi^{d} = 0$.
   line $p$ and plane $\alpha$ are parallel.
 
 {\em Polynomials:} 
-If the first approach is used ...
+If the first approach is used, then the polynomial is
+$\overrightarrow{p_Ap_B} \cdot (\overrightarrow{\alpha_A\alpha_B \times \alpha_A\alpha_C}) = 0$.
 If the second approach is used, then polynomial
 $\overrightarrow{p_v} \cdot \overrightarrow{\alpha_v} = 0$.
 
@@ -796,16 +823,55 @@ $\overrightarrow{p_v} \cdot \overrightarrow{\alpha_v} = 0$.
 \item[$\triangleright$] {\tt orthogonal\_line\_plane} $p$ $\alpha$ ---
   the line $p$ and plane $\alpha$ are orthogonal.
 
-{\em Polynomials:} If the first approach is used ...
+{\em Polynomials:} If the first approach is used polynomials are
+derived from $\overrightarrow{p_Ap_B} \cdot
+\overrightarrow{\alpha_A\alpha_B} = 0$ and $\overrightarrow{p_Ap_B}
+\cdot \overrightarrow{\alpha_A\alpha_C} = 0$.
 
 If the second approach is used the three polynomials
 $\overrightarrow{p_v} \times \overrightarrow{\alpha_v} = 0$.
 
-\marginpar{Dodati pravila za uglove}
+% ------------------------
+\item[$\triangleright$] {\tt line\_in\_plane} $l$ $\alpha$ --- the $l$
+  is in the plane $\alpha$.
+
+
+{\em Polynomials:} If the first approach is used polynomials are
+derived from two conditions {\tt point\_in\_plane} $l_A$ $\pi$ and
+{\tt point\_in\_plane} $l_B$ $\pi$.
+
+If the second approach is used, polynomials are derived from {\tt
+  point\_in\_plane} $l_A$ $\pi$ and {\tt orthogonal\_line\_plane} $l$
+$\alpha$.
+
+% ------------------------
+\item[$\triangleright$] {\tt equal\_angles} $A$ $O$ $B$ $C$ $K$ $D$ --- angles $\angle AOB$ and $\angle
+CKD$ are equal.
+
+{\em Polynomials:} Polynomials for this condition could be derived
+using trigonometry condition:
+$$\cos^2{\angle AOB} = \cos^2{\angle CKD}$$
+
+However, the condition is weakened since squares of cosines are
+compared and squares of accute and obtuse angle could be same although
+angles itself are not equal. Square of the cosine could be determined as following:
+$$\cos^2{\angle AOB} = \frac{(\overrightarrow{AO}\cdot
+  \overrightarrow{BO})^2}{|AO|^2|BO|^2}$$ where $|AO|^2 =
+\overrightarrow{AO}\cdot \overrightarrow{AO}$.  Polynomial equation
+for $\cos^2{\angle CKD}$ is similar. Finally, using several algebraic
+equations polynomial is derived from
+$$(\overrightarrow{AO}\cdot  \overrightarrow{BO})^2|CK|^2|DK|^2 = (\overrightarrow{CK}\cdot  \overrightarrow{DK})^2|AO|^2|BO|^2.$$
+
+We shall see in the following chapter that polynomial derived from
+this equation is quite complex and challenging for algebraic theorem
+provers and it had to be dissembled onto more simpler ones.
+
 \marginpar{Dodati pravila za pravilne objekte (tetraedar npr.)}
+\marginpar{Danijela: Ima dole, u construction rules}
 \end{description}
 
 \section{Simplification of polynomials (needed for Wu's method)}
+\marginpar{Danijela: ja bih ovo poglavlje pomerila na kraj.}
 \label{simplification}
 
 The first problem when applying GeoProver onto generated sets of
@@ -1364,6 +1430,15 @@ it lies in the middle of the square, so $s^x = s^y =
                    \> $poly_3 = a_4^y - 3$ \\
                    \> $poly_4 = 2a_6^x - 1$
 \end{tabbing}
+
+
+% ------------------------
+\marginpar{Razmisliti da li ovo dodati, nisam ga implementirala za pristup 2, takodje, mozda bolje premestiti posle sfere}
+\item[$\triangleright$] {\tt point\_on\_sphere} $A$ $\mathcal{S}$ --- point $A$
+  belongs to the sphere $\mathcal{S}$.
+
+{\em Polynomials:} 
+
 
 \end{description}
 
