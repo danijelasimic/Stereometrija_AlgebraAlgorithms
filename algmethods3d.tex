@@ -856,7 +856,7 @@ However, the condition is weakened since squares of cosines are
 compared and squares of accute and obtuse angle could be same although
 angles itself are not equal. Square of the cosine could be determined as following:
 $$\cos^2{\angle AOB} = \frac{(\overrightarrow{AO}\cdot
-  \overrightarrow{BO})^2}{|AO|^2|BO|^2}$$ where $|AO|^2 =
+  \overrightarrow{BO})^2}{4|AO|^2|BO|^2}$$ where $|AO|^2 =
 \overrightarrow{AO}\cdot \overrightarrow{AO}$.  Polynomial equation
 for $\cos^2{\angle CKD}$ is similar. Finally, using several algebraic
 equations polynomial is derived from
@@ -1710,7 +1710,53 @@ $x_5 = 0$ and $x_6 = 0$. So, this conditions $x_7 \neq 0$ enables that
 plane is well defined.
 \end{example}
 
-\begin{example}[Example from (\cite{arhzbirka})]
+\begin{example}[Example from (\cite{arhzbirka})] 
+Let $ABCDA_1B_1C_1D_1$ be a cube and let $S$ be the vertex of regular
+four side pyramid $ABCDS$ whose height is twice the size of the side
+of the cube. Prove that regular four side pyramid gained in the
+intersection of pyramid $ABCDS$ and cube $ABCDA_1B_1C_1D_1$ has base
+side twice the smaller than the size of the side of the cube.
+
+\begin{figure}[!h]
+\begin{center}
+\input{kocka_piramida.tkz}
+\end{center}
+\caption{Cube and pyramid intersection}
+\end{figure}
+
+Term representation of geometry statement is:
+\begin{footnotesize}
+{\tt
+\begin{tabbing}
+\hspace{5mm}\=\kill
+\> make\_cube $A$ $B$ $C$ $D$ $A_1$ $B_1$ $C_1$ $D_1$ \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
+
+\>intersection\_lines $M$ $A$ $C$ $B$ $D$ \> intersection\_lines $N$ $A_1$ $C_1$ $B_1$ $D_1$\\
+\>point\_ratio $S$ $M$ $N$ $2$ $1$\\ 
+
+\>line\_points $l$ $A$ $S$ \> line\_points $g$ $B$ $S$\\
+
+\>plane\_points $\alpha$ $A_1$ $B_1$ $C_1$\\
+
+\>intersection\_line\_plane $L$ $l$ $\alpha$ \>  intersection\_line\_plane $G$ $g$ $\alpha$ \\
+
+\>segments\_in\_ratio $L$ $G$ $A$ $B$ $1$ $2$
+\end{tabbing}
+}
+\end{footnotesize}
+
+Algebraic theorem provers proved this geometry conjecture. Derived NDG
+condition is $x_{21} \cdot x_{15} \cdot x_{13} + x_{20} \cdot x_{14}
+\cdot x_{13} + x_{19} \cdot x_{13}^2 \neq 0$. This condition can be
+dismantled into two conditions $x_{13} \neq 0$ and $x_{21} \cdot
+x_{15} + x_{20} \cdot x_{14} + x_{19} \cdot x_{13} \neq 0$. Now it had
+to be determined what geometry objects these variables determine and
+it happens to be line $l(x_{13}, x_{14}, x_{15})$ and plane
+$\alpha(x_{19}, x_{20}, x_{21}, x_{22})$.
+
+The second NDG condition ensures that line $l$ and plane $\alpha$
+are not parallel. If they were to be parallel, they would not
+intersect and there would be no point $L$. 
 \end{example}
 
 \section{Conclusion and future work}

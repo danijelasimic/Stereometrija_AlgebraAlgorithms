@@ -1,0 +1,83 @@
+% dimenzija slike
+dim 120 80
+
+%dimenzija koordinatnog sistema -- od koje tacke slike pocinje i gde sa zavrsava
+ang_picture 2 2 120 80
+
+% gde je pocetak koordinatnog pocetka, imajuci na umu dimenziju kanvasa
+ang_origin 3 3
+
+%velicina u milimetrima jednog koraka na koordinatnim osama
+% po default je 10
+
+ang_unit 12
+
+ang_point A 2 0.2
+ang_point A_1 2 3.2 
+ang_point B 5 0.2
+ang_point B_1 5 3.2
+
+ang_point D 3 1.2
+ang_point D_1 3 4.2
+ang_point C 6 1.2
+ang_point C_1 6 4.2
+
+ang_point S 4 6
+
+ang_point L 3.08 3.33
+ang_point G 4.46 3.33
+ang_point H 3.57 3.92
+ang_point F 4.87 3.92 
+
+drawsegment A B
+drawsegment B C
+drawdashsegment D C
+drawdashsegment A D
+
+
+drawsegment A A_1
+drawsegment B B_1
+drawsegment C C_1
+drawdashsegment D D_1
+
+drawsegment A_1 B_1
+drawsegment B_1 C_1
+drawsegment A_1 D_1
+drawsegment D_1 C_1
+
+
+
+cmark_b A
+cmark_b B
+cmark_b C
+cmark_b D
+
+cmark_l A_1
+cmark_rb B_1
+cmark_r C_1
+cmark_lt D_1
+
+
+cmark_r S
+
+cmark_l L
+cmark_rb G
+cmark_r F
+cmark_lt H
+
+
+color 0 0 250
+
+drawsegment A S
+drawsegment B S
+drawsegment C S
+drawsegment D S
+
+color 200 100 200
+
+drawsegment L G
+drawsegment G F
+drawdashsegment L H
+drawdashsegment H F
+
+

@@ -1,0 +1,176 @@
+\begin{tikzpicture}
+\clip (0,0) rectangle (12.000000,8.000000);
+{\footnotesize
+
+% Drawing segment A B
+\draw [line width=0.016cm] (2.740000,0.540000) -- (6.260000,0.540000);%
+
+% Drawing segment B C
+\draw [line width=0.016cm] (6.328284,0.568284) -- (7.471716,1.711716);%
+
+% Drawing segment D C
+\draw [line width=0.016cm] (3.940000,1.740000) -- (4.050000,1.740000);%
+\draw [line width=0.016cm] (4.125000,1.740000) -- (4.275000,1.740000);%
+\draw [line width=0.016cm] (4.350000,1.740000) -- (4.500000,1.740000);%
+\draw [line width=0.016cm] (4.575000,1.740000) -- (4.725000,1.740000);%
+\draw [line width=0.016cm] (4.800000,1.740000) -- (4.950000,1.740000);%
+\draw [line width=0.016cm] (5.025000,1.740000) -- (5.175000,1.740000);%
+\draw [line width=0.016cm] (5.250000,1.740000) -- (5.400000,1.740000);%
+\draw [line width=0.016cm] (5.475000,1.740000) -- (5.625000,1.740000);%
+\draw [line width=0.016cm] (5.700000,1.740000) -- (5.850000,1.740000);%
+\draw [line width=0.016cm] (5.925000,1.740000) -- (6.075000,1.740000);%
+\draw [line width=0.016cm] (6.150000,1.740000) -- (6.300000,1.740000);%
+\draw [line width=0.016cm] (6.375000,1.740000) -- (6.525000,1.740000);%
+\draw [line width=0.016cm] (6.600000,1.740000) -- (6.750000,1.740000);%
+\draw [line width=0.016cm] (6.825000,1.740000) -- (6.975000,1.740000);%
+\draw [line width=0.016cm] (7.050000,1.740000) -- (7.200000,1.740000);%
+\draw [line width=0.016cm] (7.275000,1.740000) -- (7.425000,1.740000);%
+
+% Drawing segment A D
+\draw [line width=0.016cm] (2.728284,0.568284) -- (2.806066,0.646066);%
+\draw [line width=0.016cm] (2.859099,0.699099) -- (2.965165,0.805165);%
+\draw [line width=0.016cm] (3.018198,0.858198) -- (3.124264,0.964264);%
+\draw [line width=0.016cm] (3.177297,1.017297) -- (3.283363,1.123363);%
+\draw [line width=0.016cm] (3.336396,1.176396) -- (3.442462,1.282462);%
+\draw [line width=0.016cm] (3.495495,1.335495) -- (3.601561,1.441561);%
+\draw [line width=0.016cm] (3.654594,1.494594) -- (3.760660,1.600660);%
+\draw [line width=0.016cm] (3.813693,1.653693) -- (3.871716,1.711716);%
+
+% Drawing segment A A_1
+\draw [line width=0.016cm] (2.700000,0.580000) -- (2.700000,4.100000);%
+
+% Drawing segment B B_1
+\draw [line width=0.016cm] (6.300000,0.580000) -- (6.300000,4.100000);%
+
+% Drawing segment C C_1
+\draw [line width=0.016cm] (7.500000,1.780000) -- (7.500000,5.300000);%
+
+% Drawing segment D D_1
+\draw [line width=0.016cm] (3.900000,1.780000) -- (3.900000,1.890000);%
+\draw [line width=0.016cm] (3.900000,1.965000) -- (3.900000,2.115000);%
+\draw [line width=0.016cm] (3.900000,2.190000) -- (3.900000,2.340000);%
+\draw [line width=0.016cm] (3.900000,2.415000) -- (3.900000,2.565000);%
+\draw [line width=0.016cm] (3.900000,2.640000) -- (3.900000,2.790000);%
+\draw [line width=0.016cm] (3.900000,2.865000) -- (3.900000,3.015000);%
+\draw [line width=0.016cm] (3.900000,3.090000) -- (3.900000,3.240000);%
+\draw [line width=0.016cm] (3.900000,3.315000) -- (3.900000,3.465000);%
+\draw [line width=0.016cm] (3.900000,3.540000) -- (3.900000,3.690000);%
+\draw [line width=0.016cm] (3.900000,3.765000) -- (3.900000,3.915000);%
+\draw [line width=0.016cm] (3.900000,3.990000) -- (3.900000,4.140000);%
+\draw [line width=0.016cm] (3.900000,4.215000) -- (3.900000,4.365000);%
+\draw [line width=0.016cm] (3.900000,4.440000) -- (3.900000,4.590000);%
+\draw [line width=0.016cm] (3.900000,4.665000) -- (3.900000,4.815000);%
+\draw [line width=0.016cm] (3.900000,4.890000) -- (3.900000,5.040000);%
+\draw [line width=0.016cm] (3.900000,5.115000) -- (3.900000,5.265000);%
+
+% Drawing segment A_1 B_1
+\draw [line width=0.016cm] (2.740000,4.140000) -- (6.260000,4.140000);%
+
+% Drawing segment B_1 C_1
+\draw [line width=0.016cm] (6.328284,4.168284) -- (7.471716,5.311716);%
+
+% Drawing segment A_1 D_1
+\draw [line width=0.016cm] (2.728284,4.168284) -- (3.871716,5.311716);%
+
+% Drawing segment D_1 C_1
+\draw [line width=0.016cm] (3.940000,5.340000) -- (7.460000,5.340000);%
+
+% Marking point A by circle
+\draw [line width=0.016cm] (2.700000,0.540000) circle (0.040000);%
+\draw (2.700000,0.540000) node [anchor=north] { $A$ };%
+
+% Marking point B by circle
+\draw [line width=0.016cm] (6.300000,0.540000) circle (0.040000);%
+\draw (6.300000,0.540000) node [anchor=north] { $B$ };%
+
+% Marking point C by circle
+\draw [line width=0.016cm] (7.500000,1.740000) circle (0.040000);%
+\draw (7.500000,1.740000) node [anchor=north] { $C$ };%
+
+% Marking point D by circle
+\draw [line width=0.016cm] (3.900000,1.740000) circle (0.040000);%
+\draw (3.900000,1.740000) node [anchor=north] { $D$ };%
+
+% Marking point A_1 by circle
+\draw [line width=0.016cm] (2.700000,4.140000) circle (0.040000);%
+\draw (2.700000,4.140000) node [anchor=east] { $A_1$ };%
+
+% Marking point B_1 by circle
+\draw [line width=0.016cm] (6.300000,4.140000) circle (0.040000);%
+\draw (6.270000,4.170000) node [anchor=north west] { $B_1$ };%
+
+% Marking point C_1 by circle
+\draw [line width=0.016cm] (7.500000,5.340000) circle (0.040000);%
+\draw (7.500000,5.340000) node [anchor=west] { $C_1$ };%
+
+% Marking point D_1 by circle
+\draw [line width=0.016cm] (3.900000,5.340000) circle (0.040000);%
+\draw (3.930000,5.310000) node [anchor=south east] { $D_1$ };%
+
+% Marking point S by circle
+\draw [line width=0.016cm] (5.100000,7.500000) circle (0.040000);%
+\draw (5.100000,7.500000) node [anchor=west] { $S$ };%
+
+% Marking point L by circle
+\draw [line width=0.016cm] (3.996000,4.296000) circle (0.040000);%
+\draw (3.996000,4.296000) node [anchor=east] { $L$ };%
+
+% Marking point G by circle
+\draw [line width=0.016cm] (5.652000,4.296000) circle (0.040000);%
+\draw (5.622000,4.326000) node [anchor=north west] { $G$ };%
+
+% Marking point F by circle
+\draw [line width=0.016cm] (6.144000,5.004000) circle (0.040000);%
+\draw (6.144000,5.004000) node [anchor=west] { $F$ };%
+
+% Marking point H by circle
+\draw [line width=0.016cm] (4.584000,5.004000) circle (0.040000);%
+\draw (4.614000,4.974000) node [anchor=south east] { $H$ };%
+
+% Changing color 0 0 250
+\definecolor{r0g0b250}{rgb}{0.000000,0.000000,0.980392}%
+\color{r0g0b250}% 
+
+% Drawing segment A S
+\draw [line width=0.016cm] (2.713040,0.577815) -- (3.982223,4.258447);%
+\draw [line width=0.016cm] (4.008297,4.334063) -- (5.086960,7.462185);%
+
+% Drawing segment B S
+\draw [line width=0.016cm] (6.293204,0.579418) -- (5.659198,4.256653);%
+\draw [line width=0.016cm] (5.645606,4.335486) -- (5.106796,7.460582);%
+
+% Drawing segment C S
+\draw [line width=0.016cm] (7.484615,1.776923) -- (6.155911,4.965814);%
+\draw [line width=0.016cm] (6.125273,5.039345) -- (5.115385,7.463077);%
+
+% Drawing segment D S
+\draw [line width=0.016cm] (3.908158,1.779159) -- (4.572047,4.965828);%
+\draw [line width=0.016cm] (4.588285,5.043770) -- (5.091842,7.460841);%
+
+% Changing color 200 100 200
+\definecolor{r200g100b200}{rgb}{0.784314,0.392157,0.784314}%
+\color{r200g100b200}% 
+
+% Drawing segment L G
+\draw [line width=0.016cm] (4.036000,4.296000) -- (5.612000,4.296000);%
+
+% Drawing segment G F
+\draw [line width=0.016cm] (5.674826,4.328848) -- (6.121174,4.971152);%
+
+% Drawing segment L H
+\draw [line width=0.016cm] (4.021556,4.326772) -- (4.091835,4.411393);%
+\draw [line width=0.016cm] (4.139753,4.469090) -- (4.235588,4.584483);%
+\draw [line width=0.016cm] (4.283505,4.642180) -- (4.379341,4.757573);%
+\draw [line width=0.016cm] (4.427258,4.815270) -- (4.523093,4.930663);%
+
+% Drawing segment H F
+\draw [line width=0.016cm] (4.624000,5.004000) -- (4.734000,5.004000);%
+\draw [line width=0.016cm] (4.809000,5.004000) -- (4.959000,5.004000);%
+\draw [line width=0.016cm] (5.034000,5.004000) -- (5.184000,5.004000);%
+\draw [line width=0.016cm] (5.259000,5.004000) -- (5.409000,5.004000);%
+\draw [line width=0.016cm] (5.484000,5.004000) -- (5.634000,5.004000);%
+\draw [line width=0.016cm] (5.709000,5.004000) -- (5.859000,5.004000);%
+\draw [line width=0.016cm] (5.934000,5.004000) -- (6.084000,5.004000);%
+\color{black}
+}
+\end{tikzpicture}
