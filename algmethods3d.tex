@@ -1669,7 +1669,49 @@ redundant ones.
 \end{table}
 
 
-\section{Non-degeneracy conditions}
+\section{Non--degeneracy conditions}
+
+
+Algebraic theorem provers does not only prove geometry statement, they
+also produce conditions under which this statement is true. These
+conditions are called non--degeneracy or NDG conditions. In simple
+Wu's method, once decomposition $cg_j = \sum_{i=1}^{k}h_if_i + r$ is
+obtained, if $c(v_1, \ldots, v_n) \neq 0$ holds and $\bigwedge_{i =
+  1}^{k} f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots,
+v_n) = 0$ holds then geometry statement holds, too. This means that
+geometry conjecture is true only for those objects whose coordinates
+satisfy condition $c(v_1, \ldots, v_n) \neq 0$.  
+
+However NDG conditions are given in algebraic terms, but in the
+context of geometry theorem proving, it is important to have their
+geometrical interpretation as well. Extensive research has been done
+to transform algebraic NDG conditions into geometric ones for planar
+geometry (\cite{chou1988mechanical}). It is noted that it can happen
+that statement is true even under weaker assumptions and that some
+conditions are not necessary. In addition, a presence of NDG
+conditions doesn’t necessarily mean that if they are not satisfied the
+conjecture is invalid.
+
+To the best of our knowledge, there are no research how gained NDG
+conditions could be transformed into geometric terms for three
+dimensional geometry. We did not investigate automatic approach for
+transforming NDG conditions but we analyze gained conditions with
+pen-and-paper. Couple interesting examples are given below.
+
+\begin{example}[Two examples from previous section]
+For both examples from previous section are gained same NDG
+condition. It is expressed with $x_7 \neq 0$. For both examples this
+variable belongs to the plane determined with points $A$, $B$ and
+$C$. Vector of this line is $(x_5, x_6, x_7)$. However, due to
+simplification, points $A$, $B$ and $C$ have some canonical
+coordinates --- $A(0, 0, 0)$, $B(0, 0, b^z)$ and $C(0, c^y,
+c^z)$. These coordinates determine vector of the plane $ABC$ such that
+$x_5 = 0$ and $x_6 = 0$. So, this conditions $x_7 \neq 0$ enables that
+plane is well defined.
+\end{example}
+
+\begin{example}[Example from (\cite{arhzbirka})]
+\end{example}
 
 \section{Conclusion and future work}
 
