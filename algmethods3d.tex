@@ -695,6 +695,33 @@ we when lines are planes are present in the language, we shall
 demonstrate only the second approach (the first shall always reduce to
 the variant when only the points are present in the language).
 
+
+% ------------------------
+\item[$\triangleright$] {\tt lines\_intersection} $A$ $P$ $Q$ $M$ $N$
+  --- point $A$ is the intersection of lines $PQ$ and $MN$.
+
+{\em Polynomials:} Six polynomials are derived from the conditions
+$point\_on\_line\ A\ l_1$ and $point\_on\_line\ A\ l_2$.
+
+Note again that the first three and the second three polynomials are
+dependent, so Wu's method might again have problems triangulating the
+system, and in those cases two out of six polynomials must be
+excluded. However, it is not always trivial to determine which two of
+the six polynomials should be excluded. For example, it can happen
+(due to choice of the coordinates of the free points) that some
+variables are omitted in some polynomial equations due to
+multiplication by zero. So, in order to make triangular system,
+careful analysis must be taken in order to choose which polynomials
+could be omitted.
+
+% ------------------------
+\item[$\triangleright$] {\tt lines\_intersection} $A$ $l_1$ $l_2$
+  --- point $A$ is the intersection of lines $l_1$ and $l_2$.
+
+  {\em Polynomials:} If the second approach is used, six polynomials
+  are derived from the conditions $point\_on\_line\ A\ l_1$ and
+  $point\_on\_line\ A\ l_2$.
+
 % ------------------------
 \item[$\triangleright$] {\tt orthogonal\_lines} $A$ $B$ $C$ $D$ ---
   the line $AB$ is orthogonal on the line $CD$.
@@ -846,6 +873,21 @@ $\overrightarrow{\alpha_v} \cdot \overrightarrow{\beta_v} = 0$.
   $\overrightarrow{p_v} \times \overrightarrow{\alpha_v} = 0$.
 
 % ------------------------
+\item[$\triangleright$] {\tt line\_plane\_intersection} $A$ $M$ $N$
+  $P$ $Q$ $R$ --- point $A$ is the intersection of the line $MN$ and
+  plane $PQR$.
+
+  {\em Polynomials:} Polynomials are derived from {\tt point\_on\_line
+    $A$ $M$ $N$} and {\tt point\_in\_plane $A$ $P$ $Q$ $R$}.
+
+% ------------------------
+\item[$\triangleright$] {\tt line\_plane\_intersection} $A$ $l$ $\pi$ ---
+  point $A$ is the intersection of line $l$ and plane $\pi$.
+
+  {\em Polynomials}: Polynomials are derived from {\tt point\_on\_line
+    $A$ $l$} and {\tt point\_in\_plane $A$ $\pi$}.
+
+% ------------------------
 \item[$\triangleright$] {\tt line\_in\_plane} $AB$ $PQR$ --- the line
   $AB$ is in the plane $PQR$.
 
@@ -934,79 +976,65 @@ fresh variables).
 \begin{description}
 
 % ------------------------
-\item[$\triangleright$] {\tt point} $A$ --- introduces a free point
-  $A$.  with the three fresh parameters $(A_x, A_y, A_z)$
+\item[$\triangleright$] $A$ = {\tt make\_point} --- a free point.
+
+  {\em Introduced objects and parameters}: a point $A$ with the three
+  fresh parameters $A_x$, $A_y$, and $A_z$ representing its
+  coordinates.
+
+  {\em Polynomials:} No polynomials are introduced.
 
 % ------------------------
-\item[$\triangleright$] {\tt intersection\_lines} $A$ $P$ $Q$ $M$ $N$
-  --- point $A$ is the intersection of lines $PQ$ and $MN$.
-
-{\em Polynomials:} Six polynomials are derived from the conditions
-$incident\ A\ l_1$ and $incident\ A\ l_2$.
-
-Note again that the first three and the second three polynomials are
-dependent, so Wu's method might again have problems triangulating the
-system, and in those cases two out of six polynomials must be
-excluded. However, it is not always trivial to determine which two of
-the six polynomials should be excluded. For example, it can happen
-(due to choice of the coordinates of the free points) that some
-variables are omitted in some polynomial equations due to
-multiplication with zero. So, in order to make triangular system,
-careful analysis must be taken in order to choose which polynomials
-could be omitted.
-
-% ------------------------
-\item[$\triangleright$] {\tt intersection\_lines} $A$ $l_1$ $l_2$ ---
-  point $A$ is the intersection of lines $l_1$ and $l_2$.
-
-  {\em Polynomials:} If the first approach is used then this reduces
-  to $incident\ A\ l_A\ l_B\ m_A\ m_B$. If the second approach is
-  used, six polynomials are derived from the conditions
-  $incident\ A\ l_1$ and $incident\ A\ l_2$.
-
-
-% ------------------------
-\item[$\triangleright$] {\tt intersection\_line\_plane} $A$ $l$ $\pi$ ---
-  point $A$ is the intersection of line $l$ and plane $\pi$.
-
-  {\em Polynomials} are derived from {\tt incident $A$ $l$} and {\tt
-    incident $A$ $\pi$}.
-
-% ------------------------
-\item[$\triangleright$] {\tt make\_point\_on\_line} $A$ $l$ ---
-  construct a point $A$ that belongs to the line $l$.
+\item[$\triangleright$] $A$ $=$ {\tt make\_point\_on\_line} $l$ ---
+  construct a semi-free point $A$ that belongs to the line $l$.
   
-  {\em Input:} Line $l$ with parameters with parameters $l_A$ and
-  $l_B$ for the first approach or with symbolic parameters $l(l^{v_x},
-  l^{v_y}, l^{v_z}, l^{p_x}, l^{p_y}, l^{p_z})$ for the second
-  approach.
+  {\em Introduced objects and parameters}: introduces a point $A$ with
+  three fresh parameters $a^x$, $a^y$ and $a^z$ representing its
+  coordinates.
 
-  {\em Objects and parameters:} Point $A(a^x, a^y, a^z)$, for three
-  fresh parameters $a^x$, $a^y$ and $a^z$. {\em Polynomials} are
-  derived from {\tt incident $A$ $l$}.
+  {\em Polynomials:} derived from {\tt point\_on\_line $A$ $l$}.
 
 % ------------------------
-\item[$\triangleright$] {\tt make\_point\_in\_plane} $A$ $\pi$ ---
-  construct a point $A$ that belongs to the plane $\pi$.
-  
-  {\em Input:} Plane $\pi$ with parameters $\pi_A$, $\pi_B$ and
-  $\pi_C$ for the first approach or $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z},
-  \pi^{d})$ for the second approach.
+\item[$\triangleright$] $A$ = {\tt make\_point\_in\_plane} $\pi$ ---
+  construct a semi-free point $A$ that belongs to the plane $\pi$.
 
-  {\em Objects and parameters:} Point $A(a^x, a^y, a^z)$, for three
-  fresh parameters $a^x$, $a^y$ and $a^z$. {\em Polynomial} are
-  derived from {\tt incident $A$ $\pi$}.
+  {\em Introduced objects and parameters}: introduces a point $A$ with
+  three fresh parameters $a^x$, $a^y$ and $a^z$ representing its
+  coordinates.
+  
+  {\em Polynomials:} derived from {\tt point\_in\_plane $A$ $\pi$}.
 
 % ------------------------
-\item[$\triangleright$] {\tt translate\_z} $A$ $O$ $q$ --- construct a point by translating point $A$
-  by some parameter along $z$-axis.
-  
-  {\em Input:} Point $O$ with symbolic coordinates $(o^x, o^y, o^z)$
-  and parameter $q$.
+\item[$\triangleright$] $A$ = {\tt make\_lines\_intersection} $l_1$
+  $l_2$ --- point $A$ is the intersection of lines $l_1$ and $l_2$.
 
-  {\em Objects and parameters:} Point $A(o^x, o^y, a^z)$, for one
-  fresh parameter, $a^z$. {\em Polynomial} is derived from
-  $\overrightarrow{AO} = (0, 0, q)$.
+  {\em Introduced objects and parameters}: a point $A$ with three
+  fresh parameters $a^x$, $a^y$ and $a^z$ representing its
+  coordinates.
+
+  {\em Polynomials:} derived from {\tt lines\_intersection $A$ $l_1$ $l_2$}.
+
+% ------------------------
+\item[$\triangleright$] $A$ = {\tt make\_line\_plane\_intersection}
+  $l$ $\pi$ --- point $A$ is the intersection of line $l$ and plane
+  $\pi$.
+
+  {\em Introduced objects and parameters}: a point $A$ with three
+  fresh parameters $a^x$, $a^y$ and $a^z$ representing its
+  coordinates.
+
+  {\em Polynomials:} derived from {\tt line\_plane\_intersection $A$ $l$ $\pi$}.
+
+
+% ------------------------
+\item[$\triangleright$]  $A$ = {\tt translate\_z} $O$ $d$ --- construct a
+  point by translating point $A$ by some parameter along $z$-axis.
+
+  {\em Introduced objects and parameters:} point $A$ with the
+  coordinates $(o^x, o^y, a^z)$, for a single fresh parameter $a^z$.
+
+  {\em Polynomial:} A polynomial derived from
+  $\overrightarrow{AO} = (0, 0, d)$.
 \end{description}
 
 
@@ -1017,42 +1045,43 @@ line can be constructed as a line trough two free points).
 
 \begin{description}
 % ------------------------
-\item[$\triangleright$] {\tt line\_points} $l$ $A$ $B$ --- for two
-  given points $A$ and $B$ determines the line $l$ that goes through
-  these points.
+\item[$\triangleright$] $l$ $=$ {\tt make\_line\_trough\_points} $A$ $B$
+  --- for two given points $A$ and $B$ determines the line $l$ that
+  contains them.
 
-  {\em Input:} Two points $A$ and $B$ with symbolic coordinates $(a^x,
-  a^y, a^z)$ and $(b^x, b^y, b^z)$.
+  {\em Introduced objects and parameters:} if the first approach is
+  used, no new parameters are introduced and the name $l$ is
+  associated with the pair of points $A$ and $B$. If the second
+  approach is used, fresh parameters $l^{v_x}$, $l^{v_y}$, $l^{v_z}$
+  that represent the direction vector of the are introduced. There is
+  no need to introduce the parameters for the point $l^A$, as it can
+  be associated either to the point $A$ or the point $B$.
 
-  In the first approach, there are no new polynomials and it just
-  denoted that line $l$ is determined with points $A$ and $B$.
-
-  In the second approach are introduced the line $l$ with parameters
-  $(l^{v_x}, l^{v_y}, l^{v_z}, a^x, a^y, a^z)$ (new, fresh parameters
-  $(l^{v_x}, l^{v_y}, l^{v_z})$ are parameters of line vector). As it
-  can be noted, parameters for a point belonging the line are
-  parameters of point $A$. There were no need to introduce new
-  parameters and we can arbitrary choose between points $A$ and
-  $B$. Polynomials are derived from {\tt incident $A$ $l$} and {\tt
-    incident $A$ $l$}.
+  {\em Polynomials:} If the first approach is used no polynomials are
+  needed. If the second approach is used, the polynomials are derived
+  from {\tt point\_on\_line $B$ $l$} (if $A$ is chosen for $l^A$).
 
 % ------------------------
-\item[$\triangleright$] {\tt line\_orth\_plane} $l$ $\pi$ $A$ -- for a
-  given plane $\pi$ and a point $A$ determines line $l$ witch is
-  orhogonal on the given plane $\pi$ and incides with the point $A$.
+\item[$\triangleright$] $l$ = {\tt make\_line\_orthogonal\_on\_plane}
+  $\pi$ $A$ -- for a given plane $\pi$ and a point $A$ determines the
+  line $l$ that is orthogonal on the given plane $\pi$ and contains
+  the point $A$.
 
-{\em Input:} Plane $\pi$ with symbolic parameters $(\pi^{v_x},
-\pi^{v_y}, \pi^{v_z}, \pi^{d})$ and point $A$ with symbolic
-coordinates $(a^x, a^y, a^z)$.
+  {\em Introduced objects and parameters:} if the first approach is
+  used then first point determining the line is point $A$ and the
+  second point is $A + \overrightarrow{\pi}$ where
+  $\overrightarrow{\pi}$ is determined by
+  $\overrightarrow{\pi_A\pi_B} \times \overrightarrow{\pi_A\pi_C}$.
 
-{\em Objects and parameters:} If the first approach is used then first
-point determining the line is point $A$ and the second point is $A +
-\overrightarrow{\pi}$ where $\overrightarrow{\pi}$ is determined with
-$\overrightarrow{\pi_A\pi_B} \times \overrightarrow{\pi_A\pi_C}$.
+  If the second approach is used line $l$ is determined by the
+  parameters $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, a^x, a^y, a^z)$ (its
+  direction vector is the normal vector of the plane, and its point is
+  the point $A$).
 
-If the second approach is used line $l$
-is determined with parameters $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z},
-\pi^{d}, a^x, a^y, a^z)$ (no new parameters are generated).
+  {\em Polynomials:} \marginpar{\v Sta se ovde tacno desava sa
+    polinomima u prvom pristupu? Da li se uvode simbolicke koordinate za drugu tacku?}
+
+  If the second approach is used, no polynomials are generated.
 \end{description}
 
 The construction of the line trough a given point that is parallel to
@@ -1067,24 +1096,24 @@ a free plane can be constructed as a plane trough three free points).
 
 \begin{description}
 % ------------------------
-\item[$\triangleright$] {\tt plane\_points} $\pi$ $A$ $B$ $C$ --- for
-  three given points $A$, $B$ and $C$ determines the plane $\pi$
-  containing all of them.
+\item[$\triangleright$] $\pi$ = {\tt make\_plane\_trough\_points} $A$
+  $B$ $C$ --- for three given points $A$, $B$ and $C$ determines the
+  plane $\pi$ containing all of them.
 
-{\em Input:} Tree point $A$, $B$ and $C$ with symbolic coordinates
-$(a^x, a^y, a^z)$, $(b^x, b^y, b^z)$ and $(c^x, c^y, c^z)$.
+  {\em Introduced objects and parameters:} if the first approach is
+  used, no new variables are introduced and the name $\pi$ is
+  associated with the triple of points $A$, $B$, and $C$. If the
+  second approach is used, then plane $\pi$ is determined with fresh
+  symbolic parameters $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$.
 
-If the first approach is used then there are no new polynomials since
-it is just noted in the system that plane $\pi$ is determined with
-points $A$, $B$ and $C$.
-
-If the second approach is used then plane $\pi$ is determined with
-fresh parameters $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$ and
-there are new polynomials connecting these fresh parameters with
-symbolic coordinates of the points. Polynomials are derived from
-$\overrightarrow{\pi} = \overrightarrow{AB} \times
-\overrightarrow{AC}$ and {\tt incident $\pi$ $A$}.
+  {\em Polynomials:} If the second approach is used, polynomials are
+  derived from
+  $\overrightarrow{\pi} = \overrightarrow{AB} \times
+  \overrightarrow{AC}$ and {\tt point\_on\_plane $A$ $\pi$}.
 \end{description}
+
+\marginpar{Ne bi bilo lose dodati makar jos jednu konstrukciju -
+  npr. ravan kroz tacku normalna na datu pravu.}
 
 Very similar methods can be used to construct the plane that contains
 the given line and is orthogonal or is parallel to the given plane.
@@ -1125,22 +1154,28 @@ most exercises.
 
 \begin{description}
 % ------------------------
-\item[$\triangleright$] {\tt make\_cube} $A$ $B$ $C$ $D$ $A_1$ $B_1$
-  $C_1$ $D_1$ --- construct the cube in the canonical position, with
-  the edge length equal to $1$.\\
-  {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
-  $C(1, 1, 0)$, $D(0, 1, 0)$, $A_1(0, 0, 1)$, $B_1(1, 0, 1)$,
-  $C_1(1, 1, 1)$ and $D(0, 1, 1)$.\\
-  {\em Explanation:} No polynomials are generated. Since the cube is
+\item[$\triangleright$] $A$ $B$ $C$ $D$ $A_1$ $B_1$ $C_1$ $D_1$ = {\tt
+    make\_cube} --- construct the cube in the canonical position, with
+  the edge length equal to $1$.
+
+  {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+  $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$, $A_1(0, 0, 1)$,
+  $B_1(1, 0, 1)$, $C_1(1, 1, 1)$ and $D(0, 1, 1)$. Since the cube is
   in the canonical position, no symbolic variables are introduced.
 
+  {\em Explanation:} No polynomials are generated.
+
 % ------------------------
-\item[$\triangleright$] {\tt make\_tetrahedron} $A$ $B$ $C$
-  $D$\label{tetrahedron} --- construct the tetrahedron in the
-  canonical position.\\
-  {\em Objects and parameters:} The vertices of the tetrahedron have
-  the coordinates $A(0, 0, 0)$, $B(1, 0, 0)$, $C(c^x, c^y, 0)$ and
-  $D(c^x, d^y, d^z)$, with the four fresh parameters.
+\item[$\triangleright$] $A$ $B$ $C$ $D$ = {\tt
+    make\_tetrahedron} \label{tetrahedron} --- construct the
+  tetrahedron in the
+  canonical position.
+
+  {\em Introduced objects and parameters:} The vertices of the
+  tetrahedron have the coordinates $A(0, 0, 0)$, $B(1, 0, 0)$,
+  $C(c^x, c^y, 0)$ and $D(c^x, d^y, d^z)$, with the four fresh
+  parameters $c^x$, $c^y$, $d^y$, and $d^z$.
+
 \begin{tabbing}
 {\em Polynomials:} \= $poly_1 = 2\cdot c^x - 1$ \\
                    \> $poly_2 = 2\cdot {c^y}^2 - 3$ \\
@@ -1149,11 +1184,11 @@ most exercises.
 \end{tabbing}
 
 {\em Explanation:} $c^x = \frac{1}{2}$, $c^y = \frac{\sqrt{3}}{2}$,
-$d^y = \frac{\sqrt{3}}{6} = \frac{c^y}{3}$, $d^z =
-\frac{\sqrt{2}}{\sqrt{3}}$. Note that all our objects always have
-either symbolic or integer parameters and polynomials must always have
-integer coefficients, so irrational values (and even fractions) must
-be introduced using polynomials.
+$d^y = \frac{\sqrt{3}}{6} = \frac{c^y}{3}$,
+$d^z = \frac{\sqrt{2}}{\sqrt{3}}$. Note that all our objects always
+have either symbolic or integer parameters and polynomials must always
+have integer coefficients, so irrational values (and even fractions)
+must be introduced using polynomials.
 
 % ------------------------
 \item[$\triangleright$] {\tt make\_pyramid} $A$ $B$ $C$ $D$ $S$ ---
@@ -1161,9 +1196,10 @@ be introduced using polynomials.
   the base is a unit square in the $xOy$ plane, its lateral edges are
   equal in length, and the height is not constrained.
 
-  {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
-  $C(1, 1, 0)$, $D(0, 1, 0)$ and $S(s^x, s^y, s^z)$, for three fresh
-  parameters $s^x$, $s^y$ and $s^z$.
+  {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+  $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$ and $S(s^x, s^y, s^z)$, for
+  three fresh parameters $s^x$, $s^y$ and $s^z$.
+
 \begin{tabbing}
 {\em Polynomials:} \= $poly_1 = 2\cdot s^x - 1$ \\
                    \> $poly_2 = 2\cdot s^y - 1$
@@ -1175,47 +1211,49 @@ it lies in the middle of the square, so $s^x = s^y =
 
 
 % ------------------------
-\item[$\triangleright$] {\tt make\_sphere} $\mathcal{S}$ $A$ $B$ $C$
-  $D$ --- construct a sphere $\mathcal{S} = (O, r)$ where $O = (O^x,
-  O^y, O^z)$ is center of the sphere and $r$ is its radius. Points $A$
-  $B$ $C$ $D$ are on the sphere $\mathcal{S}$.
+\item[$\triangleright$] $\mathcal{S}$ = {\tt make\_sphere} $A$ $B$ $C$
+  $D$ --- construct a sphere $\mathcal{S}$ trough four given points
+  $A$, $B$, $C$, $D$.
   
-  {\em Input:} Points $A$ $B$ $C$ and $D$.
-
-  {\em Objects and parameters:} Four fresh
-  parameters $O^x$, $O^y$, $O^z$ and $r$
+ {\em Introduced objects and parameters:} the sphere is determined by
+ its center $O = (O^x, O^y, O^z)$ and its radius $r$ --- four fresh
+ parameters $O^x$, $O^y$, $O^z$ and $r$ are introduced.
 
 {\em Polynomials:} Polynomials are derived from
 $\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$,
 $\overrightarrow{BO}\cdot\overrightarrow{BO} = r^2$,
-$\overrightarrow{CO}\cdot\overrightarrow{CO} = r^2$ and
+$\overrightarrow{CO}\cdot\overrightarrow{CO} = r^2$, and
 $\overrightarrow{DO}\cdot\overrightarrow{DO} = r^2$.
 
 % ------------------------
-\item[$\triangleright$] {\tt point\_on\_sphere} $A$ $\mathcal{S}$ --- point $A$
-  belongs to the sphere $\mathcal{S}$.
+\item[$\triangleright$] $A$ = {\tt point\_on\_sphere} $\mathcal{S}$
+  --- point $A$ belongs to the sphere $\mathcal{S}$.
 
 {\em Polynomials:} Sphere $\mathcal{S}$ is defined with its center $O$
 and radius $r$. Thus, polynomial is derived from
 $\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
 
+\marginpar{Da li je ovo relacija kojom se proverava da tacka pripada sferi 
+ili konstrukcija proizvoljne tacke na sferi?}
 
 % ------------------------
-\item[$\triangleright$] {\tt make\_square} $A$ $B$ $C$ $D$ ---
+\item[$\triangleright$] $A$ $B$ $C$ $D$ = {\tt make\_square} ---
   construct a square in the canonical position: the base is a unit
   square in the $xOy$ plane, its lateral edges are equal in length,
   and the height is not constrained.
 
-  {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
-  $C(1, 1, 0)$, $D(0, 1, 0)$.
+  {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+  $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$.
 
 % ------------------------
-\item[$\triangleright$] {\tt equilateral\_triangle} $A$ $B$ $C$ ---
-  construct a equilateral triangle in the canonical position; it is in
-  $xOy$ plane, one point is in origin, and another point is on
+\item[$\triangleright$] $A$ $B$ $C$ = {\tt
+    make\_equilateral\_triangle} --- construct a equilateral triangle
+  in the canonical position; it is in $xOy$ plane, one point is in
+  origin, and another point is on
   $x$-axis. \\
-  {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
-  $C(c^x, c^y, 0)$, for two fresh parameters $c^x$ and $c^y$.
+  {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+  $B(1, 0, 0)$, $C(c^x, c^y, 0)$, for two fresh parameters $c^x$ and
+  $c^y$.
 
 \begin{tabbing}
 {\em Polynomials:} \= $poly_1 = 2\cdot c^x - 1$ \\
@@ -1224,14 +1262,15 @@ $\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
 
 
 % ------------------------
-\item[$\triangleright$] {\tt regular\_hexagon} $A_1$ $A_2$ $A_3$ $A_4$
-  $A_5$ $A_6$ --- construct a regular hexagon in the canonical
-  position; it is in $xOy$ plane, one point is in origin, and another
+\item[$\triangleright$] $A_1$ $A_2$ $A_3$ $A_4$ $A_5$ $A_6$ = {\tt
+    make\_regular\_hexagon} --- construct a regular hexagon in the
+  canonical position; it is in $xOy$ plane, one point is in origin,
+  and another
   point is on $x$-axis. \\
-  {\em Objects and parameters:} Points $A_1(0, 0, 0)$, $A_2(1, 0, 0)$,
-  $A_3(a_3^x, a_3^y, 0)$, $A_4(1, a_4^y, 0)$, $A_5(0, a_4^y, 0)$ and
-  $A_6(a_6^x, a_3^y, 0)$, for four fresh parameters $a_3^x$, $a_3^y$,
-  $a_4^y$ and $a_6^x$.
+  {\em Introduced objects and parameters:} Points $A_1(0, 0, 0)$,
+  $A_2(1, 0, 0)$, $A_3(a_3^x, a_3^y, 0)$, $A_4(1, a_4^y, 0)$,
+  $A_5(0, a_4^y, 0)$ and $A_6(a_6^x, a_3^y, 0)$, for four fresh
+  parameters $a_3^x$, $a_3^y$, $a_4^y$ and $a_6^x$.
 
 \begin{tabbing}
 {\em Polynomials:} \= $poly_1 = 2\cdot a_3^x - 3$ \\
@@ -1240,6 +1279,10 @@ $\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
                    \> $poly_4 = 2a_6^x - 1$
 \end{tabbing}
 \end{description}
+
+\marginpar{Ove konstrukcije su malo dosadne -- mozemo ostaviti samo
+  nekoliko najzanimljivijih (kocka, tetraedar, sfera, heksagon), a
+  ostale samo pomenuti?}
 
 
 %-------------------------------------------------------------------------------
@@ -1347,16 +1390,21 @@ Geometry statement using term representation:
 {\tt
 \begin{tabbing}
 \hspace{5mm}\=\kill
-\> make\_tetrahedron $A$ $B$ $C$ $S$ \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
+\> $A$ $B$ $C$ $S$ = make\_tetrahedron  \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
 
-\> plane\_points $\alpha_1$ $A$ $B$ $C$ \> plane\_points $\alpha_2$ $B$ $C$ $S$ \\
-\>plane\_points $\alpha_3$ $A$ $C$ $S$ \> plane\_points $\alpha_4$ $A$ $B$ $S$ \\ \\
+\> $\alpha_1$ = make\_plane\_trough\_points $A$ $B$ $C$ \\
+\> $\alpha_2$ = make\_plane\_trough\_points $B$ $C$ $S$ \\
+\> $\alpha_3$ = make\_plane\_trough\_points $A$ $C$ $S$ \\
+\> $\alpha_4$ = make\_plane\_trough\_points $A$ $B$ $S$ \\ \\
 
-\>line\_orth\_plane $h_1$ $\alpha_1$ $S$ \> line\_orth\_plane $h_2$ $\alpha_2$ $A$ \\
-\>line\_orth\_plane $h_3$ $\alpha_3$ $B$ \> line\_orth\_plane $h_4$ $\alpha_4$ $C$ \\ \\
+\> $h_1$ = make\_line\_orthogonal\_to\_plane $\alpha_1$ $S$ \\
+\> $h_2$ = make\_line\_orthogonal\_to\_plane $\alpha_2$ $A$ \\
+\> $h_3$ = make\_line\_orthogonal\_to\_plane $\alpha_3$ $B$ \\
+\> $h_4$ = make\_line\_orthogonal\_to\_plane $\alpha_4$ $C$ \\ \\
 
-\>intersection\_lines $H_1$ $h_1$ $h_2$ \> intersection\_lines $H_2$ $h_2$ $h_3$ \\
-\>intersection\_lines $H_3$ $h_2$ $h_4$ \\ \\
+\> $H_1$ = make\_lines\_intersection $h_1$ $h_2$ \\
+\> $H_2$ = make\_lines\_intersection $h_2$ $h_3$ \\
+\> $H_3$ = make\_lines\_intersection $h_2$ $h_4$ \\ \\
 
 \>equal\_points $H_1$ $H_2$ \\
 \>equal\_points $H_1$ $H_3$ \\
