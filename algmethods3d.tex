@@ -454,15 +454,15 @@ use pairs of points. For example, the fact that the point $A$ belongs
 to the line $PQ$, is expressed by the relation $incident\ A\ P\ Q$.
 The only variables used in polynomials are coordinates of the points.
 
-In the second approach, all three types of objects are allowed. For
-example, statements can explicitly mention lines and $incident\ A\ l$
-expressed that the point $A$ belongs to the line $l$. All objects are
-represented using their own parameters (e.g., a line is defined by the
-coordinates of its one point, and the coordinates of its direction
-vector, and a plane is defined by the coefficients of the plane
-equation -- the coordinates of its normal vector, and its displacement
-wrt.~the origin). Polynomials can include variables for all those
-parameters.
+In the second approach, three types of objects (points, lines, and
+planes) are allowed. For example, statements can explicitly mention
+lines and $incident\ A\ l$ expressed that the point $A$ belongs to the
+line $l$. All objects are represented using their own parameters
+(e.g., a line is defined by the coordinates of its one point, and the
+coordinates of its direction vector, and a plane is defined by the
+coefficients of the plane equation -- the coordinates of its normal
+vector, and its displacement wrt.~the origin). Polynomials can include
+variables for all those parameters.
 
 Note that we could also allow using lines and planes in the first
 approach, as a syntactic sugar. Although the user can use them in the
@@ -470,8 +470,9 @@ relations, the system internally maps all line names to pairs of
 points and plane names to triple of points and encodes all relations
 as polynomial equations over only the coordinates of points.
 
-We shall describe how to encode relations using both of these
-approaches, and shall compare their efficiency.
+We shall describe how to encode various geometric relations and
+construction steps using both of these approaches, and shall compare
+their efficiency.
 
 \paragraph{Points and vectors}
 Points will have three parameters, representing their
@@ -484,8 +485,8 @@ known or can be directly calculated).
 For describing relations we shall use vectors. Vector determined by
 two points $A = (A^x, A^y, A^z)$ and $B = (B^x, B^y, B^z)$ is
 $\overrightarrow{AB} = (B^x- A^x, B^y - A^y, B^z - A^z)$. The standard
-notions of scalar product, cross product and triple product can be
-applied to vectors.
+notions of scalar product, cross product and scalar triple product can
+be applied to vectors.
 
 %% Scalar product of vectors $v = (v^x, v^y, v^z)$ and $u = (u^x, u^y,
 %% u^z)$ is $v\cdot u = v^x\cdot u^x+ v^y\cdot u^y + v^z\cdot u^z$, their
@@ -500,7 +501,7 @@ applied to vectors.
 %%   & u^z \\ w^x& w^y & w^z \\
 %% \end{array}\right|.$$
 
-\paragraph{Lines and planes}
+\paragraph{Lines}
 
 Representation of lines depends on approach used.
 
@@ -517,12 +518,13 @@ have six parameters denoted by superscripts. For example, the line $l$
 will have the parameters $(l^{v_x}, l^{v_y}, l^{v_z}, l^{A_x},
 l^{A_y}, l^{A_z})$, which represent the line given by the equation:
 $$x = k_l\cdot l^{v_x} + l^{A_x},\quad y = k_l\cdot l^{A_y} +
-l^{A_y},\quad z = k_l\cdot l^{v_z} + l^{A_z}.$$ In the previous
-equations, $k_l$ denotes the line ratio, not present in the line
-specification (which is a six-tuple). Line ratio is going to be used
-in some polynomials that describe constructions involving lines, and
-in that case it is to be introduced as a fresh symbolic variable.
+l^{A_y},\quad z = k_l\cdot l^{v_z} + l^{A_z}.$$
+In the previous equations, $k_l$ denotes the line ratio, not present
+in the line specification (which is a six-tuple). Line ratio can be
+used in some polynomials that describe constructions involving lines,
+and in that case it is introduced as a fresh symbolic variable.
 
+\paragraph{Planes}
 Planes are also represented differently, depending on the used
 approach.
 
@@ -541,12 +543,10 @@ tuple $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$ that satisfies
 $$\pi^{v_x}\cdot x + \pi^{v_y}\cdot y + \pi^{v_z}\cdot z + \pi^{d} =
 0.$$
 
-
-
-\subsection{Representing relations between geometry objects}
+\subsection{Representing relations between geometric objects}
 In this section are given polynomials that arithmetically describe
 relations over constructed objects (for example, two points coincide,
-two lines are parallel, two planes are orthogonal).  Each kind of
+two lines are parallel, two planes are orthogonal). Each kind of
 relation introduces some polynomial constraints over the parameters of
 the objects that are involved, and can be expressed differently
 depending on the chosen approach.
@@ -556,6 +556,10 @@ involved in it. For example, for the relation \mbox{{\tt congruent}
   $A$ $B$ $C$ $D$} inputs are four points, $A$, $B$, $C$, and $D$, e.g
 their symbolic or numeric parameters: $(a^x, a^y, a^z)$, $(b^x, b^y,
 b^z)$, $(c^x, c^y, c^z)$ and $(d^x, d^y, d^z)$.
+
+Note that the same relations are used both in theorem assumptions
+(usually implicitly given by the construction steps) and in theorem
+conclusions.
 
 We start with some relations that involve only points, and therefore
 are equally encoded using both approaches.
@@ -568,23 +572,18 @@ are equally encoded using both approaches.
   {\em Polynomials:} The vector equation $\overrightarrow{AB} = 0$
   yields the following three polynomial equations:
   \begin{tabbing}
-    $A^x - B^x = 0$\\
-    $A^y - B^y = 0$\\
-    $A^z - B^z = 0$
+    $a^x - b^x = 0$\\
+    $a^y - b^y = 0$\\
+    $a^z - b^z = 0$
   \end{tabbing}
 
-\marginpar{Zar nije ovde bolje samo uvesti iste simbolicke promenljive
-  i uvrstiti nego uvoditi nove polinome?}
-\marginpar{Danijela odogovor: Smatram da ne. Naime, mi ovu relaciju
-  koristimo da dokazemo da su dve tacke jednake. Samim tim, mi imamo
-  tacku $A$ i tacku $B$ o treba da se pokaze (primenom metoda) da su
-  ovi polinomi 0 --- oni idu u set za zakljucivanje. Sa druge strane,
-  da ja koristim ovu equal\_points da napravim novu tacku, onda bih
-  uzela iste simbolicke koordinate i samo ih dodelila, recimo, tacki
-  $B$ (ali nekako nema poente praviti novu tacku istih koordinata, pa
-  ovo i ne koristimo za konstrukciju, vec samo za dokaze). }
-% ------------------------
+  Note that these polynomials are used only to prove that two points
+  are equal, i.e., only as the statement polynomials. If it is known
+  that two points are equal during construction, then they are given
+  the same coordinates, and no polynomials are introduced.
 
+
+% ------------------------
 \item[$\triangleright$] {\tt congruent} $A$ $B$ $C$ $D$ --- Two
   segments, $AB$ and $CD$ are congruent.
 
@@ -592,12 +591,9 @@ are equally encoded using both approaches.
 
 {\em Polynomials:}
 $\overrightarrow{AB} \cdot \overrightarrow{AB} = \overrightarrow{CD} \cdot \overrightarrow{CD}$. \\
-Note that this gives the polynomial equation:
+This gives the following polynomial equation:
 
 $$({a^x} - {b^x})^2 + ({a^y} - {b^y})^2 + ({a^z} - {b^z})^2 - ({c^x} - {d^x})^2 - ({c^y} - {d^y})^2 - ({c^z} - {d^z})^2 = 0$$
-
-{\em Explanation:} Squares of the distance between $A$ and $B$ must be
-equal to the square of the distance between $C$ and $D$.
 
 % ------------------------
 \item[$\triangleright$] {\tt segments\_in\_ratio} $A$ $B$ $C$ $D$
@@ -630,8 +626,6 @@ $2m^z - a^z - b^z = 0$
   $n$ --- checks weather the point $M$ divides segment determined by
   points $A$ and $B$ in ratio determined by $m$ and $n$,
   e.g. $\frac{|MA|}{|MB|} = \frac{m}{n}$.
-\marginpar{Ovo zapravo znaci da su segmenti $MA$ i $MB$ u odnosu $m$ prema $n$ -- deluje mi da je ovo visak.}
-\marginpar{Danijela: Slazem se. Ovo se jako cesto javlja pa sam ja izdvojila u posebnu konstrukciju. Mislim da moze da ostane, ali da ide u appendix svakako.}
 
 {\em Polynomials:} The three polynomial equations derived from
 $n\cdot \overrightarrow{MA} = m\cdot \overrightarrow{MB}$.
@@ -642,188 +636,230 @@ $B$ $1$ $1$.
 
 \bigskip
 
-Next we describe some relations that involve both points and lines (if
-the first approach is used, then lines are represented using pairs of
-distinct points, either explicitly by the user, or implicitly, by the
-system).
-
-\marginpar{Narednih nekoliko primera pokazuju opsti sablon --- kada
-  god imamo relaciju koja radi sa pravom, mozemo imati i odgovarajucu
-  relaciju koja koristi dve tacke -- relacija sa pravom se u prvom
-  pristupu onda svodi na tu varijantu sa tackama, dok u drugom
-  pristupu ne mora. Mislim da to treba jednom prodiskutovati, a onda
-  kasnije preskociti da uvodimo duple varijante.}
-\marginpar{Danijela: Da, slazem se. Varijata sa tackama je uvedene jer
-  se opet jako cesto javlja u zadacima, ali su polinomi prakticno
-  isti.}
+Next we describe some relations that involve both points and lines.
 
 % ------------------------
-\item[$\triangleright$] {\tt incident} $A$ $P$ $Q$ --- point $A$ belongs
-  to the line $P$ $Q$.
+\item[$\triangleright$] {\tt point\_on\_line} $A$ $P$ $Q$ --- point $A$ belongs
+  to the line $P$ $Q$.\marginpar{Promenjeno da bude upareno sa donjim relacijama}
 
 {\em Polynomials:} The three polynomials are derived from
-$\overrightarrow{PQ} \times \overrightarrow{Al_A} = 0$.
+$\overrightarrow{PQ} \times \overrightarrow{PA} = 0$.
+
+Note that although there are three polynomial equations, one can
+always be derived from the other two. The three polynomials are:
+
+\begin{eqnarray*}
+  poly_1 = (a^y - p^y)\cdot (q^z - p^z) - (a^z - p^z)\cdot (q^y - p^y) = 0\\
+  poly_2 = (a^z - p^z)\cdot (q^x - p^x) - (a^x - p^x)\cdot (q^z - p^z) = 0\\
+  poly_3 = (a^x - p^x)\cdot (q^y - p^y) - (a^y - p^y)\cdot (q^x - p^x) = 0
+\end{eqnarray*}
+
+Then it holds that
+$(q^x - p^x) \cdot poly_1 + (q^y - p^y) \cdot poly_2 + (q^z - p^z)
+\cdot poly_3 = 0$.
+If $p^z \neq q^z$, then $poly_1 = 0$ and $poly_2 = 0$ imply that
+$poly_3 = 0$. However, if $p^z = q^z$, then $poly_1 = 0$, and
+$poly_2 = 0$ only imply that $a^z = p^z$, and it need not
+automatically hold that $poly_3 = 0$. Generally, one of the
+coefficients $q^x - p^x$, $q^y - p^y$ and $q^z - p^z$ must different
+from zero (as the line director vector must be nonzero) and that
+determines the two equations which imply the third, but since these
+three coefficients are symbollic, we always explicitly check all three
+equations. 
+
+Note that if the relation $point\_on\_line\ A\ P\ Q$ occurs in the
+assumptions of the theorem, then, due to the dependence of the three
+polynomials, some variants of the Wu's method might have problem in
+the triangulation phase (for example, GeoProver exibited this
+behaviour).
 
 % ------------------------
-\item[$\triangleright$] {\tt incident} $A$ $l$ --- point $A$ belongs
+\item[$\triangleright$] {\tt point\_on\_line} $A$ $l$ --- point $A$ belongs
   to the line $l$.
 
 {\em Polynomials:} If the first approach is used, then this reduces to
-$incident\ A\ l_A\ l_B$ described above. If the second approach is
+$point\_on\_line\ A\ l_A\ l_B$ described above. If the second approach is
 used, then the three polynomials are derived from
 $\overrightarrow{l_v} \times \overrightarrow{Al_A} = 0$.
 
-\marginpar{Premestiti celu ovu diskusiju u gornji slucaj A P Q -- isto
-  vazi tamo, samo malo formule treba prilagoditi.} Note that although
-there are three polynomial equations, one can always be derived from
-the other two. For example, if the second approach is used, the three
-polynomials are:
+In both approaches one polynomial can be derived from the other two.
 
-\begin{eqnarray*}
-  poly_1 = (A^y - l_A^y)\cdot l_v^z - (A^z - l_A^z)\cdot l_v^y = 0\\
-  poly_2 = (A^z - l_A^z)\cdot l_v^x - (A^x - l_A^x)\cdot l_v^z = 0\\
-  poly_3 = (A^x - l_A^x)\cdot l_v^y - (A^y - l_A^y)\cdot l_v^x = 0
-\end{eqnarray*}
+\bigskip 
 
-Then it holds that $l_v^x \cdot poly_1 + l_v^y \cdot poly_2 + l_v^z
-\cdot poly_3 = 0$. If $l_v^z \neq 0$, then $poly_1 = 0$ and $poly_2 =
-0$ imply that $poly_3 = 0$. However, if $l_v^z = 0$, then $poly_1 =
-0$, and $poly_2 = 0$ only imply that $A^z = l_A^z$, and it need not
-automatically hold that $poly_3 = 0$. Generally, one of the
-coefficients $l_v^x$, $l_v^y$ and $l_v^z$ must different from zero (as
-the line director vector must be nonzero) and that determines the two
-equations which imply the third, but since these three coefficients
-are symbollic, we always explicitly check all three equations.
-\marginpar{Ovo je osnova svih onih kasnijih problema sa viskom
-  jednacina}
-
-Note that if the relation $incident\ A\ l$ occurs in the assumptions
-of the theorem, then, due to the dependence of the three polynomials,
-some variants of the Wu's method might have problem in the
-triangulation phase (for example, GeoProver exibited this behaviour).
+Note that the polynomials obtained from $point\_on\_line\ A\ P\ Q$ and
+$pont\_on\_line\ A\ l$ if the first approach is used are exactly the same.
+The only difference is that in the first case the user keeps track of
+the two points of the line, and in the second one, the system does
+this implicitly. This symmetry is present in all further relations, so
+we when lines are planes are present in the language, we shall
+demonstrate only the second approach (the first shall always reduce to
+the variant when only the points are present in the language).
 
 % ------------------------
 \item[$\triangleright$] {\tt orthogonal\_lines} $A$ $B$ $C$ $D$ ---
   the line $AB$ is orthogonal on the line $CD$.
 
-{\em Polynomials:} A polynomial derived from $\overrightarrow{AB}
-\cdot \overrightarrow{CD} = 0$.
-
-However, this conditions is not enough since it is only checked
-weather the appropriate vectors of the lines are orthogonal but lines
-itself could be skew. So, one more condition must be added in order to
-ensure that lines really intersect: $\overrightarrow{AC} \times
-(\overrightarrow{AB} \cdot \overrightarrow{CD}) = 0$
+  {\em Polynomials:} A necessary condition is
+  $\overrightarrow{AB} \cdot \overrightarrow{CD} = 0$ and it yields
+  one polynomial. However, this conditions is not enough since it is
+  only checked weather the appropriate vectors of the lines are
+  orthogonal but lines itself could be skew. So, one more condition
+  must be added in order to ensure that lines really intersect, and it
+  can be that vectors $\overrightarrow{AB}$, $\overrightarrow{AC}$,
+  and $\overrightarrow{CD}$ are coplanar, that is easily expressed
+  using scalar triple product:
+  $\overrightarrow{AC} \times (\overrightarrow{AB} \cdot
+  \overrightarrow{CD}) = 0$, and this yields three more polynomials.
 
 % ------------------------
 \item[$\triangleright$] {\tt orthogonal\_lines} $l$ $m$ --- the lines
   $l$ and $m$ are orthogonal.
 
-{\em Polynomials:} If the first approach is used, then the lines are
-given by the points $(l_A, l_B)$ and $(l_A, l_B)$, so this reduces to
-the previous case of $orthogonal\_lines\ l_A\ l_B\ m_A\ m_B$. If the
-second approach is used, the direction vectors of the lines are given
-as the input, and the polynomial is $\overrightarrow{l_v} \cdot
-\overrightarrow{m_v} = 0$. Similarly for intersection condition,
-polynomial are derived from $\overrightarrow{m_Am_B} \times
-(\overrightarrow{l_v} \cdot \overrightarrow{m_v}) = 0$.
+  {\em Polynomials:} If the second approach is used, the direction
+  vectors of the lines are given as the input, and the polynomials are
+  derived from $\overrightarrow{l_v} \cdot \overrightarrow{m_v} = 0$
+  and
+  $\overrightarrow{m_Am_B} \times (\overrightarrow{l_v} \cdot
+  \overrightarrow{m_v}) = 0$.
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_lines} $A$ $B$ $C$ $D$ ---
+  lines $AB$ and $CD$ are parallel.
+
+  {\em Polynomials:} The three polynomials are derived from
+  $\overrightarrow{AB} \times \overrightarrow{CD}$.
 
 % ------------------------
 \item[$\triangleright$] {\tt parallel\_lines} $p$ $q$ --- lines $p$
   and $q$ are parallel.
 
-{\em Polynomials:} The three polynomials are derived from
-$\overrightarrow{p_Ap_B} \times \overrightarrow{q_Aq_B}$ or
-$\overrightarrow{p_v} \times \overrightarrow{q_v}$ depending on the
-approach.
+  {\em Polynomials:} If the second approach is used, the three
+  polynomials derived from
+  $\overrightarrow{p_v} \times \overrightarrow{q_v}$.
+
+\bigskip
+
+Next we describe some relations that also involve planes.
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_in\_plane} $A$ $P$ $Q$ $R$
+  --- the point $A$ belongs to the plane determined by points $P$,
+  $Q$, and $R$.
+
+  {\em Polynomials:} The polynomial
+$$\overrightarrow{PA}\cdot (\overrightarrow{PQ} \times \overrightarrow{PR}) = 0.$$
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_in\_plane} $A$ $\pi$ --- the
+  point $A$ belongs to the plane $\pi$.
+
+  {\em Polynomials:} If the second approach is used, the polynomial
+  $\overrightarrow{\pi_v} \cdot \overrightarrow{A} + \pi^{d} = 0$.
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_planes} $A$ $B$ $C$ $P$ $Q$ $R$
+  --- the plane determined by points $A$, $B$, and $C$, and the plane
+  determined by points $P$, $Q$, and $R$ are parallel.
+
+{\em Polynomials:} If the first approach is used, polynomials are
+derived from:
+
+$$\overrightarrow{PQ}\cdot \overrightarrow{AC} \times \overrightarrow{BA} = 0$$
+$$\overrightarrow{PR}\cdot \overrightarrow{AC} \times \overrightarrow{AB} = 0$$
+
+Denote the plane determined by $A$, $B$, and $C$ by $\alpha$, and the
+plane determined by $P$, $Q$, and $R$ by $\beta$. These two equations
+are derived from the conditions that vectors of all lines parallel to
+$\beta$ plane are orthogonal to the normal vector of the plane
+$\beta$. Since $\beta$ and $\alpha$ should be parallel, vectors of
+lines in $\beta$ should be orthogonal to the normal vector of
+$\alpha$, e.g. to the
+$\overrightarrow{AC} \times \overrightarrow{BA}$.  However,
+polynomials gained from these equations are quite complex (and can
+negatively effect algebraic theorem provers). For example, the first
+polynomial is:
+$$(P^x - Q^x)(A^y - B^y)(A^z - C^z) + (A^x - B^x)(A^y - C^y)(P^z - Q^z) \ +$$
+$$(P^x - Q^y)(A^z - B^z)(A^x - C^x) - (P^z - Q^z)(A^y - B^y)(A^x - C^x) \ -$$
+$$(A^z - B^z)(A^y - C^y)(P^x - Q^x) - (P^x - Q^y)(A^x - B^x)(A^z - C^z) = 0$$
+
 
 % ------------------------
 \item[$\triangleright$] {\tt parallel\_planes} $\alpha$ $\beta$ ---
   planes $\alpha$ and $\beta$ are parallel.
 
-{\em Polynomials:} If the first approach is used, polynomials are
-derived from:
-
-$$\overrightarrow{\beta_A\beta_B}\cdot \overrightarrow{\alpha_A\alpha_C} \times \overrightarrow{\alpha_B\alpha_A} = 0$$
-$$\overrightarrow{\beta_A\beta_C}\cdot \overrightarrow{\alpha_A\alpha_C} \times \overrightarrow{\alpha_A\alpha_B} = 0$$
-
-These two equations are derived from conditions that vectors of lines
-in $\beta$ plane are orthogonal to the vector determine the plane
-$\beta$. Since $\beta$ and $\alpha$ should be parallel, vectors of
-lines in $\beta$ should be orthogonal to the vector determine plane
-$\alpha$, e.g. to the $\overrightarrow{\alpha_A\alpha_C} \times
-\overrightarrow{\alpha_B\alpha_A}$. However, polynomials gained from
-these equations are quite complex (which we shall see is important
-property for algebraic theorem provers). For example, first polynomial
-is:
-$$(\beta_{A^x} - \beta_{B^x})(\alpha_{A^y} - \alpha_{B^y})(\alpha_{A^z} - \alpha_{C^z}) + (\alpha_{A^x} - \alpha_{B^x})(\alpha_{A^y} - \alpha_{C^y})(\beta_{A^z} - \beta_{B^z}) +$$
-$$(\beta_{A^x} - \beta_{B^y})(\alpha_{A^z} - \alpha_{B^z})(\alpha_{A^x} - \alpha_{C^x}) - (\beta_{A^z} - \beta_{B^z})(\alpha_{A^y} - \alpha_{B^y})(\alpha_{A^x} - \alpha_{C^x}) -$$
-$$(\alpha_{A^z} - \alpha_{B^z})(\alpha_{A^y} - \alpha_{C^y})(\beta_{A^x} - \beta_{B^x}) - (\beta_{A^x} - \beta_{B^y})(\alpha_{A^x} - \alpha_{B^x})(\alpha_{A^z} - \alpha_{C^z}) = 0$$
-
+{\em Polynomials:} 
 If the second approach is used, the three polynomials are derived from
-$\overrightarrow{\alpha_v} \times \overrightarrow{\beta_v} = 0.$
-For the comparison, one of the polynomials derived using this approach is:
-$$\alpha_{v^y}\beta_{v^z} - \alpha_{v^z}\beta_{v^y} = 0$$
+$\overrightarrow{\alpha_v} \times \overrightarrow{\beta_v} = 0.$ For
+the comparison, one of the three polynomials derived using this
+approach is:
+$$\alpha_{v^y}\beta_{v^z} - \alpha_{v^z}\beta_{v^y} = 0,$$
+and it is significantly simpler than the one in the first approach.
 
+\item[$\triangleright$] {\tt orthogonal\_planes} $A$ $B$ $C$ $P$ $Q$ $R$
+  --- the plane determined by points $A$, $B$, and $C$, and the plane
+  determined by points $P$, $Q$, and $R$ are orthogonal.
+
+  {\em Polynomials:} The polynomial is derived from
+  $(\overrightarrow{AB} \times \overrightarrow{AC}) \cdot
+  (\overrightarrow{PQ} \times \overrightarrow{PR}) = 0$.
 
 % ------------------------
 \item[$\triangleright$] {\tt orthogonal\_planes} $\alpha$ $\beta$ ---
   checks weather two planes, $\alpha$ and $\beta$ are orthogonal.
 
-{\em Polynomials:} If the first approach is used, the polynomial is
-derived from $(\overrightarrow{\alpha_A\alpha_B} \times
-\overrightarrow{\alpha_A\alpha_B}) \cdot
-(\overrightarrow{\beta_A\beta_B} \times
-\overrightarrow{\beta_A\beta_B}) = 0$.
 
 If the second approach is used, the polynomial is
 $\overrightarrow{\alpha_v} \cdot \overrightarrow{\beta_v} = 0$.
 
 % ------------------------
-\item[$\triangleright$] {\tt point\_in\_plane} $A$ $\pi$ --- the point
-  $A$ belongs to the plane $\pi$.
+\item[$\triangleright$] {\tt parallel\_line\_plane} $A$ $B$ $P$ $Q$ $R$ ---
+  line $AB$ and plane $PQR$ are parallel.
 
-{\em Polynomials:} If the first approach is used, then the polynomial
-$$\overrightarrow{\pi_AA}\cdot (\overrightarrow{\pi_A\pi_B} \times \overrightarrow{\pi_A\pi_C}) = 0.$$
-If the second approach is used, then the polynomial
-$\overrightarrow{\pi_v} \cdot \overrightarrow{A} + \pi^{d} = 0$.
+  {\em Polynomials:} The polynomial is determined from
+  $\overrightarrow{AB} \cdot (\overrightarrow{PQ \times PR}) = 0$.
+
+{\em Note:} This statement also holds if line belongs to the plane.
 
 % ------------------------
 \item[$\triangleright$] {\tt parallel\_line\_plane} $p$ $\alpha$ ---
   line $p$ and plane $\alpha$ are parallel.
 
-{\em Polynomials:} 
-If the first approach is used, then the polynomial is
-$\overrightarrow{p_Ap_B} \cdot (\overrightarrow{\alpha_A\alpha_B \times \alpha_A\alpha_C}) = 0$.
-If the second approach is used, then polynomial
-$\overrightarrow{p_v} \cdot \overrightarrow{\alpha_v} = 0$.
+  {\em Polynomials:} If the second approach is used, then polynomial
+  $\overrightarrow{p_v} \cdot \overrightarrow{\alpha_v} = 0$.
 
 {\em Note:} This statement also holds if line belongs to the plane.
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_line\_plane} $A$ $B$ $P$ $Q$
+  $R$ --- the line $AB$ and plane $PQR$ are orthogonal.
+
+  {\em Polynomials:} Two polynomials are derived from
+  $\overrightarrow{AB} \cdot \overrightarrow{PQ} = 0$ and
+  $\overrightarrow{AB} \cdot \overrightarrow{PR} = 0$.
 
 % ------------------------
 \item[$\triangleright$] {\tt orthogonal\_line\_plane} $p$ $\alpha$ ---
   the line $p$ and plane $\alpha$ are orthogonal.
 
-{\em Polynomials:} If the first approach is used polynomials are
-derived from $\overrightarrow{p_Ap_B} \cdot
-\overrightarrow{\alpha_A\alpha_B} = 0$ and $\overrightarrow{p_Ap_B}
-\cdot \overrightarrow{\alpha_A\alpha_C} = 0$.
+  {\em Polynomials:} If the second approach is used the three
+  polynomials derived from
+  $\overrightarrow{p_v} \times \overrightarrow{\alpha_v} = 0$.
 
-If the second approach is used the three polynomials
-$\overrightarrow{p_v} \times \overrightarrow{\alpha_v} = 0$.
+% ------------------------
+\item[$\triangleright$] {\tt line\_in\_plane} $AB$ $PQR$ --- the line
+  $AB$ is in the plane $PQR$.
+
+  {\em Polynomials:} Polynomials are derived from two conditions {\tt
+    point\_in\_plane} $A$ $P$ $Q$ $R$ and {\tt point\_in\_plane} $B$
+  $P$ $Q$ $R$.
 
 % ------------------------
 \item[$\triangleright$] {\tt line\_in\_plane} $l$ $\alpha$ --- the $l$
   is in the plane $\alpha$.
 
-
-{\em Polynomials:} If the first approach is used polynomials are
-derived from two conditions {\tt point\_in\_plane} $l_A$ $\pi$ and
-{\tt point\_in\_plane} $l_B$ $\pi$.
-
-If the second approach is used, polynomials are derived from {\tt
-  point\_in\_plane} $l_A$ $\pi$ and {\tt orthogonal\_line\_plane} $l$
-$\alpha$.
+  {\em Polynomials:} If the second approach is used, polynomials are
+  derived from {\tt point\_in\_plane} $l_A$ $\pi$ and
+  $l_v \cdot \alpha_v = 0$.
 
 % ------------------------
 \item[$\triangleright$] {\tt equal\_angles} $A$ $O_1$ $B$ $C$ $O_2$ $D$ --- angles $\angle AO_1B$ and $\angle
@@ -838,14 +874,13 @@ $$\cos{\angle AO_1B} = \frac{\overrightarrow{AO_1}\cdot
   \overrightarrow{BO_1}}{2|AO_1||BO_1|}.$$
 
 Polynomial equation for $\cos{\angle CO_2D}$ is similar. However,
-distance ($|AO_1|$ and $|BO_1|$) is determined using square root and
-polynomials for algebraic theorem provers cannot have square
-roots. Thus, squares of the cosines of an angles must be compared ---
-$\cos^2{\angle AO_1B} = \cos^2{\angle CO_2D}$. Unfortunately, this
-makes the condition weakened since squares of cosines of accute and
-obtuse angle could be same although angles itself are not
-equal. Finally, using several algebraic equations polynomial is
-derived from
+distances ($|AO_1|$ and $|BO_1|$) are calculated square roots and that
+cannot be processed by algebraic theorem provers (that accept only
+polynomial equations). Thus, squares of the cosines of an angles must
+be compared --- $\cos^2{\angle AO_1B} = \cos^2{\angle CO_2D}$.
+Unfortunately, this makes the condition weakened since squares of
+cosines of accute and obtuse angle could be same although angles
+itself are not equal. The final polinomial is derived from
 $$(\overrightarrow{AO_1}\cdot  \overrightarrow{BO_1})^2|CO_2|^2|DO_2|^2 = (\overrightarrow{CO_2}\cdot  \overrightarrow{DO_2})^2|AO_1|^2|BO_1|^2.$$
 
 The polynomial derived from this equation is quite complex and
