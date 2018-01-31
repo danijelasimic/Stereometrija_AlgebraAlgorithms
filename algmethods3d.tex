@@ -664,6 +664,7 @@ system).
 {\em Polynomials:} The three polynomials are derived from
 $\overrightarrow{PQ} \times \overrightarrow{Al_A} = 0$.
 
+% ------------------------
 \item[$\triangleright$] {\tt incident} $A$ $l$ --- point $A$ belongs
   to the line $l$.
 
@@ -702,26 +703,6 @@ some variants of the Wu's method might have problem in the
 triangulation phase (for example, GeoProver exibited this behaviour).
 
 % ------------------------
-\item[$\triangleright$] {\tt intersection\_lines} $A$ $P$ $Q$ $M$ $N$
-  --- point $A$ is the intersection of lines $PQ$ and $MN$.
-
-  {\em Polynomials:} Six polynomials are derived from the conditions
-$incident\ A\ l_1$ and $incident\ A\ l_2$.
-
-Note again that the first three and the second three polynomials are
-dependent, so Wu's method might again have problems triangulating the
-system, and in those cases two out of six polynomials must be
-excluded.
-
-\item[$\triangleright$] {\tt intersection\_lines} $A$ $l_1$ $l_2$ ---
-  point $A$ is the intersection of lines $l_1$ and $l_2$.
-
-  {\em Polynomials:} If the first approach is used then this reduces
-  to $incident\ A\ l_A\ l_B\ m_A\ m_B$. If the second approach is
-  used, six polynomials are derived from the conditions
-  $incident\ A\ l_1$ and $incident\ A\ l_2$.
-
-
 \item[$\triangleright$] {\tt orthogonal\_lines} $A$ $B$ $C$ $D$ ---
   the line $AB$ is orthogonal on the line $CD$.
 
@@ -732,7 +713,7 @@ However, this conditions is not enough since it is only checked
 weather the appropriate vectors of the lines are orthogonal but lines
 itself could be skew. So, one more condition must be added in order to
 ensure that lines really intersect: $\overrightarrow{AC} \times
-(\overrightarrow{AB} \cdot \overrightarrow{CD} = 0$
+(\overrightarrow{AB} \cdot \overrightarrow{CD}) = 0$
 
 % ------------------------
 \item[$\triangleright$] {\tt orthogonal\_lines} $l$ $m$ --- the lines
@@ -775,14 +756,14 @@ $\alpha$, e.g. to the $\overrightarrow{\alpha_A\alpha_C} \times
 these equations are quite complex (which we shall see is important
 property for algebraic theorem provers). For example, first polynomial
 is:
-$$(\beta_{A_X} - \beta_{B_X})(\alpha_{A_y} - \alpha_{B_y})(\alpha_{A_z} - \alpha_{C_z}) + (\alpha_{A_x} - \alpha_{B_x})(\alpha_{A_y} - \alpha_{C_y})(\beta_{A_z} - \beta_{B_z}) +$$
-$$(\beta_{A_x} - \beta_{B_y})(\alpha_{A_z} - \alpha_{B_z})(\alpha_{A_x} - \alpha_{C_x}) - (\beta_{A_z} - \beta_{B_z})(\alpha_{A_y} - \alpha_{B_y})(\alpha_{A_x} - \alpha_{C_x}) -$$
-$$(\alpha_{A_z} - \alpha_{B_z})(\alpha_{A_y} - \alpha_{C_y})(\beta_{A_x} - \beta_{B_x}) - (\beta_{A_x} - \beta_{B_y})(\alpha_{A_x} - \alpha_{B_x})(\alpha_{A_z} - \alpha_{C_z}) = 0$$
+$$(\beta_{A^x} - \beta_{B^x})(\alpha_{A^y} - \alpha_{B^y})(\alpha_{A^z} - \alpha_{C^z}) + (\alpha_{A^x} - \alpha_{B^x})(\alpha_{A^y} - \alpha_{C^y})(\beta_{A^z} - \beta_{B^z}) +$$
+$$(\beta_{A^x} - \beta_{B^y})(\alpha_{A^z} - \alpha_{B^z})(\alpha_{A^x} - \alpha_{C^x}) - (\beta_{A^z} - \beta_{B^z})(\alpha_{A^y} - \alpha_{B^y})(\alpha_{A^x} - \alpha_{C^x}) -$$
+$$(\alpha_{A^z} - \alpha_{B^z})(\alpha_{A^y} - \alpha_{C^y})(\beta_{A^x} - \beta_{B^x}) - (\beta_{A^x} - \beta_{B^y})(\alpha_{A^x} - \alpha_{B^x})(\alpha_{A^z} - \alpha_{C^z}) = 0$$
 
 If the second approach is used, the three polynomials are derived from
 $\overrightarrow{\alpha_v} \times \overrightarrow{\beta_v} = 0.$
 For the comparison, one of the polynomials derived using this approach is:
-$$\alpha_{v_y}\beta_{v_z} - \alpha_{v_z}\beta_{v_y} = 0$$
+$$\alpha_{v^y}\beta_{v^z} - \alpha_{v^z}\beta_{v^y} = 0$$
 
 
 % ------------------------
@@ -845,34 +826,35 @@ If the second approach is used, polynomials are derived from {\tt
 $\alpha$.
 
 % ------------------------
-\item[$\triangleright$] {\tt equal\_angles} $A$ $O$ $B$ $C$ $K$ $D$ --- angles $\angle AOB$ and $\angle
-CKD$ are equal.
+\item[$\triangleright$] {\tt equal\_angles} $A$ $O_1$ $B$ $C$ $O_2$ $D$ --- angles $\angle AO_1B$ and $\angle
+CO_2D$ are equal.
 
 {\em Polynomials:} Polynomials for this condition could be derived
 using trigonometry condition:
-$$\cos^2{\angle AOB} = \cos^2{\angle CKD}$$
+$$\cos{\angle AO_1B} = \cos{\angle CO_2D}$$
 
-However, the condition is weakened since squares of cosines are
-compared and squares of accute and obtuse angle could be same although
-angles itself are not equal. Square of the cosine could be determined as following:
-$$\cos^2{\angle AOB} = \frac{(\overrightarrow{AO}\cdot
-  \overrightarrow{BO})^2}{4|AO|^2|BO|^2}$$ where $|AO|^2 =
-\overrightarrow{AO}\cdot \overrightarrow{AO}$.  Polynomial equation
-for $\cos^2{\angle CKD}$ is similar. Finally, using several algebraic
-equations polynomial is derived from
-$$(\overrightarrow{AO}\cdot  \overrightarrow{BO})^2|CK|^2|DK|^2 = (\overrightarrow{CK}\cdot  \overrightarrow{DK})^2|AO|^2|BO|^2.$$
+and cosine of an angle can be determined using following equation:
+$$\cos{\angle AO_1B} = \frac{\overrightarrow{AO_1}\cdot
+  \overrightarrow{BO_1}}{2|AO_1||BO_1|}.$$
 
-We shall see in the following chapter that polynomial derived from
-this equation is quite complex and challenging for algebraic theorem
-provers and it had to be dissembled onto more simpler ones.
+Polynomial equation for $\cos{\angle CO_2D}$ is similar. However,
+distance ($|AO_1|$ and $|BO_1|$) is determined using square root and
+polynomials for algebraic theorem provers cannot have square
+roots. Thus, squares of the cosines of an angles must be compared ---
+$\cos^2{\angle AO_1B} = \cos^2{\angle CO_2D}$. Unfortunately, this
+makes the condition weakened since squares of cosines of accute and
+obtuse angle could be same although angles itself are not
+equal. Finally, using several algebraic equations polynomial is
+derived from
+$$(\overrightarrow{AO_1}\cdot  \overrightarrow{BO_1})^2|CO_2|^2|DO_2|^2 = (\overrightarrow{CO_2}\cdot  \overrightarrow{DO_2})^2|AO_1|^2|BO_1|^2.$$
 
-\marginpar{Dodati pravila za pravilne objekte (tetraedar npr.)}
-\marginpar{Danijela: Ima dole, u construction rules}
+The polynomial derived from this equation is quite complex and
+challenging for algebraic theorem provers and in the following chapter
+we shall see how it can be dissembled onto more simpler ones.
 \end{description}
 
+
 \section{Construction rules}
-
-
 Each construction starts from some given (free) objects and proceeds
 by introducing new (dependent) objects. We will allow introducing only
 free points (and all lines, planes, and solids are going to be
@@ -899,11 +881,11 @@ then constructs the polynomials based on the relation $R(i_1, \ldots,
 i_n, o)$, where $R$ is the relation corresponding to the function $f$.
 For example, constructing the midpoint $m = midpoint\ A\ B$, reduces
 to introducing variables $m_x$ and $m_y$ and constructing polynomials
-from the condition $is\_midpoint\ m\ A\ B$. \marginpar{Razmisliti sta
-  se desava ako su $A$ i $B$ tacke sa numerickim koordinatama. Da li
-  tada uvodimo i numericke koordinate za $m$? Da li to radimo odmah
-  ili u posebnoj fazi simplifikacije?} However, in some construction
-steps we can introduce less parameters, and we describe those cases.
+from the condition $is\_midpoint\ m\ A\ B$. However, in some
+construction steps we can introduce less parameters, and we describe
+those cases. Also, some symbolic variables for free points could be
+substituted with numeric values and we described this procedure in
+simplification of polynomials (Section \ref{simplification}).
 
 \paragraph{Constructions of points}
 
@@ -917,131 +899,79 @@ fresh variables).
 \begin{description}
 
 % ------------------------
-\item[$\triangleright$] {\tt point} $A$ --- introduces a free point $A$.
-  {\em Objects and parameters:} A point $A$ with the three fresh parameters
-  $(A_x, A_y, A_z)$ \\
-  {\em Polynomials:} no polynomials are generated. \\
+\item[$\triangleright$] {\tt point} $A$ --- introduces a free point
+  $A$.  with the three fresh parameters $(A_x, A_y, A_z)$
 
 % ------------------------
-\item[$\triangleright$] {\tt point\_ratio} $M$ $A$ $B$ $p$ $q$ ---
-  construction of a point that divides a segment in a given ratio,
-  i.e., for two given points $A$ and $B$, and two integer numbers $p$
-  and $q$, this step constructs the point $M$ so that
-  $\frac{|AM|}{|BM|} = \frac{p}{q}$ holds.
+\item[$\triangleright$] {\tt intersection\_lines} $A$ $P$ $Q$ $M$ $N$
+  --- point $A$ is the intersection of lines $PQ$ and $MN$.
 
-  {\tt point\_ratio} $M$ $A$ $B$ $p$ $q$ = {\tt point\_segment\_ratio} $M$ $A$ $B$ $p$ $q$
+{\em Polynomials:} Six polynomials are derived from the conditions
+$incident\ A\ l_1$ and $incident\ A\ l_2$.
 
-{\em Note:} Note that {\tt midpoint} is a special case of this
-construction, e.g. it is possible to determine midpoint in the
-following way \mbox{{\tt point\_ratio} $M$ $A$ $B$ $1$ $1$}. However,
-we also support the \mbox{{\tt midpoint} $M$ $A$ $B$} construction.
+Note again that the first three and the second three polynomials are
+dependent, so Wu's method might again have problems triangulating the
+system, and in those cases two out of six polynomials must be
+excluded. However, it is not always trivial to determine which two of
+the six polynomials should be excluded. For example, it can happen
+(due to choice of the coordinates of the free points) that some
+variables are omitted in some polynomial equations due to
+multiplication with zero. So, in order to make triangular system,
+careful analysis must be taken in order to choose which polynomials
+could be omitted.
 
 % ------------------------
 \item[$\triangleright$] {\tt intersection\_lines} $A$ $l_1$ $l_2$ ---
-  this construction introduces the point $A$ that is
-  the intersection of the two given lines $l_1$ and $l_2$.
+  point $A$ is the intersection of lines $l_1$ and $l_2$.
 
-  {\em Input:} The two given lines $l_1$ and $l_2$ with parameters
-  $l_1(l_1^{v_x}, l_1^{v_y}, l_1^{v_z}, l_1^{p_x}, l_1^{p_y},
-  l_1^{p_z})$ and $l_2(l_2^{v_x}, l_2^{v_y}, l_2^{v_z}, l_2^{p_x}
-  l_2^{p_y}, l_2^{p_z})$.
+  {\em Polynomials:} If the first approach is used then this reduces
+  to $incident\ A\ l_A\ l_B\ m_A\ m_B$. If the second approach is
+  used, six polynomials are derived from the conditions
+  $incident\ A\ l_1$ and $incident\ A\ l_2$.
 
-  {\em Objects and parameters:} The point $A$ with three fresh
-  symbolic coordinates $(a^x, a^y, a^z)$.
-
-  {\em Polynomials:} We generate polynomials using rule:
-  {\tt intersection\_lines} $A$ $l_1$ $l_2$ = {\tt incident} $A$ $l_1$ and {\tt incident} $A$ $l_2$
-
-
-\begin{tabbing}
-{\em Polynomials for Wu's method:} \= $poly_1 = a^x - k_1\cdot l_1^{v_x} - l_1^{p_x}$ \\
-                   \> $poly_2 = a^y - k_1\cdot l_1^{v_y} - l_1^{p_y}$ \\
-                   \> $poly_3 = a^z - k_1\cdot l_1^{v_z} - l_1^{p_z}$ \\
-                   \> $poly_4 = a^x - k_2\cdot l_2^{v_x} - l_2^{p_x}$ \\
-                   \> $poly_5 = a^y - k_2\cdot l_2^{v_y} - l_2^{p_y}$ \\
-                   \> $poly_6 = a^z - k_2\cdot l_2^{v_z} - l_2^{p_z}$
-\end{tabbing}
-
-{\em Explanation:} 
-Since the point $a$ should belong to both lines $l_1$ (given by the
-point $\overrightarrow{l_1^p}$ and the vector
-$\overrightarrow{l_1^v}$) and $l_2$ (given by the point
-$\overrightarrow{l_2^p}$ and the vector $\overrightarrow{l_2^v}$) it
-must satisfy their parametric equations, i.e., it must hold that
-$\overrightarrow{A} = \overrightarrow{l_1^p} + k_1 \cdot
-\overrightarrow{l_1^v}$
-and
-$\overrightarrow{A} = \overrightarrow{l_2^p} + k_2 \cdot
-\overrightarrow{l_2^v}$.
-
-This is the most interesting case of point construction. In
-tree--dimensional space not all lines have intersection, some lines
-can be parallel, and others can be skew lines. Note that the
-polynomials use two unknown variables $k_1$ and $k_2$ that
-respectively represent line ratios for lines $l_1$ and
-$l_2$. Therefore, the total number of unknown variables is five, but
-there are six polynomials that this construction generates. If all six
-polynomials are included in the construction set, then it will not be
-possible to make triangular system since there will be more
-polynomials than unknown variables.\marginpar{Govori se o postupku
-  resavanja o kom nije jos bilo reci.} Five polynomials can be used to
-determine the solution of the system of equations and the remaining
-polynomial should be used to justify the solution. Any of the
-polynomials could be excluded and in our solution we always exclude
-$p_6$. If all five chosen polynomials have zero value for the
-calculated coordinates, then also the remaining polynomial must be
-zero (or otherwise, the lines will not always intersect). If the
-excluded polynomial is not considered, that could lead into wrong
-constructions and conclusions since now it is possible to (falsely)
-determine the intersection point of parallel or skew lines. So,
-instead of just deleting this last polynomial, is should be put it in
-the conclusion set.
 
 % ------------------------
-\item[$\triangleright$] {\tt intersection\_4points} $M$ $A$ $B$ $C$
-  $D$ --- for four given point $A$, $B$, $C$ and $D$ determine the
-  point $M$ which is intersection of line determined by points $A$ and
-  $B$ and line determined by points $C$ and $D$.
+\item[$\triangleright$] {\tt intersection\_line\_plane} $A$ $l$ $\pi$ ---
+  point $A$ is the intersection of line $l$ and plane $\pi$.
 
-  {\em Input:} Four points $A$, $B$, $C$ and $D$ with symbolic
-  coordinates $(a^x, a^y, a^z)$, $(b^x, b^y, b^z)$, $(c^x, c^y, c^z)$
-  and $(d^x, d^y, d^z)$.
+  {\em Polynomials} are derived from {\tt incident $A$ $l$} and {\tt
+    incident $A$ $\pi$}.
 
-  {\em Objects and parameters:} The point $M$ with three fresh
-  symbolic coordinates $(m^x, m^y, m^z)$.
+% ------------------------
+\item[$\triangleright$] {\tt make\_point\_on\_line} $A$ $l$ ---
+  construct a point $A$ that belongs to the line $l$.
+  
+  {\em Input:} Line $l$ with parameters with parameters $l_A$ and
+  $l_B$ for the first approach or with symbolic parameters $l(l^{v_x},
+  l^{v_y}, l^{v_z}, l^{p_x}, l^{p_y}, l^{p_z})$ for the second
+  approach.
 
-\begin{tabbing}
-{\em Polynomials:} \= $poly_1 = m^x - k^x\cdot b^x + k_1\cdot a^x - a^x$ \\
-                   \> $poly_2 = m^y - k^x\cdot b^y + k_1\cdot a^y - a^y$ \\
-                   \> $poly_3 = m^z - k^x\cdot b^z + k_1\cdot a^z - a^z$ \\
-                   \> $poly_4 = m^x - k^y\cdot d^x + k_2\cdot c^x - c^x$ \\
-                   \> $poly_5 = m^y - k^y\cdot d^y + k_2\cdot c^y - c^y$ \\
-                   \> $poly_6 = m^z - k^y\cdot d^z + k_2\cdot c^z - c^z$
-\end{tabbing}
+  {\em Objects and parameters:} Point $A(a^x, a^y, a^z)$, for three
+  fresh parameters $a^x$, $a^y$ and $a^z$. {\em Polynomials} are
+  derived from {\tt incident $A$ $l$}.
 
-{\em Explanation:} The polynomials were generated using the following
-line equations: \\ $x = k_1\cdot (b^x - a^x) + a^x \ \ \ \ y =
-k_1\cdot (b^y - a^y) + a^y \ \ \ \ z = k_1\cdot (b^z - a^z) + a^z$ ---
-line determined by points $A$ and $B$ \\ $x = k_2\cdot (d^x - c^x) +
-c^x \ \ \ \ y = k_2\cdot (d^y - c^y) + c^y \ \ \ \ z = k_2\cdot (d^z -
-c^z) + c^z$ --- line determined by points $C$ and $D$.
+% ------------------------
+\item[$\triangleright$] {\tt make\_point\_in\_plane} $A$ $\pi$ ---
+  construct a point $A$ that belongs to the plane $\pi$.
+  
+  {\em Input:} Plane $\pi$ with parameters $\pi_A$, $\pi_B$ and
+  $\pi_C$ for the first approach or $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z},
+  \pi^{d})$ for the second approach.
 
+  {\em Objects and parameters:} Point $A(a^x, a^y, a^z)$, for three
+  fresh parameters $a^x$, $a^y$ and $a^z$. {\em Polynomial} are
+  derived from {\tt incident $A$ $\pi$}.
 
+% ------------------------
+\item[$\triangleright$] {\tt translate\_z} $A$ $O$ $q$ --- construct a point by translating point $A$
+  by some parameter along $z$-axis.
+  
+  {\em Input:} Point $O$ with symbolic coordinates $(o^x, o^y, o^z)$
+  and parameter $q$.
 
-This construction could be performed by explicitly constructing lines
-$AB$ and $CD$ and then constructing their intersection using the
-previous rules. However, it turns out that this would introduce many
-new symbolic variables (parameters of the two lines), the system would
-become more complex, and the algebraic solver would have to work with
-a much more difficult task. Therefore, it is much more efficient to
-have this construction as an elementary step, especially, having in
-mind that this step is used very often in classic geometric problems. 
-
-Note that again there are six polynomials and five unknown
-variables. This problem is resolved in the same manner as above by
-putting polynomial $poly_6$ in the conclusion set. The reason is the
-same as in the previous construction rule and again it is possible not
-to have intersection since lines can be parallel or skew.
+  {\em Objects and parameters:} Point $A(o^x, o^y, a^z)$, for one
+  fresh parameter, $a^z$. {\em Polynomial} is derived from
+  $\overrightarrow{AO} = (0, 0, q)$.
 \end{description}
 
 
@@ -1052,64 +982,42 @@ line can be constructed as a line trough two free points).
 
 \begin{description}
 % ------------------------
-\item[$\triangleright$] {\tt line\_points} $l$ $A$ $B$
-
-  {\em Description} For two given points $A$ and $B$ determines the
-  line $l$ that goes through these points.
-
+\item[$\triangleright$] {\tt line\_points} $l$ $A$ $B$ --- for two
+  given points $A$ and $B$ determines the line $l$ that goes through
+  these points.
 
   {\em Input:} Two points $A$ and $B$ with symbolic coordinates $(a^x,
   a^y, a^z)$ and $(b^x, b^y, b^z)$.
 
-  {\em Objects and parameters:} The line $l$ with parameters
+  In the first approach, there are no new polynomials and it just
+  denoted that line $l$ is determined with points $A$ and $B$.
+
+  In the second approach are introduced the line $l$ with parameters
   $(l^{v_x}, l^{v_y}, l^{v_z}, a^x, a^y, a^z)$ (new, fresh parameters
-  $(l^{v_x}, l^{v_y}, l^{v_z})$ are parameters of line vector).
-
-\begin{tabbing}
-{\em Polynomials:} \= $poly_1 = l^{v_x} - a^x + b^x$ \\
-                   \> $poly_2 = l^{v_y} - a^y + b^y$ \\
-                   \> $poly_3 = l^{v_z} - a^z + b^z$ \\
-                   \> $\overrightarrow{l} = \overrightarrow{AB}$ \\
-                   \> {\tt line\_points} $l$ $A$ $B$ = {\tt incident} $A$ $l$ and {\tt incident} $B$ $l$
-\end{tabbing}
-
-{\em Explanation:} Each line is determined by a set of 6 parameters,
-but note that in this construction we have chosen to introduce only
-three. This is due to the fact that the parameters for the point on
-the line can be exactly the coordinates of the point $A$ (or $B$),
-that are already introduced symbolic variables, so there is no need to
-introduce new variables and polynomials (if the parameters $l^{p_x}$,
-$l^{p_y}$ and $l^{p_z}$ were introduced, they would need to satisfy
-the trivial polynomials $l^{p_x} - a_x$, $l^{p_y}-a_y$ and $l^{p_z} -
-a_z$). The parameters $(l^{v_x}, l^{v_y}, l^{v_z})$ that correspond to
-the vector of the line must satisfy $\overrightarrow{v} =
-\overrightarrow{BA}$, and the polynomials are generated from this
-equation (when written in symbolic coordinates).
+  $(l^{v_x}, l^{v_y}, l^{v_z})$ are parameters of line vector). As it
+  can be noted, parameters for a point belonging the line are
+  parameters of point $A$. There were no need to introduce new
+  parameters and we can arbitrary choose between points $A$ and
+  $B$. Polynomials are derived from {\tt incident $A$ $l$} and {\tt
+    incident $A$ $l$}.
 
 % ------------------------
-\item[$\triangleright$] {\tt line\_orth\_plane} $l$ $\pi$ $A$ \\
-
-{\em Description:} For a given plane $\pi$ and a point $A$ determines
-line $l$ witch is orhogonal on the given plane $\pi$ and incides with
-the point $A$.
+\item[$\triangleright$] {\tt line\_orth\_plane} $l$ $\pi$ $A$ -- for a
+  given plane $\pi$ and a point $A$ determines line $l$ witch is
+  orhogonal on the given plane $\pi$ and incides with the point $A$.
 
 {\em Input:} Plane $\pi$ with symbolic parameters $(\pi^{v_x},
 \pi^{v_y}, \pi^{v_z}, \pi^{d})$ and point $A$ with symbolic
 coordinates $(a^x, a^y, a^z)$.
 
-{\em Objects and parameters:} Line $l$ with parameters $(\pi^{v_x},
-\pi^{v_y}, \pi^{v_z}, \pi^{d}, a^x, a^y, a^z)$ (no new parameters are
-generated).
+{\em Objects and parameters:} If the first approach is used then first
+point determining the line is point $A$ and the second point is $A +
+\overrightarrow{\pi}$ where $\overrightarrow{\pi}$ is determined with
+$\overrightarrow{\pi_A\pi_B} \times \overrightarrow{\pi_A\pi_C}$.
 
-{\em Polynomials:} No polynomials are generated.
-                   {\tt line\_orth\_plane} $l$ $\pi$ $A$ = {\tt incident} $A$ $l$ and {\tt parallel\_line\_plane} $l$ $\pi$
-
-{\em Explanation:} Both the parameters for the point on the line and
-the vector of the line can be represented by the already introduced
-symbolic coordinates --- the point can be the point $A$ and the line
-vector could be equal to the normal vector of the plane. Therefore, it
-was not necessary to add neither new symbolic parameters, nor the new
-polynomials.
+If the second approach is used line $l$
+is determined with parameters $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z},
+\pi^{d}, a^x, a^y, a^z)$ (no new parameters are generated).
 \end{description}
 
 The construction of the line trough a given point that is parallel to
@@ -1124,96 +1032,23 @@ a free plane can be constructed as a plane trough three free points).
 
 \begin{description}
 % ------------------------
-\item[$\triangleright$] {\tt plane\_points} $\pi$ $A$ $B$ $C$
-
-{\em Description:} For three given points $A$, $B$ and $C$ determines
-the plane $\pi$ containing all of them.
+\item[$\triangleright$] {\tt plane\_points} $\pi$ $A$ $B$ $C$ --- for
+  three given points $A$, $B$ and $C$ determines the plane $\pi$
+  containing all of them.
 
 {\em Input:} Tree point $A$, $B$ and $C$ with symbolic coordinates
 $(a^x, a^y, a^z)$, $(b^x, b^y, b^z)$ and $(c^x, c^y, c^z)$.
 
-{\em Objects and parameters:} Plane $\pi$ with fresh parameters
-$(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$.
+If the first approach is used then there are no new polynomials since
+it is just noted in the system that plane $\pi$ is determined with
+points $A$, $B$ and $C$.
 
-\marginpar{ovo nije sasvim tacno, jer ovde imamo tri jednacine, a 4 nepoznate}
-\begin{tabbing}
-{\em Polynomials:} \= $poly_1 = \pi^{v_x} - b^y\cdot c^z + b^y\cdot a^z + a^y\cdot c^z + b^z\cdot c^y - b^z\cdot a^y - a^z\cdot c^y$ \\
-                   \> $poly_2 = \pi^{v_y} - b^x\cdot c^z - b^x\cdot a^z - a^x\cdot c^z - b^z\cdot c^x + b^z\cdot a^x + a^z\cdot c^x$ \\
-                   \> $poly_3 = \pi^{v_z} - b^x\cdot c^y + b^x\cdot a^y + a^x\cdot c^y + b^y\cdot c^x - b^y\cdot a^x - a^y\cdot c^x$ \\
-                   \> $poly_4 = \pi^{d} + \pi^{v_x}\cdot a^x + \pi^{v_y}\cdot a^y + \pi^{v_z}\cdot a^z$ \\
-                   \> {\tt plane\_points} $\pi$ $A$ $B$ $C$ = \= {\tt point\_in\_plane} $A$ $\pi$ and \\
-                                                              \>\> {\tt point\_in\_plane} $B$ $\pi$ and \\
-                                                              \>\> {\tt point\_in\_plane} $C$ $\pi$ \\
-\end{tabbing}
-
-{\em Explanation:} The normal vector of the line can be obtained as a
-vector product of the vectors $\overrightarrow{AB}$ and
-$\overrightarrow{AC}$. Since $(b^x - a^x, b^y - a^y, b^z - a^z)$ and
-$(c^x - a^x, c^y - a^y, c^z - a^z)$ are vectors of two lines
-determined by points $A$ and $B$, and points $C$ and $D$, the first
-three polynomials are derived using the formula:
-$$(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}) = \begin{array}{ccc} i & j & k \\ b^x
-  - a^x & b^y - a^y & b^z - a^z \\ c^x - a^x & c^y - a^y & c^z - a^z
-\end{array}$$
-
-The last parameter of the plane $\pi^{d}$ is obtained from the
-condition that the point $A$ is in the plane $\pi$, and satisfies its
-equation. Note that this equation uses the symbolic parameters
-$\pi^{v_x}$, $\pi^{v_y}$ and $\pi^{v_z}$ that are introduced in this
-construction step.
-
-% ------------------------
-\item[$\triangleright$] {\tt make\_point\_on\_line} $A$ $l$
-
-  {\em Description:} Construct a point that belongs to the given line.
-  
-  {\em Input:} Line $l$ with symbolic parameters with parameters
-  $l(l^{v_x}, l^{v_y}, l^{v_z}, l^{p_x}, l^{p_y}, l^{p_z})$.
-
-  {\em Objects and parameters:} Point $A(a^x, a^y, a^z)$, for three
-  fresh parameters $a^x$, $a^y$ and $a^z$.
-
-\begin{tabbing}
-{\em Polynomials:} \= $poly_1 = l^{p_x}\cdot l^{v_y} - a^x\cdot l^{v_y} - l^{p_y}\cdot l^{v_x} + a^y\cdot l^{v_x}$ \\
-                   \> $poly_2 = l^{p_x}\cdot l^{v_z} - a^x\cdot l^{v_z} - l^{p_z}\cdot l^{v_x} + a^z\cdot l^{v_x}$ \\
-                   \> $poly_3 = l^{p_y}\cdot l^{v_z} - a^y\cdot l^{v_z} - l^{p_z}\cdot l^{v_y} + a^z\cdot l^{v_y}$ \\
-                   \> {\tt make\_point\_on\_line $A$ $l$} = {\tt incident} $A$ $l$
-\end{tabbing}
-
-% ------------------------
-\item[$\triangleright$] {\tt make\_point\_in\_plane} $A$ $\pi$ 
-
-  {\em Description:} Construct a point that belongs to the given
-  plane.
-  
-  {\em Input:} Plane $\pi$ with fresh parameters $(\pi^{v_x},
-  \pi^{v_y}, \pi^{v_z}, \pi^{d})$.
-
-  {\em Objects and parameters:} Point $A(a^x, a^y, a^z)$, for three
-  fresh parameters $a^x$, $a^y$ and $a^z$.
-
-\begin{tabbing}
-{\em Polynomials:} \= $poly = \overrightarrow{\pi} \circ \overrightarrow{A} + \pi^{d}$ \\
-                   \> {\tt make\_point\_in\_plane} $A$ $\pi$  = {\tt point\_in\_plane} $A$ $\pi$
-
-\end{tabbing}
-
-% ------------------------
-\item[$\triangleright$] {\tt translate\_z} $A$ $O$ $q$
-
-  {\em Description:} Construct a point given by translating another
-  point by some parameter along $z$-axis.
-  
-  {\em Input:} Point $O$ with symbolic coordinates $(o^x, o^y, o^z)$
-  and parameter $q$.
-
-  {\em Objects and parameters:} Point $A(o^x, o^y, a^z)$, for one
-  fresh parameter, $a^z$.
-
-\begin{tabbing}
-{\em Polynomials:} \= $poly = a^z - q - o^z$ \\
-                   $\overrightarrow{AO} = (0, 0, q)$
-\end{tabbing}
+If the second approach is used then plane $\pi$ is determined with
+fresh parameters $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$ and
+there are new polynomials connecting these fresh parameters with
+symbolic coordinates of the points. Polynomials are derived from
+$\overrightarrow{\pi} = \overrightarrow{AB} \times
+\overrightarrow{AC}$ and {\tt incident $\pi$ $A$}.
 \end{description}
 
 Very similar methods can be used to construct the plane that contains
@@ -1221,12 +1056,10 @@ the given line and is orthogonal or is parallel to the given plane.
 
 \paragraph{Solid construction}
 \label{objectconstruction}
-\marginpar{Da li uvesti izometrijske transformacije?}
-\marginpar{Skratiti opise, premestiti ranije?}
 
-Many exercises in solid geometry have objects and usually start with a
-sentence of the form {\em "In a given cube..."}, {\em "In a given
-  pyramid..."}, {\em "In a given prism..."} and so on. The first
+Problems in solid geometry usually deal with objects and usually start
+with a sentence of the form {\em "In a given cube..."}, {\em "In a
+  given pyramid..."}, {\em "In a given prism..."} and so on. The first
 approach was to construct such solids using construction rules
 presented above. This means that there were many rules (around 20)
 constructing only one cube and thus many new variables and polynomials
@@ -1257,21 +1090,19 @@ most exercises.
 
 \begin{description}
 % ------------------------
-\item[$\triangleright$] {\tt make\_cube} $A$ $B$ $C$ $D$ $A_1$ $B_1$ $C_1$ $D_1$\\
-  {\em Description:} Construct the cube in the canonical position, with the edge length equal to $1$.\\
-  {\em Input}: none\\
+\item[$\triangleright$] {\tt make\_cube} $A$ $B$ $C$ $D$ $A_1$ $B_1$
+  $C_1$ $D_1$ --- construct the cube in the canonical position, with
+  the edge length equal to $1$.\\
   {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
   $C(1, 1, 0)$, $D(0, 1, 0)$, $A_1(0, 0, 1)$, $B_1(1, 0, 1)$,
   $C_1(1, 1, 1)$ and $D(0, 1, 1)$.\\
-  {\em Polynomials:} No polynomials are generated. \\
-  {\em Explanation:} Since the cube is in the canonical position, no
-  symbolic variables are introduced.
+  {\em Explanation:} No polynomials are generated. Since the cube is
+  in the canonical position, no symbolic variables are introduced.
 
 % ------------------------
-\item[$\triangleright$] {\tt make\_tetrahedron} $A$ $B$ $C$ $D$\label{tetrahedron}\\
-  {\em Description: }Construct the tetrahedron in the canonical
-  position.\\
-  {\em Input: } none\\
+\item[$\triangleright$] {\tt make\_tetrahedron} $A$ $B$ $C$
+  $D$\label{tetrahedron} --- construct the tetrahedron in the
+  canonical position.\\
   {\em Objects and parameters:} The vertices of the tetrahedron have
   the coordinates $A(0, 0, 0)$, $B(1, 0, 0)$, $C(c^x, c^y, 0)$ and
   $D(c^x, d^y, d^z)$, with the four fresh parameters.
@@ -1290,14 +1121,10 @@ integer coefficients, so irrational values (and even fractions) must
 be introduced using polynomials.
 
 % ------------------------
-\item[$\triangleright$] {\tt make\_pyramid} $A$ $B$ $C$ $D$ $S$
-
-  {\em Description:} Construct a regular four--side pyramid in the
-  canonical position -- the base is a unit square in the $xOy$ plane,
-  its lateral edges are equal in length, and the height is not
-  constrained.
-  
-  {\em Input:} none
+\item[$\triangleright$] {\tt make\_pyramid} $A$ $B$ $C$ $D$ $S$ ---
+  construct a regular four--side pyramid in the canonical position --
+  the base is a unit square in the $xOy$ plane, its lateral edges are
+  equal in length, and the height is not constrained.
 
   {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
   $C(1, 1, 0)$, $D(0, 1, 0)$ and $S(s^x, s^y, s^z)$, for three fresh
@@ -1313,13 +1140,10 @@ it lies in the middle of the square, so $s^x = s^y =
 
 
 % ------------------------
-\marginpar{Sferu uopste nisam implementirala za pristup 2. Mozda to za
-  sada uopste ne pominjati, pa ako primete...}
-\item[$\triangleright$] {\tt make\_sphere} $\mathcal{S}$ $A$ $B$ $C$ $D$
-
-{\em Description:} Construct a sphere $\mathcal{S} = (O, r)$ where $O
-= (O^x, O^y, O^z)$ is center of the sphere and $r$ is its
-radius. Points $A$ $B$ $C$ $D$ are on the sphere $\mathcal{S}$.
+\item[$\triangleright$] {\tt make\_sphere} $\mathcal{S}$ $A$ $B$ $C$
+  $D$ --- construct a sphere $\mathcal{S} = (O, r)$ where $O = (O^x,
+  O^y, O^z)$ is center of the sphere and $r$ is its radius. Points $A$
+  $B$ $C$ $D$ are on the sphere $\mathcal{S}$.
   
   {\em Input:} Points $A$ $B$ $C$ and $D$.
 
@@ -1333,8 +1157,6 @@ $\overrightarrow{CO}\cdot\overrightarrow{CO} = r^2$ and
 $\overrightarrow{DO}\cdot\overrightarrow{DO} = r^2$.
 
 % ------------------------
-\marginpar{Ovo ne pripada bas ovde, ali ako dodamo ranije mora da se
-  objasni sta je sfera i cime je zadata. Mozda ovo i preskociti.}
 \item[$\triangleright$] {\tt point\_on\_sphere} $A$ $\mathcal{S}$ --- point $A$
   belongs to the sphere $\mathcal{S}$.
 
@@ -1344,31 +1166,19 @@ $\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
 
 
 % ------------------------
-\item[$\triangleright$] {\tt make\_square} $A$ $B$ $C$ $D$
-
-  {\em Description:} Construct a square in the canonical position --
-  the base is a unit square in the $xOy$ plane, its lateral edges are
-  equal in length, and the height is not constrained.
-  
-  {\em Input:} none
+\item[$\triangleright$] {\tt make\_square} $A$ $B$ $C$ $D$ ---
+  construct a square in the canonical position: the base is a unit
+  square in the $xOy$ plane, its lateral edges are equal in length,
+  and the height is not constrained.
 
   {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
   $C(1, 1, 0)$, $D(0, 1, 0)$.
 
-\begin{tabbing}
-{\em Polynomials:} no new polynomials are created.
-\end{tabbing}
-
-
 % ------------------------
-\item[$\triangleright$] {\tt equilateral\_triangle} $A$ $B$ $C$
-
-  {\em Description:} Construct a equilateral triangle in the canonical
-  position -- it is in $xOy$ plane, one point is in origin, and
-  another point is on $x$-axis.
-  
-  {\em Input:} none
-
+\item[$\triangleright$] {\tt equilateral\_triangle} $A$ $B$ $C$ ---
+  construct a equilateral triangle in the canonical position; it is in
+  $xOy$ plane, one point is in origin, and another point is on
+  $x$-axis. \\
   {\em Objects and parameters:} Points $A(0, 0, 0)$, $B(1, 0, 0)$,
   $C(c^x, c^y, 0)$, for two fresh parameters $c^x$ and $c^y$.
 
@@ -1379,18 +1189,14 @@ $\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
 
 
 % ------------------------
-\item[$\triangleright$] {\tt regular\_hexagon} $A_1$ $A_2$ $A_3$ $A_4$ $A_5$ $A_6$
-
-  {\em Description:} Construct a regular hexagon in the canonical
-  position -- it is in $xOy$ plane, one point is in origin, and
-  another point is on $x$-axis. 
-  
-  {\em Input:} none
-
+\item[$\triangleright$] {\tt regular\_hexagon} $A_1$ $A_2$ $A_3$ $A_4$
+  $A_5$ $A_6$ --- construct a regular hexagon in the canonical
+  position; it is in $xOy$ plane, one point is in origin, and another
+  point is on $x$-axis. \\
   {\em Objects and parameters:} Points $A_1(0, 0, 0)$, $A_2(1, 0, 0)$,
   $A_3(a_3^x, a_3^y, 0)$, $A_4(1, a_4^y, 0)$, $A_5(0, a_4^y, 0)$ and
   $A_6(a_6^x, a_3^y, 0)$, for four fresh parameters $a_3^x$, $a_3^y$,
-  $a_4^y$, and $a_6^x$.
+  $a_4^y$ and $a_6^x$.
 
 \begin{tabbing}
 {\em Polynomials:} \= $poly_1 = 2\cdot a_3^x - 3$ \\
