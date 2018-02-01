@@ -1118,6 +1118,7 @@ line can be constructed as a line trough two free points).
 
   {\em Polynomials:} \marginpar{\v Sta se ovde tacno desava sa
     polinomima u prvom pristupu? Da li se uvode simbolicke koordinate za drugu tacku?}
+  \marginpar{Danijela: Da, uvode se simbolicke koordinate, pa se onda pravi jednacina nova\_tacka - A - vektor\_prave = 0}
 
   If the second approach is used, no polynomials are generated.
 \end{description}
@@ -1148,10 +1149,34 @@ a free plane can be constructed as a plane trough three free points).
   derived from
   $\overrightarrow{\pi} = \overrightarrow{AB} \times
   \overrightarrow{AC}$ and {\tt point\_on\_plane $A$ $\pi$}.
+
+
+% ------------------------
+\item[$\triangleright$] $\pi$ = {\tt
+  make\_plane\_orth\_on\_plane\_has\_line} $\alpha$ $l$ --- for given
+  plane $\alpha$ and line $l$ constructs plane with line $l$ and
+  orthogonal to the plane $\alpha$.
+
+  {\em Introduced objects and parameters:} if the first approach is
+  used, no new variables are introduced and the name $\pi$ is
+  associated with the triple of points $l_A$, $l_B$, and new fresh
+  point $\pi_C$. If the second approach is used, then plane $\pi$ is
+  determined with fresh symbolic parameters $(\pi^{v_x}, \pi^{v_y},
+  \pi^{v_z}, \pi^{d})$.
+
+  {\em Polynomials:} If the first approach is used polynomials are
+  derived from $(\overrightarrow{\pi_Cl_A} \times
+  \overrightarrow{\pi_Cl_B}) \cdot (\overrightarrow{\alpha_A\alpha_B}
+  \times \overrightarrow{\alpha_A\alpha_C}) = 0$. If the second
+  approach is used, polynomials are derived from $\overrightarrow{\pi}
+  = \overrightarrow{\alpha} \times \overrightarrow{l}$ and {\tt
+    point\_on\_plane $l_A$ $\pi$}.
+
 \end{description}
 
 \marginpar{Ne bi bilo lose dodati makar jos jednu konstrukciju -
   npr. ravan kroz tacku normalna na datu pravu.}
+\marginpar{Danijela: Nemam ovu konstrukciju, ali imam ovu sto sam dodala. Nadam se da je ok?}
 
 Very similar methods can be used to construct the plane that contains
 the given line and is orthogonal or is parallel to the given plane.
@@ -1232,7 +1257,7 @@ have integer coefficients, so irrational values (and even fractions)
 must be introduced using polynomials.
 
 % ------------------------
-\item[$\triangleright$] {\tt make\_pyramid} $A$ $B$ $C$ $D$ $S$ ---
+\item[$\triangleright$] $A$ $B$ $C$ $D$ $S$ = {\tt make\_pyramid} ---
   construct a regular four--side pyramid in the canonical position --
   the base is a unit square in the $xOy$ plane, its lateral edges are
   equal in length, and the height is not constrained.
@@ -1312,6 +1337,13 @@ $\overrightarrow{DO}\cdot\overrightarrow{DO} = r^2$.
 \marginpar{Ove konstrukcije su malo dosadne -- mozemo ostaviti samo
   nekoliko najzanimljivijih (kocka, tetraedar, sfera, heksagon), a
   ostale samo pomenuti?}
+\marginpar{Danijela: slazem se, moze ovako nesto: Similary, the system
+  supports the following constructions: $A$ $B$ $C$ = {\tt
+    make\_equilateral\_triangle} (construct a equilateral triangle in
+  the canonical position), $A$ $B$ $C$ $D$ = {\tt make\_square}
+  (construct a square in the canonical position), $A$ $B$ $C$ $D$ $S$
+  = {\tt make\_pyramid} (construct a regular four--side pyramid in the
+  canonical position)}
 
 
 %-------------------------------------------------------------------------------
@@ -1408,31 +1440,92 @@ $h_b$. Prove that $H$ is also incident with lines $h_s$ and $h_c$.
 \end{figure}
 
 Geometry statement using term representation:
+\marginpar{Zapisala sam koje polinome pravi drugi pristup, prvi pristup cu sutra. Mislim da nije ovako pregledno jer ima puno polinoma i dva pristupa, Mozda napraviti neku tabelu pa sa leve strane termovska reprezentacija, a sa desne polinomi... }
 
 \begin{footnotesize}
-{\tt
 \begin{tabbing}
 \hspace{5mm}\=\kill
-\> $A$ $B$ $C$ $S$ = make\_tetrahedron\\
+\> $A$ $B$ $C$ $S$ = {\tt make\_tetrahedron}\\
+  first approch and second approach: \\
+  $A: (0, 0, 0)$ $ B: (1, 0, 0)$  $C: (x_1, x_2, 0)$ $S: (x_3, x_4, x_5)$ \\
+  $2*x_1  - 1$ \\
+  $4*x_2^2  -3$ \\
+  $3*x_3  -  x_2$ \\
+  $3*x_4^2  -2$ \\ \\
+\> $\alpha_1$ = {\tt make\_plane\_trough\_points} $A$ $B$ $C$ \\
+second approach: \\
+ $\alpha_1 : (0, 0, x_5, 0)$ --- Note that coordinates for plane $\alpha_1$ gained zero values after simplification \\ and symbolic coordinates presenting these coordinates are deleted from the system and substituted with $0$. \\
+ $x_5  -  x_2$ \\
+\> $\alpha_2$ = {\tt make\_plane\_trough\_points $B$ $C$ $S$} \\
+second approach: \\
+$\alpha_2 : (x_6, x_7, 0, x_8)$ \\
+ $x_6  -  x_2*x_4$ \\
+ $x_7  +  x_1*x_4  -  x_4$ \\
+ $x_8  -  x_1*x_3  +  x_3  +  x_2*x_1  -  x_2$ \\
+\> $\alpha_3$ = {\tt make\_plane\_trough\_points} $A$ $C$ $S$ \\
+second approach: \\
+$\alpha_3 : (x_9, x_{10}, x_{11}, x_{12})$ \\
+  $x_9  +  x_6$ \\
+  $x_{10}  -  x_2*x_4$ \\
+  $x_{11}  +  x_1*x_4$ \\
+  $x_{12}  -  x_1*x_3  +  x_2*x_1$ \\
+\> $\alpha_4$ = {\tt make\_plane\_trough\_points} $A$ $B$ $S$ \\
+$\alpha_4 : (0, 0, x_{13}, x_{14})$ \\
+second approach: \\
+  $x_{13}  +  x_4$ \\
+  $x_{14}  -  x_3$ \\
  \\
-\> $\alpha_1$ = make\_plane\_trough\_points $A$ $B$ $C$ \\
-\> $\alpha_2$ = make\_plane\_trough\_points $B$ $C$ $S$ \\
-\> $\alpha_3$ = make\_plane\_trough\_points $A$ $C$ $S$ \\
-\> $\alpha_4$ = make\_plane\_trough\_points $A$ $B$ $S$ \\
+\> $h_1$ = {\tt make\_line\_orthogonal\_to\_plane} $\alpha_1$ $S$ \\
+second approach: \\
+$h_1: (0, 0, x_5, x_3, x_4, x_5)$ \\
+\> $h_2$ = {\tt make\_line\_orthogonal\_to\_plane} $\alpha_2$ $A$ \\
+second approach: \\
+$h_2: (x_6, x_7, 0, 0, 0, 0) $ \\
+\> $h_3$ = {\tt make\_line\_orthogonal\_to\_plane} $\alpha_3$ $B$ \\
+second approach: \\
+$h_3: (x_9, x_{10}, x_{11}, 1, 0, 0)$ \\
+\> $h_4$ = {\tt make\_line\_orthogonal\_to\_plane} $\alpha_4$ $C$ \\
+second approach: \\
+$h_4: (0, 0, x_{13}, x_1, x_2, 0)$ \\
  \\
-\> $h_1$ = make\_line\_orthogonal\_to\_plane $\alpha_1$ $S$ \\
-\> $h_2$ = make\_line\_orthogonal\_to\_plane $\alpha_2$ $A$ \\
-\> $h_3$ = make\_line\_orthogonal\_to\_plane $\alpha_3$ $B$ \\
-\> $h_4$ = make\_line\_orthogonal\_to\_plane $\alpha_4$ $C$ \\
- \\
-\> $H_1$ = make\_lines\_intersection $h_1$ $h_2$ \\
-\> $H_2$ = make\_lines\_intersection $h_2$ $h_3$ \\
-\> $H_3$ = make\_lines\_intersection $h_2$ $h_4$ \\
- \\
-\>equal\_points $H_1$ $H_2$ \\
-\>equal\_points $H_1$ $H_3$ \\
+\> $H_1$ = {\tt make\_lines\_intersection} $h_1$ $h_2$ \\
+second approach: \\
+  $H_1 : (x_{15}, x_{16}, x_{17})$ \\
+  $x_{15}  -  x_1$ \\
+  $x_{16}  -  x_3$ \\
+  $x_{17}  -  x_5*x_{18}  -  x_4$ \\
+  $x_{15}  -  x_6*x_{19}$ \\
+  $x_{16}  -  x_7*x_{19}$ \\
+  $x_{17}  -  x_8*x_{19}$ \\
+\> $H_2$ = {\tt make\_lines\_intersection} $h_2$ $h_3$ \\
+second approach: \\
+ $H_2 : (x_{20}, x_{21}, x_{22})$ \\
+   $x_{20}  -  x_6*x_{23}$ \\
+   $x_{21}  -  x_7*x_{23}$ \\
+   $x_{22}  -  x_8*x_{23}$ \\
+   $x_{20}  -  x_{10}*x_{24}  -1$ \\
+   $x_{21}  -  x_{11}*x_{24}$ \\
+   $x_{22}  -  x_{12}*x_{24}$ \\
+\> $H_3$ = {\tt make\_lines\_intersection} $h_2$ $h_4$ \\
+second approach: \\
+ $H_3 : (x_{25}, x_{26}, x_{27})$ \\
+  $x_{25}  -  x_6*x_{28}$ \\
+  $x_{26}  -  x_7*x_{28}$ \\
+  $x_{27}  -  x_8*x_{28}$ \\
+  $x_{25}  -  x_1$ \\
+  $x_{26}  -  x_{13}*x_{29}  -  x_2$ \\
+  $x_{27}  -  x_{14}*x_{29}$ \\
+\>{\tt equal\_points} $H_1$ $H_2$ \\
+second approach: \\
+  $x_{15}  -  x_{20}$ \\
+  $x_{16}  -  x_{21}$ \\
+  $x_{17}  -  x_{22}$ \\
+\>{\tt equal\_points} $H_1$ $H_3$ \\
+second approach: \\
+ $x_{15}  -  x_{25}$ \\
+ $x_{16}  -  x_{26}$ \\
+ $x_{17}  -  x_{27}$ \\
 \end{tabbing}
-}
 \end{footnotesize}
 \marginpar{Ovo kodiranje je malo drugacije nego sam tekst
   zadatka. Tamo se trazi da se dokaze pripadnost preseka dve visine
@@ -1461,12 +1554,12 @@ polynomials increased, but that it due to intersection of lines
 all $9$ polynomials are zero) and average time for GeoProver was
 $0.1132$ секунде.
 
-Second approach of algebraization and simplification procedure
-produces $29$ polynomials defining premises, $9$ conclusion
-polynomials and $29$ variables. Retrieved polynomials are less complex
-and usually have only two monomials. All three provers were
-successful, but average time was smaller, for GeoProver it was
-$0.0862$ seconds.
+Second approach of algebraization produces $44$ polynomials and after
+simplification procedure produces $29$ polynomials defining premises,
+$9$ conclusion polynomials and $29$ variables (presented
+above). Retrieved polynomials are less complex and usually have only
+two monomials. All three provers were successful, but average time was
+smaller, for GeoProver it was $0.0862$ seconds.
 
 \marginpar{Izmeniti tacan prosecan broj monoma, ovo je bilo otprilike}
 \begin{table}[!hb]
