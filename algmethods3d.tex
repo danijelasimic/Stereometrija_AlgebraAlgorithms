@@ -247,49 +247,62 @@ quadratic. They also made a prototype of the system where user can
 manipulate with constraints.
 
 \section{Background}
-\subsection{Algebraization of geometry relations}
-We shall assume that geometry problems are given in terms of relations
-between the geometric object involved (points, lines, planes, circles,
-\ldots). Each theorem under consideration is given in form of an
-implication, and both hypothesis and conclusions are given as one or
-more geometric relations. In some cases, the properties of constructed
-geometric objects should be proved. The construction is usually
-specified by a series of construction steps, and each construction
-step is a function that builds new geometric objects out of the
-existing ones. However, the properties of the new object can usually
-be specified in terms of one or more relations, so without losing
-generality, it can be assumed that we are dealing only with relations.
+\subsection{Algebraization of geometric statements}
 
-The standard algebraization procedure introduces fresh symbolic
-variables for point coordinates and introduces (polynomial) equations
-that characterize every relation between objected observed.
+Algebraization of a geometric statement involves formulating it in
+algebraic terms, as a statement over some number field. Geometry
+problems are usually given in terms of relations between the geometric
+object involved (points, lines, planes, circles, \ldots). We shall
+assume that each theorem under consideration is given in form of an
+implication, and that both its premises and conclusions are given as
+one or more geometric relations over the objects involved. This setup
+is general enough to cover most standard geometric problems. For
+example, in some problems, the properties of constructed geometric
+objects should be proved. The construction is usually specified by a
+series of construction steps, and each construction step is a function
+(not a relation), that builds new geometric objects out of the
+existing ones (e.g., constructs a new line trough the two existing
+points). However, the properties of the new, constructed object can
+usually be specified in terms of one or more relations, so without
+losing generality, it can be assumed that we are dealing only with
+statements that involve relations (although we shall explicitly show
+how to convert some common construction steps into a relational form).
 
-Each object can be given independently by adding its arbitrary
-parameters or it can be given using relationship with other, already
-introduced objects. In the second case, for each new object both the
-parameters and the polynomials that represent relationship between new
-object and other objects in the construction are
-introduced. Polynomials contain parameters of all objects in the
-construction rule and analytic identities. All polynomials are
-recorded in construction set which is later used in GeoProver.
+Each object (point, line, circle, etc.) is given by some its
+parameters (most often some coordinates) and by its relationship with
+other, previously introduced objects. All such relationships are
+encoded as (polynomial) equations over the parameters of the involved
+objects. Since statement under consideration is an implication, two
+sets of polynomial equations are maintained: the first contains
+relations between objects given by the premises, and the second one
+contains the statements given by the conclusions. The proving process
+then requires to prove that the polynomial equations given by the
+premises imply all polynomial equations given by the conclusions.
+There are provers that support only a single equation in the
+conclusion, but this does not pose a problem, since all equations in
+the conclusion can be proved separately (one by one). The statement is
+proved only if all polynomial equations in the conclusion set are
+derived.
 
-Beside construction rules, there are statement rules, rules used to
-express some condition that can be check using GeoProver. For each of
-these conditions are created polynomials which are recorded in the
-statement set. Although in most of the cases, there is only one
-statement polynomial, there were couple statement that generated more
-than one. As mentioned earlier, GeoProver can only have one statement
-rule. However, this not pose a problem, since for each polynomial in
-the statement set GeoProver was applied (always using the same
-construction set). The statement is considered to be true only if
-GeoProver returned true for all polynomials in the statement set.
+\subsection{``Without loss of generality'' reasoning}
 
-For the purpose of the further text we are going to assume that we
-have all the necessary data for each construction or statement rule
-(our system collects this data, but we are not going to explain
-technical side of the system since we fill this is not the scope of
-this paper). This means that we have all the parameters of already
-given objects.
+An important step in the algebraization procedure is simplification of
+polynomial equations based on the ``without lost of generality
+reasoning (wlog)'' principle (the use of this principle in a formal
+setting is described by Harrison \cite{harrison}). A convenient choice
+of coordinate system can transform the objects so that many
+coordinates become zero (some points can be translated to the origin,
+a and a rotation can be made to put some other points on the axis)
+which can significantly simplify the polynomials and make them
+provable more easily (in some cases proofs without such
+simplifications can take hours, while the simplified variants are
+proved in milliseconds). This does not affect the generality of
+statement and justification for its usage comes from the fact that
+rotations and translations can be used to transform points into its
+"canonical" position. Translation and rotation are isometries which
+means that they preserve distance, and then also the other geometric
+relations such as incidence, orthogonality, size of an angle and so
+on.
 
 \subsection{Algebraic methods}
 
@@ -298,11 +311,12 @@ Algebraic methods in geometry are well described in literature
 algebraic methods in geometry, in order to explain some relevant steps
 needed in algebraization of solid objects.
 
-Algebraization introduces variables $v_i$ that denote coordinates of
-free and constructed points. Geometric relations between points are
-described by polynomial equations of the form $p_1(v_1, \ldots, v_n) =
-p_2(v_1, \ldots, v_n)$, that are trivially transformed to the form
-$p(v_1, \ldots, v_n) = 0$. 
+Algebraization introduces variables $v_i$ that denote parameters of
+geometric objects (usually these are only the coordinates of free and
+constructed points). Geometric relations between points are described
+by polynomial equations of the form
+$p_1(v_1, \ldots, v_n) = p_2(v_1, \ldots, v_n)$, that are trivially
+transformed to the form $p(v_1, \ldots, v_n) = 0$.
 
 If polynomials representing relations between objects given by the
 construction and theorem assumptions are denoted by $f_i$, $i = 1,
@@ -311,20 +325,21 @@ are denoted by $g_j$, $j = 1, \ldots, l$, then proving reduces to
 checking if for each $g_j$ it holds that
 $$\forall v_1, \ldots, v_n \in \mathbb{R}. \bigwedge_{i = 1}^{k}
 f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
-Polynomials $f_i$ are sometimes called \emph{construction polynomials}
-and $g_j$ are called \emph{statement polynomials}.
+Polynomials $f_i$ are sometimes called \emph{premises polynomials} and
+$g_j$ are called \emph{conclusion polynomials}.
 
 Once the geometric theorem has been algebrized, it is possible to
 apply algebraic theorem proving methods.  As Tarski suggested, proving
 geometric properties can be done using quantifier elimination
-procedure for the reals, but this approach is inefficient and proving
-nontrivial geometric properties would take too long. But, there is
-another approach. The main insight, given by Wu Wen-ts\"un in 1978, is
-that remarkably many geometrical theorems, when formulated as
+procedure for the reals, or the cylindrical algebraic decomposition,
+that is its improved variant, but these approaches are inefficient and
+proving nontrivial geometric properties would take too long. But,
+there is another approach. The main insight, given by Wu Wen-ts\"un in
+1978, is that remarkably many geometrical theorems, when formulated as
 universal algebraic statements in terms of coordinates, are also true
-for all complex values of the “coordinates”. However, a care should be
-taken, since, in some cases, the condition holds for $\mathbb{R}$, but
-not for $\mathbb{C}$, and in these cases methods fail due to
+for all complex values of the ``coordinates''. However, a care should
+be taken, since, in some cases, the condition holds for $\mathbb{R}$,
+but not for $\mathbb{C}$, and in these cases methods fail due to
 counterexamples in $\mathbb{C}$. Statements to be proved are of
 following form:
 $$\forall v_1, \ldots, v_n \in \mathbb{C}. \bigwedge_{i = 1}^{k} f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
@@ -408,11 +423,12 @@ input formats for conjectures.
 
 Mathematica is commercial software designed for technical
 computing. It has support for Gr\"obner basis and can be used for
-automated theorem proving. $F = GroebnerBasis[\{poly_1\}, \{poly_2\},
-  \ldots]$ computes a Gr\"obner basis for the given list of
-construction polynomials. If $PolynomialReduce[poly, F, V][[2]]$ is
-zero ($V$ is the set of variables), the geometry statement represented
-by polynomial $poly$ is true.
+automated theorem proving.
+$F = GroebnerBasis[\{poly_1\}, \{poly_2\}, \ldots]$ computes a
+Gr\"obner basis for the given list of premises polynomials. If
+$PolynomialReduce[poly, F, V][[2]]$ is zero ($V$ is the set of
+variables), the geometry statement with the conclusion polynomial
+$poly$ is true.
 
 \paragraph{Wu's method in Maple -- wsolve}
 
@@ -425,8 +441,8 @@ geometric theorem to be false by computing the projection of a quasi
 variety.
 
 The method is easily invoked by key word \emph{wsolve(V, P, C)} where
-$V$ is a list of variables, $P$ is a list of construction polynomials
-and $C$ is a statement polynomial.
+$V$ is a list of variables, $P$ is a list of premises polynomials and
+$C$ is a conclusion polynomial.
 
 \section{Alegebrization of geometric relations in solid geometry}
 \label{polynomials}
@@ -438,7 +454,7 @@ richer set of relations can be represented using similar techniques,
 and a detailed description is given in an online
 appendix). \marginpar{dodati url}
 
-\subsection{Representation of basic objects -- points, lines and planes}
+\subsection{Representation of basic objects -- points, lines, planes, spheres}
 One of the first questions in the algebraization process is what
 objects of 3d geometry are basic and can be used in our statements and
 what variables are used to express geometric relations. We shall
@@ -520,9 +536,7 @@ l^{A_y}, l^{A_z})$, which represent the line given by the equation:
 $$x = k_l\cdot l^{v_x} + l^{A_x},\quad y = k_l\cdot l^{A_y} +
 l^{A_y},\quad z = k_l\cdot l^{v_z} + l^{A_z}.$$
 In the previous equations, $k_l$ denotes the line ratio, not present
-in the line specification (which is a six-tuple). Line ratio can be
-used in some polynomials that describe constructions involving lines,
-and in that case it is introduced as a fresh symbolic variable.
+in the line specification (which is a six-tuple).
 
 \paragraph{Planes}
 Planes are also represented differently, depending on the used
@@ -543,6 +557,11 @@ tuple $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$ that satisfies
 $$\pi^{v_x}\cdot x + \pi^{v_y}\cdot y + \pi^{v_z}\cdot z + \pi^{d} =
 0.$$
 
+\paragraph{Spheres}
+Some problems involve spheres and we always represent them by four
+parameters --- three coordinates of the center $(o^x, o^y, o^z)$, and
+the radius $r$.
+
 \subsection{Representing relations between geometric objects}
 In this section are given polynomials that arithmetically describe
 relations over constructed objects (for example, two points coincide,
@@ -554,8 +573,16 @@ depending on the chosen approach.
 Input parameters for given relation are parameters of all objects
 involved in it. For example, for the relation \mbox{{\tt congruent}
   $A$ $B$ $C$ $D$} inputs are four points, $A$, $B$, $C$, and $D$, e.g
-their symbolic or numeric parameters: $(a^x, a^y, a^z)$, $(b^x, b^y,
-b^z)$, $(c^x, c^y, c^z)$ and $(d^x, d^y, d^z)$.
+their symbolic or numeric parameters: $(a^x, a^y, a^z)$,
+$(b^x, b^y, b^z)$, $(c^x, c^y, c^z)$ and $(d^x, d^y, d^z)$. However,
+when line and planes are involved, then the set of input parameters
+depends on the used approach. For example, for the relation \mbox{{\tt
+    point\_on\_line} $A$ $l$}, input parameters are the coordinates
+$(a^x, a^y, a^z)$ of the point $A$, and the coordinates
+$(l^{A_x}, l^{A_y}, l^{A_z})$ of a point on the line $l$ and either the
+coordinates $(l^{B_x}, l^{B_y}, l^{B_z})$ of a second point on the line $l$
+if the first approach is used, or its direction vector
+$(l^{v_x}, l^{v_y}, l^{v_z})$.
 
 Note that the same relations are used both in theorem assumptions
 (usually implicitly given by the construction steps) and in theorem
@@ -578,10 +605,9 @@ are equally encoded using both approaches.
   \end{tabbing}
 
   Note that these polynomials are used only to prove that two points
-  are equal, i.e., only as the statement polynomials. If it is known
+  are equal, i.e., only as the conclusion polynomials. If it is known
   that two points are equal during construction, then they are given
   the same coordinates, and no polynomials are introduced.
-
 
 % ------------------------
 \item[$\triangleright$] {\tt congruent} $A$ $B$ $C$ $D$ --- Two
@@ -609,7 +635,7 @@ between $C$ and $D$ must be in the ratio $\frac{m^2}{n^2}$. Note that
 this reduces to congruence when $m = n$.
 
 % ------------------------
-\item[$\triangleright$] {\tt is\_midpoint} $M$ $A$ $B$ --- the point
+\item[$\triangleright$] {\tt midpoint} $M$ $A$ $B$ --- the point
   $M$ is the midpoint of the segment determined by points $A$ and
   $B$.
 
@@ -630,7 +656,7 @@ $2m^z - a^z - b^z = 0$
 {\em Polynomials:} The three polynomial equations derived from
 $n\cdot \overrightarrow{MA} = m\cdot \overrightarrow{MB}$.
 
-{\em Explanation:} Note that {\tt is\_midpoint $M$ $A$ $B$} can be
+{\em Explanation:} Note that {\tt midpoint $M$ $A$ $B$} can be
 also written using this rule as {\tt point\_segment\_ratio} $M$ $A$
 $B$ $1$ $1$.
 
@@ -763,6 +789,33 @@ could be omitted.
   {\em Polynomials:} If the second approach is used, the three
   polynomials derived from
   $\overrightarrow{p_v} \times \overrightarrow{q_v}$.
+
+
+% ------------------------
+\item[$\triangleright$] {\tt equal\_angles} $A$ $O_1$ $B$ $C$ $O_2$ $D$ --- angles $\angle AO_1B$ and $\angle
+CO_2D$ are equal.
+
+{\em Polynomials:} Polynomials for this condition could be derived
+using trigonometry condition:
+$$\cos{\angle AO_1B} = \cos{\angle CO_2D}$$
+
+and cosine of an angle can be determined using following equation:
+$$\cos{\angle AO_1B} = \frac{\overrightarrow{AO_1}\cdot
+  \overrightarrow{BO_1}}{2|AO_1||BO_1|}.$$
+
+Polynomial equation for $\cos{\angle CO_2D}$ is similar. However,
+distances ($|AO_1|$ and $|BO_1|$) are calculated square roots and that
+cannot be processed by algebraic theorem provers (that accept only
+polynomial equations). Thus, squares of the cosines of an angles must
+be compared --- $\cos^2{\angle AO_1B} = \cos^2{\angle CO_2D}$.
+Unfortunately, this makes the condition weakened since squares of
+cosines of accute and obtuse angle could be same although angles
+itself are not equal. The final polinomial is derived from
+$$(\overrightarrow{AO_1}\cdot  \overrightarrow{BO_1})^2|CO_2|^2|DO_2|^2 = (\overrightarrow{CO_2}\cdot  \overrightarrow{DO_2})^2|AO_1|^2|BO_1|^2.$$
+
+The polynomial derived from this equation is quite complex and
+challenging for algebraic theorem provers and in the following chapter
+we shall see how it can be dissembled onto more simpler ones.
 
 \bigskip
 
@@ -903,35 +956,20 @@ $\overrightarrow{\alpha_v} \cdot \overrightarrow{\beta_v} = 0$.
   derived from {\tt point\_in\_plane} $l_A$ $\pi$ and
   $l_v \cdot \alpha_v = 0$.
 
+Some theorems can involve spheres. 
+
 % ------------------------
-\item[$\triangleright$] {\tt equal\_angles} $A$ $O_1$ $B$ $C$ $O_2$ $D$ --- angles $\angle AO_1B$ and $\angle
-CO_2D$ are equal.
+\item[$\triangleright$] {\tt point\_on\_sphere} $A$ $\mathcal{S}$
+  --- point $A$ belongs to the sphere $\mathcal{S}$.
 
-{\em Polynomials:} Polynomials for this condition could be derived
-using trigonometry condition:
-$$\cos{\angle AO_1B} = \cos{\angle CO_2D}$$
+{\em Polynomials:} Sphere $\mathcal{S}$ is defined with its center $O$
+and radius $r$. Thus, polynomial is derived from
+$\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
 
-and cosine of an angle can be determined using following equation:
-$$\cos{\angle AO_1B} = \frac{\overrightarrow{AO_1}\cdot
-  \overrightarrow{BO_1}}{2|AO_1||BO_1|}.$$
-
-Polynomial equation for $\cos{\angle CO_2D}$ is similar. However,
-distances ($|AO_1|$ and $|BO_1|$) are calculated square roots and that
-cannot be processed by algebraic theorem provers (that accept only
-polynomial equations). Thus, squares of the cosines of an angles must
-be compared --- $\cos^2{\angle AO_1B} = \cos^2{\angle CO_2D}$.
-Unfortunately, this makes the condition weakened since squares of
-cosines of accute and obtuse angle could be same although angles
-itself are not equal. The final polinomial is derived from
-$$(\overrightarrow{AO_1}\cdot  \overrightarrow{BO_1})^2|CO_2|^2|DO_2|^2 = (\overrightarrow{CO_2}\cdot  \overrightarrow{DO_2})^2|AO_1|^2|BO_1|^2.$$
-
-The polynomial derived from this equation is quite complex and
-challenging for algebraic theorem provers and in the following chapter
-we shall see how it can be dissembled onto more simpler ones.
 \end{description}
 
 
-\section{Construction rules}
+\subsection{Algebraization of construction steps}
 Each construction starts from some given (free) objects and proceeds
 by introducing new (dependent) objects. We will allow introducing only
 free points (and all lines, planes, and solids are going to be
@@ -956,9 +994,9 @@ described by either numeric or symbolic parameters). In most cases the
 algebraization introduces new fresh parameters for the object $o$, and
 then constructs the polynomials based on the relation $R(i_1, \ldots,
 i_n, o)$, where $R$ is the relation corresponding to the function $f$.
-For example, constructing the midpoint $m = midpoint\ A\ B$, reduces
+For example, constructing the midpoint $m = make\_midpoint\ A\ B$, reduces
 to introducing variables $m_x$ and $m_y$ and constructing polynomials
-from the condition $is\_midpoint\ m\ A\ B$. However, in some
+from the condition $midpoint\ m\ A\ B$. However, in some
 construction steps we can introduce less parameters, and we describe
 those cases. Also, some symbolic variables for free points could be
 substituted with numeric values and we described this procedure in
@@ -966,12 +1004,12 @@ simplification of polynomials (Section \ref{simplification}).
 
 \paragraph{Constructions of points}
 
-Its name will be given by the first argument of the construction step
-(e.g., {\tt midpoint} $M$ $A$ $B$ constructs the point $M$ using given
-points $A$ $B$). In each such construction step, it is assumed that
-the numeric or symbolic parameters of given objects are already known,
-and the symbolic coordinates of the resulting point are introduced (as
-fresh variables).
+The name of the constructed point will be given the results the
+construction step (e.g., $M$ = {\tt make\_midpoint} $A$ $B$ constructs
+the point $M$ using given points $A$ $B$). In each such construction
+step, it is assumed that the numeric or symbolic parameters of given
+objects are already known, and the symbolic coordinates of the
+resulting point are introduced (as fresh variables).
 
 \begin{description}
 
@@ -1045,9 +1083,9 @@ line can be constructed as a line trough two free points).
 
 \begin{description}
 % ------------------------
-\item[$\triangleright$] $l$ $=$ {\tt make\_line\_trough\_points} $A$ $B$
-  --- for two given points $A$ and $B$ determines the line $l$ that
-  contains them.
+\item[$\triangleright$] $l$ $=$ {\tt make\_line\_trough\_points} $A$
+  $B$ --- for two given points $A$ and $B$ constructs the line $l$
+  that contains them.
 
   {\em Introduced objects and parameters:} if the first approach is
   used, no new parameters are introduced and the name $l$ is
@@ -1063,7 +1101,7 @@ line can be constructed as a line trough two free points).
 
 % ------------------------
 \item[$\triangleright$] $l$ = {\tt make\_line\_orthogonal\_on\_plane}
-  $\pi$ $A$ -- for a given plane $\pi$ and a point $A$ determines the
+  $\pi$ $A$ -- for a given plane $\pi$ and a point $A$ constructs the
   line $l$ that is orthogonal on the given plane $\pi$ and contains
   the point $A$.
 
@@ -1097,7 +1135,7 @@ a free plane can be constructed as a plane trough three free points).
 \begin{description}
 % ------------------------
 \item[$\triangleright$] $\pi$ = {\tt make\_plane\_trough\_points} $A$
-  $B$ $C$ --- for three given points $A$, $B$ and $C$ determines the
+  $B$ $C$ --- for three given points $A$, $B$ and $C$ constructs the
   plane $\pi$ containing all of them.
 
   {\em Introduced objects and parameters:} if the first approach is
@@ -1123,32 +1161,35 @@ the given line and is orthogonal or is parallel to the given plane.
 
 Problems in solid geometry usually deal with objects and usually start
 with a sentence of the form {\em "In a given cube..."}, {\em "In a
-  given pyramid..."}, {\em "In a given prism..."} and so on. The first
-approach was to construct such solids using construction rules
-presented above. This means that there were many rules (around 20)
-constructing only one cube and thus many new variables and polynomials
-which made polynomial systems very complex. Also, some important
-construction steps could be forgotten. Therefore, it is very natural
-to introduce solid constructions as elementary construction steps
-(instead of ten or twenty rules that construct their points, lines and
-planes). Such construction steps automatically introduce only the
-points of the solid, whereas lines (edges) and planes (faces) can be
-introduced by the previous construction rules only when necessary.
+  given pyramid..."}, {\em "In a given prism..."} and so on. One
+approach is to construct such solids by applying the construction
+steps presented above. However, this can lead to a large number of
+very fine grained steps which can be both cumbersome for specifying
+and hard for proving (for example, one needs to apply around 20 small
+construction steps to construct a cube, and during that process many
+new variables and complex polynomials are introduced). Therefore, it
+is very natural to introduce solid constructions as elementary
+construction steps (instead of ten or twenty rules that construct
+their points, lines and planes). Such construction steps automatically
+introduce only the points of the solid, whereas lines (edges) and
+planes (faces) can be introduced by the previous construction rules
+only when necessary.
 
-We decide to support only the construction of solids placed in some
-{\em canonical} positions --- for example, when constructing a cube,
-one vertex is placed in the origin, and the other three are placed on
-the axes ($x$-axis, $y$-axis and $z$-axis). However, this approach has
-a drawback. For example, it is not possible to construct more than one
-different cube using the elementary cube construction step. The points
-of other cubes that are not in the canonical position can be
-constructed using point construction steps or by applying isometric
-transformations to the canonical cube. On the other hand, in most
-geometric problems encountered in education there is usually only one
-free solid, and without loss of generality it can be assumed that it
-is in the canonical position. When other solids are introduced in the
-problem text, they are usually dependent, so their points (vertices)
-have to be constructed. Therefore, supporting only canonical solid
+As we want to have simpler polynomials, we decide to support only the
+construction of solids placed in some {\em canonical} positions ---
+for example, when constructing a cube, one vertex is placed in the
+origin, and the other three are placed on the axes ($x$-axis, $y$-axis
+and $z$-axis). However, this approach has a drawback. For example, it
+is not possible to construct more than one different cube using the
+elementary cube construction step. The points of other cubes that are
+not in the canonical position can be constructed using point
+construction steps or by applying isometric transformations to the
+canonical cube. On the other hand, in most geometric problems
+encountered in education there is usually only one free solid, and
+without loss of generality it can be assumed that it is in the
+canonical position. When other solids are introduced in the problem
+text, they are usually dependent, so their points (vertices) have to
+be constructed. Therefore, supporting only canonical solid
 constructions was not the obstacle for the problems encountered in
 most exercises.
 
@@ -1209,7 +1250,6 @@ must be introduced using polynomials.
 it lies in the middle of the square, so $s^x = s^y =
 \frac{1}{2}$. Note that $s^z$ is not constrained.
 
-
 % ------------------------
 \item[$\triangleright$] $\mathcal{S}$ = {\tt make\_sphere} $A$ $B$ $C$
   $D$ --- construct a sphere $\mathcal{S}$ trough four given points
@@ -1224,17 +1264,6 @@ $\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$,
 $\overrightarrow{BO}\cdot\overrightarrow{BO} = r^2$,
 $\overrightarrow{CO}\cdot\overrightarrow{CO} = r^2$, and
 $\overrightarrow{DO}\cdot\overrightarrow{DO} = r^2$.
-
-% ------------------------
-\item[$\triangleright$] $A$ = {\tt point\_on\_sphere} $\mathcal{S}$
-  --- point $A$ belongs to the sphere $\mathcal{S}$.
-
-{\em Polynomials:} Sphere $\mathcal{S}$ is defined with its center $O$
-and radius $r$. Thus, polynomial is derived from
-$\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
-
-\marginpar{Da li je ovo relacija kojom se proverava da tacka pripada sferi 
-ili konstrukcija proizvoljne tacke na sferi?}
 
 % ------------------------
 \item[$\triangleright$] $A$ $B$ $C$ $D$ = {\tt make\_square} ---
@@ -1286,67 +1315,61 @@ ili konstrukcija proizvoljne tacke na sferi?}
 
 
 %-------------------------------------------------------------------------------
-\section{Simplification of polynomials}
+\subsection{Simplification of polynomials}
 %-------------------------------------------------------------------------------
 \label{simplification}
 
-In order to test proposed algebraization we used three tools,
-GeoProver, Maple and Mathematica. The first problem we encountered was
-often reaching time and space limit due to complexity of polynomial
-sets. The reason for this is large number of variables and polynomials
-that were created. It should be noted that polynomials in solid
-geometry are more complex than corresponding polynomials in plane
-geometry. Thus, there was a need to simplify our system.
+If the algebraic methods were applied to the raw equations obtained by
+our algebraization procedure, the provers often reached time and space
+limit due to complexity of polynomial sets. The reason for this is
+large number of variables and polynomials that were created. It should
+be noted that polynomials in solid geometry are more complex than
+corresponding polynomials in plane geometry. Thus, there was a need to
+consider various simplifications.
 
-We used approach proposed by Harrison, without lost of generality
-reasoning --- "wlog" (\cite{harrison}) by making a convenient choice
-of coordinate system since different choice of coordinate system could
-make algebraic calculations much less robust.
+As already discussed, a key technique for simplification is wlog
+reasoning and a careful choice of the coordinate system (without
+applying this, even the simplest statements could not be proved). In
+3d space, for three independently given points $A$, $B$ and $C$, it is
+possible to choose their coordinates so that $A(0, 0, 0)$ is in the
+origin, $B(0, 0, b^z)$ is on the $z$-axis and $C(0, c^y, c^z)$ lies in
+plane $yOz$. With this choice of coordinates, the number of variables
+is reduced by six and the corresponding zeroes can significantly
+simplify polynomials. This approach is ``hard-coded'' in our
+construction steps for solids, as we explained in
+\ref{objectconstruction}, but we also automatically apply it in all
+other situations (the choice of points that be put into the canonical
+can significantly affect the proving performance, however, we
+currently naively choose the first three constructed points and put
+them in the canonical position).
 
-For three independently given points $A$, $B$ and $C$, it is possible
-to choose their coordinated in such a manner that $A(0, 0, 0)$ is in
-the origin, $B(0, 0, b^z)$ is on the $z$-axis and $C(0, c^y, c^z)$
-lies in plane $yOz$. With this choice of coordinates, the number of
-variables is reduced by six and the corresponding zeroes simplify
-polynomials. This approach is commonly used in algebraic methods. It
-does not affect the generality of statement and justification for its
-usage comes from the fact that rotations and translations can be used
-to transform points into its "canonical" position. Translation and
-rotation are isometries which means that they preserve distance, and
-then also the other geometric relations such as incidence,
-orthogonality, size of an angle and so on.
+Note that putting points into the canonical position can make
+polynomials redundant, as they become $0$, and these can simply be
+removed from the system. Also, some polynomials can become of the form
+$x^n$ for some variable $x$ and the degree $n$. Since they represent
+the equation $x^n=0$, it can be deduced that it must hold that $x=0$,
+which can be used for further simplification. Although, it is not
+necessary to delete these polynomials, the system was simplified a bit
+more when they were deleted. Besides, GeoProver cannot transform
+polynomial system containing $0 = 0$ into triangular system, and in
+that case all such polynomials had to be deleted.
 
-Without applying this method, even the simplest statements could not
-be proved. Choosing convenient coordinates greatly improved simplicity
-of the system of polynomials and, by doing so, made the program more
-efficient. However, some polynomials become redundant, as they become
-$0$ and we just deleted them from the system. Also, some polynomials
-become a polynomial of one variable on some degree and they were also
-deleted from the system and the value of the corresponding variable
-was set to zero. Although, it was not necessary to delete these
-polynomials, the system was simplified a bit more when they were
-deleted. Besides, GeoProver cannot transform polynomial system
-containing $0 = 0$ into triangular system.
-
-To simplify constructions even further, we choose appropriate
-coordinates for figures as we explained in \ref{objectconstruction}.
-
-Furthermore, polynomials whose structure is $x_i - x_j$ or $x_i + x_j$
-(assume $j < i$) were also deleted from the system, each appearance of
-$x_i$ was replaced with $x_j$, e.g. with $-x_j$, and $x_i$ was deleted
-from the set of variables. This simplification step was not very
+Furthermore, polynomials of the form $x_i - x_j$ i.e., $x_i + x_j$
+(for $j < i$) imply that $x_i=x_j$ i.e., $x_i=-x_j$. These are also
+deleted from the system, each appearance of $x_i$ is replaced with
+$x_j$, i.e., with $-x_j$, and $x_i$ is deleted from the set of
+variables. In our experiments this simplification step was not
 crucial, and most of the tested statements could be proved without
-adding this simplification. However, for some complex statements, it
-was very important to reduce the size of sets of polynomials
-(otherwise, space or time limit is reached) and this is a step into
-that direction.
+it. However, we expect that it might be beneficial for some more
+complex statements.
 
-Relation {\tt equal\_angles} produces very complex polynomial. Non of
-the three algebraic provers (GeoProver, Maple or Mathematica) were
-successful proving geometry conjecture with this relation. GeoProver
-arrived to the memory limit after couple of steps, whereas Mathematica
-and Maple worked for couple of hours without reaching conclusion (and
-were violently interrupted). The solution was to dismantle large
+Relation {\tt equal\_angles} produces very complex polynomial. Our
+preliminary experiments have shown that none of the three algebraic
+provers (GeoProver, Maple or Mathematica) could successfully prove
+conjectures that heavily use this relation. GeoProver usually arrived
+to the memory limit after couple of steps, whereas Mathematica and
+Maple worked for couple of hours without reaching conclusion (and were
+violently interrupted). The solution was to dismantle large
 polynomial into simpler ones: \\
 $scalar_1 = \overrightarrow{AO}\cdot\overrightarrow{BO}$ \\
 $scalar_2 = \overrightarrow{CK}\cdot\overrightarrow{DK}$ \\
@@ -1357,9 +1380,9 @@ $dist_{BO} = |BO|$ \\
 $poly = scalar_1 * scalar_1 * dist_{CK} * dist_{DK} - scalar_2 * scalar_2 * dist_{AO} * dist_{BO}$ \\
 
 Basically, the set of polynomials and variables are increased but
-substituted polynomials are far less complex. With this change, non of
-the three algebraic provers had problems and they reached conclusions
-within a second.
+substituted polynomials are far less complex. With this change, none
+of the three algebraic provers had problems and they reached
+conclusions within a second.
 
 %-------------------------------------------------------------------------------
 \section{Examples and testing}
@@ -1390,33 +1413,42 @@ Geometry statement using term representation:
 {\tt
 \begin{tabbing}
 \hspace{5mm}\=\kill
-\> $A$ $B$ $C$ $S$ = make\_tetrahedron  \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
-
+\> $A$ $B$ $C$ $S$ = make\_tetrahedron\\
+ \\
 \> $\alpha_1$ = make\_plane\_trough\_points $A$ $B$ $C$ \\
 \> $\alpha_2$ = make\_plane\_trough\_points $B$ $C$ $S$ \\
 \> $\alpha_3$ = make\_plane\_trough\_points $A$ $C$ $S$ \\
-\> $\alpha_4$ = make\_plane\_trough\_points $A$ $B$ $S$ \\ \\
-
+\> $\alpha_4$ = make\_plane\_trough\_points $A$ $B$ $S$ \\
+ \\
 \> $h_1$ = make\_line\_orthogonal\_to\_plane $\alpha_1$ $S$ \\
 \> $h_2$ = make\_line\_orthogonal\_to\_plane $\alpha_2$ $A$ \\
 \> $h_3$ = make\_line\_orthogonal\_to\_plane $\alpha_3$ $B$ \\
-\> $h_4$ = make\_line\_orthogonal\_to\_plane $\alpha_4$ $C$ \\ \\
-
+\> $h_4$ = make\_line\_orthogonal\_to\_plane $\alpha_4$ $C$ \\
+ \\
 \> $H_1$ = make\_lines\_intersection $h_1$ $h_2$ \\
 \> $H_2$ = make\_lines\_intersection $h_2$ $h_3$ \\
-\> $H_3$ = make\_lines\_intersection $h_2$ $h_4$ \\ \\
-
+\> $H_3$ = make\_lines\_intersection $h_2$ $h_4$ \\
+ \\
 \>equal\_points $H_1$ $H_2$ \\
 \>equal\_points $H_1$ $H_3$ \\
 \end{tabbing}
 }
 \end{footnotesize}
+\marginpar{Ovo kodiranje je malo drugacije nego sam tekst
+  zadatka. Tamo se trazi da se dokaze pripadnost preseka dve visine
+  drugim dvema, a ovde se racuna nekoliko preseka i dokazuje da su
+  isti. To moze biti sasvim drugacija teorema (sa drugim NDG). Mislim
+  da bi dobro bilo upariti tekst sa ovim.}
 
 Since tetrahedron is already in canonical position, coordinates of the
-points are $A(0, 0, 0)$, $B(0, 0, 1)$, $C(x_1, x_2, 0)$ and $S(x_3,
-x_4, x_5)$ where $x_1$, $x_2$, $x_3$, $x_4$ and $x_5$ are dependent
-variables occur in polynomials describing tetrahedron
+points are $A(0, 0, 0)$, $B(0, 0, 1)$, $C(x_1, x_2, 0)$ and
+$S(x_3, x_4, x_5)$ where $x_1$, $x_2$, $x_3$, $x_4$ and $x_5$ are
+dependent variables occur in polynomials describing tetrahedron
 \ref{tetrahedron}).
+
+\marginpar{Ovde bi bilo dobro raspisati rezultat oba kodiranja (makar
+  i skraceno, ali da se dobije neka predstava o tome kako dva pristupa
+  rade i koje su razlike izmedju njih).}
 
 Using first approach for algebraization gives $34$ polynomials
 describing premises, $6$ polynomials for the conclusion (for each
