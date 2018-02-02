@@ -139,19 +139,20 @@ Having this in mind, this work tries to bridge several gaps that we
 feel are present in current state-of-the-art in the field of automatic
 proving in solid geometry.
 \begin{enumerate}
-\item In this paper we examine and compare several ways of applying
-  algebraic theorem provers based on Gr\"obner bases and Wu's method
-  to solid geometry problems.
+\item In this paper we examine and compare two different methods of
+  algebraization of geometry statements, before algebraic theorem
+  provers based on Gr\"obner bases and Wu's method to solid geometry
+  problems are applied.
 
-\item We describe integration of algebraic theorem provers with
-  dynamic geometry systems for solid geometry.
+\item We build an implementation of automated theorem provers for
+  solid geometry problems based on those two algebraization methods.
 
-\item We provide an implementation of one dynamic geometry system for
-  solid geometry, capable of proving statements about the properties
-  of constructed objects.
+\item We analyze a corpus of problems from solid geometry and evaluate
+  our system and different algebraization methods on the problems from
+  that corpus.
 
-\item We also analyze a corpus of problems from solid geometry and
-  evaluate methods to those problems.
+\item We describe integration of algebraic theorem provers into an
+  existing dynamic geometry system Stereos for solid geometry.
 
 \item We discuss challenges and possible applications in the field of
   geometry education.
@@ -665,8 +666,8 @@ $B$ $1$ $1$.
 Next we describe some relations that involve both points and lines.
 
 % ------------------------
-\item[$\triangleright$] {\tt point\_on\_line} $A$ $P$ $Q$ --- point $A$ belongs
-  to the line $P$ $Q$.\marginpar{Promenjeno da bude upareno sa donjim relacijama}
+\item[$\triangleright$] {\tt point\_on\_line} $A$ $P$ $Q$ --- point
+  $A$ belongs to the line $P$ $Q$.
 
 {\em Polynomials:} The three polynomials are derived from
 $\overrightarrow{PQ} \times \overrightarrow{PA} = 0$.
@@ -1106,19 +1107,18 @@ line can be constructed as a line trough two free points).
   the point $A$.
 
   {\em Introduced objects and parameters:} if the first approach is
-  used then first point determining the line is point $A$ and the
-  second point is $A + \overrightarrow{\pi}$ where
-  $\overrightarrow{\pi}$ is determined by
-  $\overrightarrow{\pi_A\pi_B} \times \overrightarrow{\pi_A\pi_C}$.
+  used then first point $l_A$ determining the line is point $A$. The
+  fresh symbolic coordinates of the second point $l_B$ are introduced.
 
   If the second approach is used line $l$ is determined by the
   parameters $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, a^x, a^y, a^z)$ (its
   direction vector is the normal vector of the plane, and its point is
   the point $A$).
 
-  {\em Polynomials:} \marginpar{\v Sta se ovde tacno desava sa
-    polinomima u prvom pristupu? Da li se uvode simbolicke koordinate za drugu tacku?}
-  \marginpar{Danijela: Da, uvode se simbolicke koordinate, pa se onda pravi jednacina nova\_tacka - A - vektor\_prave = 0}
+  {\em Polynomials:} If the first approach is used, polynomials are
+  determined by
+  $l_B = l_A + \overrightarrow{\pi_A\pi_B} \times
+  \overrightarrow{\pi_A\pi_C}$.
 
   If the second approach is used, no polynomials are generated.
 \end{description}
@@ -1153,16 +1153,16 @@ a free plane can be constructed as a plane trough three free points).
 
 % ------------------------
 \item[$\triangleright$] $\pi$ = {\tt
-  make\_plane\_orth\_on\_plane\_has\_line} $\alpha$ $l$ --- for given
-  plane $\alpha$ and line $l$ constructs plane with line $l$ and
-  orthogonal to the plane $\alpha$.
+    make\_plane\_orthogonal\_on\_plane\_containing\_line} $\alpha$ $l$
+  --- for given plane $\alpha$ and line $l$ constructs plane with line
+  $l$ and orthogonal to the plane $\alpha$.
 
   {\em Introduced objects and parameters:} if the first approach is
   used, no new variables are introduced and the name $\pi$ is
   associated with the triple of points $l_A$, $l_B$, and new fresh
   point $\pi_C$. If the second approach is used, then plane $\pi$ is
-  determined with fresh symbolic parameters $(\pi^{v_x}, \pi^{v_y},
-  \pi^{v_z}, \pi^{d})$.
+  determined with fresh symbolic parameters
+  $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$.
 
   {\em Polynomials:} If the first approach is used polynomials are
   derived from $(\overrightarrow{\pi_Cl_A} \times
@@ -1173,10 +1173,6 @@ a free plane can be constructed as a plane trough three free points).
     point\_on\_plane $l_A$ $\pi$}.
 
 \end{description}
-
-\marginpar{Ne bi bilo lose dodati makar jos jednu konstrukciju -
-  npr. ravan kroz tacku normalna na datu pravu.}
-\marginpar{Danijela: Nemam ovu konstrukciju, ali imam ovu sto sam dodala. Nadam se da je ok?}
 
 Very similar methods can be used to construct the plane that contains
 the given line and is orthogonal or is parallel to the given plane.
@@ -1257,23 +1253,23 @@ have integer coefficients, so irrational values (and even fractions)
 must be introduced using polynomials.
 
 % ------------------------
-\item[$\triangleright$] $A$ $B$ $C$ $D$ $S$ = {\tt make\_pyramid} ---
-  construct a regular four--side pyramid in the canonical position --
-  the base is a unit square in the $xOy$ plane, its lateral edges are
-  equal in length, and the height is not constrained.
+% \item[$\triangleright$] $A$ $B$ $C$ $D$ $S$ = {\tt make\_pyramid} ---
+%   construct a regular four--side pyramid in the canonical position --
+%   the base is a unit square in the $xOy$ plane, its lateral edges are
+%   equal in length, and the height is not constrained.
 
-  {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
-  $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$ and $S(s^x, s^y, s^z)$, for
-  three fresh parameters $s^x$, $s^y$ and $s^z$.
+%   {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+%   $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$ and $S(s^x, s^y, s^z)$, for
+%   three fresh parameters $s^x$, $s^y$ and $s^z$.
 
-\begin{tabbing}
-{\em Polynomials:} \= $poly_1 = 2\cdot s^x - 1$ \\
-                   \> $poly_2 = 2\cdot s^y - 1$
-\end{tabbing}
+% \begin{tabbing}
+% {\em Polynomials:} \= $poly_1 = 2\cdot s^x - 1$ \\
+%                    \> $poly_2 = 2\cdot s^y - 1$
+% \end{tabbing}
 
-{\em Explanation:} The projection of the apes is $(s^x, s^y, 0)$ and
-it lies in the middle of the square, so $s^x = s^y =
-\frac{1}{2}$. Note that $s^z$ is not constrained.
+% {\em Explanation:} The projection of the apes is $(s^x, s^y, 0)$ and
+% it lies in the middle of the square, so $s^x = s^y =
+% \frac{1}{2}$. Note that $s^z$ is not constrained.
 
 % ------------------------
 \item[$\triangleright$] $\mathcal{S}$ = {\tt make\_sphere} $A$ $B$ $C$
@@ -1291,29 +1287,28 @@ $\overrightarrow{CO}\cdot\overrightarrow{CO} = r^2$, and
 $\overrightarrow{DO}\cdot\overrightarrow{DO} = r^2$.
 
 % ------------------------
-\item[$\triangleright$] $A$ $B$ $C$ $D$ = {\tt make\_square} ---
-  construct a square in the canonical position: the base is a unit
-  square in the $xOy$ plane, its lateral edges are equal in length,
-  and the height is not constrained.
+% \item[$\triangleright$] $A$ $B$ $C$ $D$ = {\tt make\_square} ---
+%   construct a square in the canonical position: the base is a unit
+%   square in the $xOy$ plane, its lateral edges are equal in length,
+%   and the height is not constrained.
 
-  {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
-  $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$.
+%   {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+%   $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$.
 
 % ------------------------
-\item[$\triangleright$] $A$ $B$ $C$ = {\tt
-    make\_equilateral\_triangle} --- construct a equilateral triangle
-  in the canonical position; it is in $xOy$ plane, one point is in
-  origin, and another point is on
-  $x$-axis. \\
-  {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
-  $B(1, 0, 0)$, $C(c^x, c^y, 0)$, for two fresh parameters $c^x$ and
-  $c^y$.
+% \item[$\triangleright$] $A$ $B$ $C$ = {\tt
+%     make\_equilateral\_triangle} --- construct a equilateral triangle
+%   in the canonical position; it is in $xOy$ plane, one point is in
+%   origin, and another point is on
+%   $x$-axis. \\
+%   {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+%   $B(1, 0, 0)$, $C(c^x, c^y, 0)$, for two fresh parameters $c^x$ and
+%   $c^y$.
 
-\begin{tabbing}
-{\em Polynomials:} \= $poly_1 = 2\cdot c^x - 1$ \\
-                   \> $poly_2 = 4\cdot c^y - 3$
-\end{tabbing}
-
+% \begin{tabbing}
+% {\em Polynomials:} \= $poly_1 = 2\cdot c^x - 1$ \\
+%                    \> $poly_2 = 4\cdot c^y - 3$
+% \end{tabbing}
 
 % ------------------------
 \item[$\triangleright$] $A_1$ $A_2$ $A_3$ $A_4$ $A_5$ $A_6$ = {\tt
@@ -1334,16 +1329,12 @@ $\overrightarrow{DO}\cdot\overrightarrow{DO} = r^2$.
 \end{tabbing}
 \end{description}
 
-\marginpar{Ove konstrukcije su malo dosadne -- mozemo ostaviti samo
-  nekoliko najzanimljivijih (kocka, tetraedar, sfera, heksagon), a
-  ostale samo pomenuti?}
-\marginpar{Danijela: slazem se, moze ovako nesto: Similary, the system
-  supports the following constructions: $A$ $B$ $C$ = {\tt
-    make\_equilateral\_triangle} (construct a equilateral triangle in
-  the canonical position), $A$ $B$ $C$ $D$ = {\tt make\_square}
-  (construct a square in the canonical position), $A$ $B$ $C$ $D$ $S$
-  = {\tt make\_pyramid} (construct a regular four--side pyramid in the
-  canonical position)}
+
+Similary, the system supports the following constructions: {\tt
+  make\_equilateral\_triangle} (construct a equilateral triangle in
+the canonical position), {\tt make\_square} (construct a square in the
+canonical position), {\tt make\_pyramid} (construct a regular
+four--side pyramid in the canonical position), etc.
 
 
 %-------------------------------------------------------------------------------
@@ -1427,10 +1418,11 @@ applied these methods on 38 different problems from various source
 (\cite{janicic1997zbirka, shao2016challenging, arhzbirka, kinknjiga}).
 
 \begin{example}[Regular tetrahedron altitudes]\label{prvi} 
-Let $ABCS$ be a tetrahedron and let $h_a$, $h_b$, $h_c$ and $h_s$ be
-perpendicular lines from vertices $A$, $B$, $C$ and $S$ onto
-appropriate opposite sides. Let $H$ be intersection of lines $h_a$ and
-$h_b$. Prove that $H$ is also incident with lines $h_s$ and $h_c$.
+  Let $ABCS$ be a tetrahedron and let $h_a$, $h_b$, $h_c$ and $h_s$ be
+  perpendicular lines from vertices $A$, $B$, $C$ and $S$ onto
+  appropriate opposite sides. Prove that intersections of all
+  altitudes $h_a$, $h_b$, $h_c$, and $h_d$ coincide.
+\end{example}
 
 \begin{figure}[!hb]
 \begin{center}
@@ -1439,9 +1431,10 @@ $h_b$. Prove that $H$ is also incident with lines $h_s$ and $h_c$.
 \caption{Tetrahedron altitudes intersect in one point}
 \end{figure}
 
-Geometry statement using term representation and polynomials obtained
-by two approaches of algebraization (after simplification procedure
-applied):
+Next we shall describe the geometry statement using a formal
+representation and parameters and polynomials obtained by the two
+approaches of algebraization (after the simplification procedure has
+been applied):
 
 \footnotetext[11]{Note that coordinates for plane $\alpha_1$ gained
   zero values after simplification and symbolic coordinates are
@@ -1450,121 +1443,125 @@ applied):
 \begin{footnotesize}
 \begin{tabbing}
 \hspace{5mm}\=\hspace{1cm}\=\hspace{1cm}\=\hspace{6cm}\=\kill
+Premises:\\
+\\
 \> $A$ $B$ $C$ $S$ = {\tt make\_tetrahedron} \\
-  \>\> first approch and second approach: \\
-  \>\> $A: (0, 0, 0)$ $ B: (1, 0, 0)$  $C: (x_1, x_2, 0)$ $S: (x_3, x_4, x_5)$ \\
-  \>\> $2*x_1  - 1$ \\
-  \>\> $4*x_2^2  -3$ \\
-  \>\> $3*x_3  -  x_2$ \\
-  \>\> $3*x_4^2  -2$ \\ \\
+  \>\> both first approch and second approach: \\
+  \>\> $A: (0, 0, 0)$\ \ $B: (1, 0, 0)$\ \ $C: (x_1, x_2, 0)$\ \ $S: (x_3, x_4, x_5)$ \\
+  \>\> $2\cdot x_1  - 1 = 0$ \\
+  \>\> $4\cdot x_2^2  -3 = 0$ \\
+  \>\> $3\cdot x_3  -  x_2 = 0$ \\
+  \>\> $3\cdot x_4^2  -2 = 0$ \\ \\
 \> $\alpha_1$ = {\tt make\_plane\_trough\_points} $A$ $B$ $C$ \\
-\>\> first approach: \>\>second approach: \\
- \>\> $\alpha_1: (A, B, C)$ \>\> $\alpha_1 : (0, 0, x_5, 0)$ ---  \footnotemark[11]\\
- \>\>\> \>$x_5  -  x_2$ \\
+\>\> first approach: \>\>second approach\footnotemark[11]: \\
+ \>\> $\alpha_1: (A, B, C)$ \>\> $\alpha_1 : (0, 0, x_5, 0)$ \\
+ \>\>\> \>$x_5  -  x_2 = 0$ \\
 \> $\alpha_2$ = {\tt make\_plane\_trough\_points $B$ $C$ $S$} \\
 \>\> first approach: \>\> second approach: \\
 \>\> $\alpha_2: (B, C, S)$ \>\>$\alpha_2 : (x_6, x_7, 0, x_8)$ \\
- \>\> \>\>$x_6  -  x_2*x_4$ \\
- \>\> \>\>$x_7  +  x_1*x_4  -  x_4$ \\
- \>\> \>\>$x_8  -  x_1*x_3  +  x_3  +  x_2*x_1  -  x_2$ \\
+ \>\> \>\>$x_6  -  x_2\cdot x_4 = 0$ \\
+ \>\> \>\>$x_7  +  x_1\cdot x_4  -  x_4 = 0$ \\
+ \>\> \>\>$x_8  -  x_1\cdot x_3  +  x_3  +  x_2\cdot x_1  -  x_2 = 0$ \\
 \> $\alpha_3$ = {\tt make\_plane\_trough\_points} $A$ $C$ $S$ \\
 \>\> first approach: \>\> second approach: \\
 \>\> $\alpha_3: (A, C, S)$ \>\> $\alpha_3 : (x_9, x_{10}, x_{11}, x_{12})$ \\
-  \>\> \>\> $x_9  +  x_6$ \\
-  \>\> \>\> $x_{10}  -  x_2*x_4$ \\
-  \>\> \>\> $x_{11}  +  x_1*x_4$ \\
-  \>\> \>\> $x_{12}  -  x_1*x_3  +  x_2*x_1$ \\
+  \>\> \>\> $x_9  +  x_6 = 0$ \\
+  \>\> \>\> $x_{10}  -  x_2\cdot x_4 = 0$ \\
+  \>\> \>\> $x_{11}  +  x_1\cdot x_4 = 0$ \\
+  \>\> \>\> $x_{12}  -  x_1\cdot x_3  +  x_2\cdot x_1 = 0$ \\
 \> $\alpha_4$ = {\tt make\_plane\_trough\_points} $A$ $B$ $S$ \\
-\>\> first approach: \> second approach: \\
+\>\> first approach: \>\> second approach: \\
 \>\> $\alpha_4: (A, B, S)$ \>\> $\alpha_4 : (0, 0, x_{13}, x_{14})$ \\
-  \>\> \>\> $x_{13}  +  x_4$ \\
- \>\> \>\>  $x_{14}  -  x_3$ \\
+  \>\> \>\> $x_{13}  +  x_4 = 0$ \\
+ \>\> \>\>  $x_{14}  -  x_3 = 0$ \\
  \\
 \> $h_1$ = {\tt make\_line\_orthogonal\_to\_plane} $\alpha_1$ $S$ \\
 \>\> first approach: \>\>second approach: \\
 \>\> $h1: ((x_5, x_6, x_7), S) $ \>\>$h_1: (0, 0, x_5, x_3, x_4, x_5)$ \\
-\>\> $x_5 - x_1$ \\
-\>\> $x_6  -  x_3$ \\
-\>\> $x_7  -  x_4  -  x_2$ \\
+\>\> $x_5 - x_1 = 0$ \\
+\>\> $x_6  -  x_3 = 0$ \\
+\>\> $x_7  -  x_4  -  x_2 = 0$ \\
+\\
 \> $h_2$ = {\tt make\_line\_orthogonal\_to\_plane} $\alpha_2$ $A$ \\
 \>\> first approach: \>\>second approach: \\
 \>\> $h_2 : ((x_8, x_9, x_{10}), A)$ \>\>$h_2: (x_6, x_7, 0, 0, 0, 0) $ \\
-\>\> $x_8  -  x_2*x_4$ \\
-\>\> $x_9  +  x_1*x_4  -  x_4$ \\
-\>\> $x_{10}  -  x_1*x_3  +  x_3  +  x_2*x_1  -  x_2$ \\
+\>\> $x_8  -  x_2\cdot x_4 = 0$ \\
+\>\> $x_9  +  x_1\cdot x_4  -  x_4 = 0$ \\
+\>\> $x_{10}  -  x_1\cdot x_3  +  x_3  +  x_2\cdot x_1  -  x_2 = 0$ \\
+\\
 \> $h_3$ = {\tt make\_line\_orthogonal\_to\_plane} $\alpha_3$ $B$ \\
 \>\> first approach: \>\>second approach: \\
 \>\> $h_3 : ((x_{11}, x_{12}, x_{13}), B)$ \>\>$h_3: (x_9, x_{10}, x_{11}, 1, 0, 0)$ \\
-\>\> $x_{11}  -1  -  x_2*x_4$ \\
-\>\> $x_{12}  +  x_1*x_4$ \\
-\>\> $x_{13}  -  x_1*x_3  +  x_2*x_1$ \\
+\>\> $x_{11}  -1  -  x_2\cdot x_4 = 0$ \\
+\>\> $x_{12}  +  x_1\cdot x_4 = 0$ \\
+\>\> $x_{13}  -  x_1\cdot x_3  +  x_2\cdot x_1 = 0$ \\
+\\
 \> $h_4$ = {\tt make\_line\_orthogonal\_to\_plane} $\alpha_4$ $C$ \\
 \>\> first approach: \>\> second approach: \\
 \>\> $h_4 : ((x_{14}, x_{15}, x_{16}), C) $ \>\>$h_4: (0, 0, x_{13}, x_1, x_2, 0)$ \\
-\>\> $x_{14}  -  x_1$ \\
-\>\> $x_{15}  -  x_2  +  x_4$ \\
-\>\> $x_{16}  -  x_3$ \\
+\>\> $x_{14}  -  x_1 = 0$ \\
+\>\> $x_{15}  -  x_2  +  x_4 = 0$ \\
+\>\> $x_{16}  -  x_3 = 0$ \\
  \\
 \> $H_1$ = {\tt make\_lines\_intersection} $h_1$ $h_2$ \\
 \>\> first approach: \>\>second approach: \\
 \>\> $H_1 : (x_{17}, x_{18}, x_{19})$  \>\> $H_1 : (x_{15}, x_{16}, x_{17})$ \\
-\>\> $x_6*x_7  -  x_6*x_{19}  -  x_3*x_7  +  x_3*x_{19}  -$   \>\> $x_{15}  -  x_1$ \\
-\>\>\> $x_7*x_6  +  x_7*x_{18}  +  x_4*x_6  -  x_4*x_{18}$ \> $x_{16}  -  x_3$\\
-\>\> $x_7*x_5  -  x_7*x_{17}  -  x_4*x_5  +  x_4*x_{17}  -$ \>\> $x_{17}  -  x_5*x_{18}  -  x_4$ \\
-\>\>\> $x_5*x_7  +  x_5*x_{19}  +  x_1*x_7  -  x_1*x_{19}$ \> $x_{15}  -  x_6*x_{19}$ \\
-\>\> $x_5*x_6  -  x_5*x_{18}  -  x_1*x_6  +  x_1*x_{18}  -$ \>\> $x_{16}  -  x_7*x_{19}$ \\
-\>\>\> $x_6*x_5  +  x_6*x_{17}  +  x_3*x_5  -  x_3*x_{17}$ \> $x_{17}  -  x_8*x_{19}$ \\
-\>\> $x_9*x_{10}  -  x_9*x_{19}  -  x_{10}*x_9  +  x_{10}*x_{18}$ \\
-\>\> $x_{10}*x_8  -  x_{10}*x_{17}  -  x_8*x_{10}  +  x_8*x_{19}$ \\
-\>\> $x_8*x_9  -  x_8*x_{18}  -  x_9*x_8  +  x_9*x_{17}$ \\
+\>\> $x_6\cdot x_7  -  x_6\cdot x_{19}  -  x_3\cdot x_7  +  x_3\cdot x_{19}  -$   \>\> $x_{15}  -  x_1 = 0$ \\
+\>\>\> $x_7\cdot x_6  +  x_7\cdot x_{18}  +  x_4\cdot x_6  -  x_4\cdot x_{18} = 0$ \> $x_{16}  -  x_3 = 0$\\
+\>\> $x_7\cdot x_5  -  x_7\cdot x_{17}  -  x_4\cdot x_5  +  x_4\cdot x_{17}  -$ \>\> $x_{17}  -  x_5\cdot x_{18}  -  x_4= 0$ \\
+\>\>\> $x_5\cdot x_7  +  x_5\cdot x_{19}  +  x_1\cdot x_7  -  x_1\cdot x_{19} = 0$ \> $x_{15}  -  x_6\cdot x_{19} = 0$ \\
+\>\> $x_5\cdot x_6  -  x_5\cdot x_{18}  -  x_1\cdot x_6  +  x_1\cdot x_{18}  -$ \>\> $x_{16}  -  x_7\cdot x_{19} = 0$ \\
+\>\>\> $x_6\cdot x_5  +  x_6\cdot x_{17}  +  x_3\cdot x_5  -  x_3\cdot x_{17} = 0$ \> $x_{17}  -  x_8\cdot x_{19} = 0$ \\
+\>\> $x_9\cdot x_{10}  -  x_9\cdot x_{19}  -  x_{10}\cdot x_9  +  x_{10}\cdot x_{18} = 0$ \\
+\>\> $x_{10}\cdot x_8  -  x_{10}\cdot x_{17}  -  x_8\cdot x_{10}  +  x_8\cdot x_{19} = 0$ \\
+\>\> $x_8\cdot x_9  -  x_8\cdot x_{18}  -  x_9\cdot x_8  +  x_9\cdot x_{17} = 0$ \\
+\\
 \> $H_2$ = {\tt make\_lines\_intersection} $h_2$ $h_3$ \\
 \>\> first approach: \>\>second approach: \\
 \>\> $H_2 : (x_{20}, x_{21}, x_{22})$  \>\> $H_2 : (x_{20}, x_{21}, x_{22})$ \\
-\>\> $x_9*x_{10}  -  x_9*x_{22}  -  x_{10}*x_9  +  x_{10}*x_{21}$ \>\>   $x_{20}  -  x_6*x_{23}$ \\
-\>\> $x_{10}*x_8  -  x_{10}*x_{20}  -  x_8*x_{10}  +  x_8*x_{22}$ \>\>   $x_{21}  -  x_7*x_{23}$ \\
-\>\> $x_8*x_9  -  x_8*x_{21}  -  x_9*x_8  +  x_9*x_{20}$ \>\>   $x_{22}  -  x_8*x_{23}$ \\
-\>\> $x_{12}*x_{13}  -  x_{12}*x_{22}  -  x_{13}*x_{12}  +  x_{13}*x_{21}$ \>\>   $x_{20}  -  x_{10}*x_{24}  -1$ \\
-\>\> $x_{13}*x_{11}  -  x_{13}*x_{20}  -  x_{11}*x_{13}  +  x_{11}*x_{22}  +  x_{13}  -  x_{22}$ \>\> $x_{21}  -  x_{11}*x_{24}$ \\
-\>\> $x_{11}*x_{12}  -  x_{11}*x_{21}  -  x_{12}  +  x_{21}  -  x_{12}*x_{11}  +  x_{12}*x_{20}$ \>\>   $x_{22}  -  x_{12}*x_{24}$ \\
+\>\> $x_9\cdot x_{10}  -  x_9\cdot x_{22}  -  x_{10}\cdot x_9  +  x_{10}\cdot x_{21} = 0$ \>\>   $x_{20}  -  x_6\cdot x_{23} = 0$ \\
+\>\> $x_{10}\cdot x_8  -  x_{10}\cdot x_{20}  -  x_8\cdot x_{10}  +  x_8\cdot x_{22} = 0$ \>\>   $x_{21}  -  x_7\cdot x_{23} = 0$ \\
+\>\> $x_8\cdot x_9  -  x_8\cdot x_{21}  -  x_9\cdot x_8  +  x_9\cdot x_{20} = 0$ \>\>   $x_{22}  -  x_8\cdot x_{23} = 0$ \\
+\>\> $x_{12}\cdot x_{13}  -  x_{12}\cdot x_{22}  -  x_{13}\cdot x_{12}  +  x_{13}\cdot x_{21} = 0$ \>\>   $x_{20}  -  x_{10}\cdot x_{24}  -1 = 0$ \\
+\>\> $x_{13}\cdot x_{11}  -  x_{13}\cdot x_{20}  -  x_{11}\cdot x_{13}  +  x_{11}\cdot x_{22}  +  x_{13}  -  x_{22} = 0$ \>\> $x_{21}  -  x_{11}\cdot x_{24} = 0$ \\
+\>\> $x_{11}\cdot x_{12}  -  x_{11}\cdot x_{21}  -  x_{12}  +  x_{21}  -  x_{12}\cdot x_{11}  +  x_{12}\cdot x_{20} = 0$ \>\>   $x_{22}  -  x_{12}\cdot x_{24} = 0$ \\
+\\
 \> $H_3$ = {\tt make\_lines\_intersection} $h_2$ $h_4$ \\
 \>\> first approach: \>\> second approach: \\
 \>\> $H_3 : (x_{23}, x_{24}, x_{25})$  \>\>  $H_3 : (x_{25}, x_{26}, x_{27})$ \\
-\>\> $x_9*x_{10}  -  x_9*x_{25}  -  x_{10}*x_9  +  x_{10}*x_{24}$  \>\> $x_{25}  -  x_6*x_{28}$ \\
-\>\> $x_{10}*x_8  -  x_{10}*x_{23}  -  x_8*x_{10}  +  x_8*x_{25}$ \>\>  $x_{26}  -  x_7*x_{28}$ \\
-\>\> $x_8*x_9  -  x_8*x_{24}  -  x_9*x_8  +  x_9*x_{23}$ \>\>  $x_{27}  -  x_8*x_{28}$ \\
-\>\> $x_{15}*x_{16}  -  x_{15}*x_{25}  -  x_2*x{16}  +  x_2*x{25}  -$ \>\>  $x_{25}  -  x_1$ \\
-\>\>\> $x_{16}*x_{15}  +  x_{16}*x_{24}$ \>  $x_{26}  -  x_{13}*x_{29}  -  x_2$ \\
-\>\> $x_{16}*x_{14}  -  x_{16}*x_{23}  -  x_{14}*x_{16}  +  x_{14}*x_{25}  +$ \>\>  $x_{27}  -  x_{14}*x_{29}$ \\
-\>\>\>$x_1*x_{16}  -  x_1*x_{25}$ \\
-\>\> $x_{14}*x_{15}  -  x_{14}*x_{24}  -  x_1*x_{15}  +  x_1*x_{24}  -  x_{15}*x_{14}  +$ \\
-\>\>\> $x_{15}*x_{23}  +  x_2*x_{14}  -  x_2*x_{23}$ \\
+\>\> $x_9\cdot x_{10}  -  x_9\cdot x_{25}  -  x_{10}\cdot x_9  +  x_{10}\cdot x_{24} = 0$  \>\> $x_{25}  -  x_6\cdot x_{28} = 0$ \\
+\>\> $x_{10}\cdot x_8  -  x_{10}\cdot x_{23}  -  x_8\cdot x_{10}  +  x_8\cdot x_{25} = 0$ \>\>  $x_{26}  -  x_7\cdot x_{28} = 0$ \\
+\>\> $x_8\cdot x_9  -  x_8\cdot x_{24}  -  x_9\cdot x_8  +  x_9\cdot x_{23} = 0$ \>\>  $x_{27}  -  x_8\cdot x_{28} = 0$ \\
+\>\> $x_{15}\cdot x_{16}  -  x_{15}\cdot x_{25}  -  x_2\cdot x_{16}  +  x_2\cdot x_{25}  -$ \>\>  $x_{25}  -  x_1 = 0$ \\
+\>\>\> $x_{16}\cdot x_{15}  +  x_{16}\cdot x_{24} = 0$ \>  $x_{26}  -  x_{13}\cdot x_{29}  -  x_2 = 0$ \\
+\>\> $x_{16}\cdot x_{14}  -  x_{16}\cdot x_{23}  -  x_{14}\cdot x_{16}  +  x_{14}\cdot x_{25}  +$ \>\>  $x_{27}  -  x_{14}\cdot x_{29} = 0$ \\
+\>\>\>$x_1\cdot x_{16}  -  x_1\cdot x_{25} = 0$ \\
+\>\> $x_{14}\cdot x_{15}  -  x_{14}\cdot x_{24}  -  x_1\cdot x_{15}  +  x_1\cdot x_{24}  -  x_{15}\cdot x_{14}  +$ \\
+\>\>\> $x_{15}\cdot x_{23}  +  x_2\cdot x_{14}  -  x_2\cdot x_{23} = 0$ \\
+Conclusion:\\
+\\
 \>{\tt equal\_points} $H_1$ $H_2$ \\
 \>\> first approach: \>\> second approach: \\
-\>\> $x_{17}  -  x_{20}$ \>\>  $x_{15}  -  x_{20}$ \\
-\>\> $x_{18}  -  x_{21}$ \>\>  $x_{16}  -  x_{21}$ \\
-\>\> $x_{19}  -  x_{22}$ \>\>  $x_{17}  -  x_{22}$ \\
+\>\> $x_{17}  -  x_{20} = 0$ \>\>  $x_{15}  -  x_{20} = 0$ \\
+\>\> $x_{18}  -  x_{21} = 0$ \>\>  $x_{16}  -  x_{21} = 0$ \\
+\>\> $x_{19}  -  x_{22} = 0$ \>\>  $x_{17}  -  x_{22} = 0$ \\
+\\
 \>{\tt equal\_points} $H_1$ $H_3$ \\
 \>\> first approach: \>\> second approach: \\
-\>\> $x_{17}  -  x_{23}$ \>\> $x_{15}  -  x_{25}$ \\
-\>\> $x_{18}  -  x_{24}$ \>\> $x_{16}  -  x_{26}$ \\
-\>\> $x_{19}  -  x_{25}$ \>\> $x_{17}  -  x_{27}$ \\
+\>\> $x_{17}  -  x_{23} = 0$ \>\> $x_{15}  -  x_{25} = 0$ \\
+\>\> $x_{18}  -  x_{24} = 0$ \>\> $x_{16}  -  x_{26} = 0$ \\
+\>\> $x_{19}  -  x_{25} = 0$ \>\> $x_{17}  -  x_{27} = 0$ \\
 \end{tabbing}
 \end{footnotesize}
-\marginpar{Ovo kodiranje je malo drugacije nego sam tekst
-  zadatka. Tamo se trazi da se dokaze pripadnost preseka dve visine
-  drugim dvema, a ovde se racuna nekoliko preseka i dokazuje da su
-  isti. To moze biti sasvim drugacija teorema (sa drugim NDG). Mislim
-  da bi dobro bilo upariti tekst sa ovim.}
+\marginpar{Da li se ovde vrse simplifikacije $x_i - x_j$ i
+  $x_i + x_j$? Deluje da ne. Reci onda da to nije uradjeno i da to
+  dodatno uproscava sistem.}
 
 Since tetrahedron is already in canonical position, coordinates of the
 points are $A(0, 0, 0)$, $B(0, 0, 1)$, $C(x_1, x_2, 0)$ and
 $S(x_3, x_4, x_5)$ where $x_1$, $x_2$, $x_3$, $x_4$ and $x_5$ are
 dependent variables occur in polynomials describing tetrahedron
 \ref{tetrahedron}).
-
-\marginpar{Ovde bi bilo dobro raspisati rezultat oba kodiranja (makar
-  i skraceno, ali da se dobije neka predstava o tome kako dva pristupa
-  rade i koje su razlike izmedju njih).}
 
 Using first approach for algebraization gives $34$ polynomials
 describing premises, $6$ polynomials for the conclusion (for each
@@ -1573,36 +1570,43 @@ simplification procedure, the numbers of polynomials and variables are
 decreased -- $22$ polynomial of premises, $9$ conclusion polynomials
 and $25$ variables. All three systems successfully proved statement
 (proved that all $9$ polynomials are zero) and average time for
-GeoProver was $0.1132$ секунде.
+GeoProver was $0.1132$ секунде.  \marginpar{Treba proveriti da li se
+  ovi brojevi poklapaju sa gore prikazanim polinomima. Kako se broj
+  conclusion polinoma povecao? To treba proveriti i razjasniti.}
 
 Second approach of algebraization produces $44$ polynomials and after
 simplification procedure produces $29$ polynomials defining premises,
 $6$ conclusion polynomials and $29$ variables (presented
-above). Retrieved polynomials are less complex and usually have only
-two monomials. All three provers were successful, but average time was
-smaller, for GeoProver it was $0.0862$ seconds.
+above). Obtained polynomials are significantly less complex (as can be
+noticed above) and usually have only two monomials. All three provers
+were successful, but average time was smaller, for GeoProver it was
+$0.0862$ seconds.
 
-\begin{table}[!ht]
+Some statistics are summarized in Table \ref{tbl:prvi}.
+
+\begin{table}[!h]
 \begin{center}
 \begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{1.5cm}}
-\                   &  number of polynomials & average number of monomials & number of variables & time \\
+\                   &  number of polynomials & average number of monomials & number of variables & GeoProver time \\
 \hline
 \hline
 \textbf{first approach} & $22$ & $4.58$ & $25$ & $0.1132s$ \\
 \hline
 \textbf{second approach} & $29$ & $1.97$ & $22$ & $0.0862s$
 \end{tabular}
-\caption{Comparison of two algebraization approaches for example \ref{prvi}}
+\caption{Comparison of two algebraization approaches for Example
+  \ref{prvi}}
+\label{tbl:prvi}
 \end{center}
 \end{table}
 
-\end{example}
 
 \begin{example}[Angles and tetrahedron, example from (\cite{shao2016challenging})]\label{primer2}
 Let $ABCD$ be a tetrahedron, $O$ be the circumcenter of $ABCD$, and
 $K$, $L$, $M$ be the middle points of edges $AB$, $BC$, $CA$
 respectively. If $|AB|=|CD|$, $|AC|=|BD|$, $|AD|= |BC|$, then $\angle
 KOL = \angle LOM = \angle MOK$.
+\end{example}
 
 \begin{figure}[!hb]
 \begin{center}
@@ -1611,22 +1615,22 @@ KOL = \angle LOM = \angle MOK$.
 \caption{Example \ref{primer2}, $\angle KOL = \angle LOM = \angle MOK$}
 \end{figure}
 
-Term representation of geometry statement:
+Formal representation of geometry statement:
 
 \begin{footnotesize}
 {\tt
 \begin{tabbing}
-make\_tetrahedron $A$ $B$ $C$ $D$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
-
-line\_orth\_plane $l_1$ $A$ $B$ $C$ $D$ \\
-line\_orth\_plane $l_2$ $A$ $C$ $D$ $B$ \\ \\
-
-intersection\_lines $O$ $l_1$ $l_2$ \\ \\
-
-midpoint $K$ $A$ $B$ \\
-midpoint $L$ $B$ $C$ \\
-midpoint $M$ $C$ $A$ \\ \\
-
+make\_tetrahedron $A$ $B$ $C$ $D$ \\
+ \\
+$l_1$ = make\_line\_orthogonal\_on\_plane $A$ $B$ $C$ $D$ \\
+$l_2$ = make\_line\_orthogonal\_on\_plane $A$ $C$ $D$ $B$ \\
+ \\
+$O$ = make\_lines\_intersection\ $l_1$ $l_2$ \\
+ \\
+$K$ = make\_midpoint $A$ $B$ \\
+$L$ = midpoint $B$ $C$ \\
+$M$ = midpoint $C$ $A$ \\
+ \\
 equal\_angles  $K$ $O$ $L$ $L$ $O$ $M$
 \end{tabbing}
 }
@@ -1648,28 +1652,33 @@ exceeded in pseudo division. Obtained polynomial with 3339 terms).
 By using second approach, number of obtained polynomials are equal as
 above, $24$, but polynomials are less complex. All three provers were
 successful and GeoProver reached conclusion after $0.835$ seconds.
+\marginpar{Sta se desava sa vremenim za ostale sisteme?}
 
-\begin{table}[!hb]
+Some statistics for this example are summarized in Table \ref{tbl:drugi}.
+
+\begin{table}[!h]
 \begin{center}
 \begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{1.5cm}}
-\                   &  number of polynomials & average number of monomials & number of variables & time \\
+\                   &  number of polynomials & average number of monomials & number of variables & GeoProver time \\
 \hline
 \hline
 \textbf{first approach} & $24$ & $7.2$ & $18$ & \emph{memory limit} \\
 \hline
 \textbf{second approach} & $24$ & $3.5$ & $24$ & $0.835s$
 \end{tabular}
-\caption{Comparison of two algebraization approaches}
+\caption{Comparison of two algebraization approaches for the Example \ref{drugi}}
+\label{tbl:drugi}
 \end{center}
 \end{table}
-\end{example}
 
-Observing these two simple examples leads to the conclusion that first
-approach generates less variables, but the second approach generates
-less complex polynomials. As we shall see by testing, algebraic
-theorem provers are more efficient if the polynomials are simpler, and
-so algebraic provers were more successful when second approach is
-used.
+\bigskip 
+
+These two simple examples indicate that the first approach generates
+less variables, but the second approach generates less complex
+polynomials. Further testing on a larger corpus of problem also
+indicates that algebraic theorem provers are more efficient if the
+polynomials are simpler, and so algebraic provers were more successful
+when second approach is used.
 
 \paragraph{Results of testing algebraic provers}
 Maple and Mathematica were more successful than GeoProver. Mathematica
@@ -1716,33 +1725,38 @@ v_n) = 0$ holds then geometry statement holds, too. This means that
 geometry conjecture is true only for those objects whose coordinates
 satisfy condition $c(v_1, \ldots, v_n) \neq 0$.  
 
-However NDG conditions are given in algebraic terms, but in the
-context of geometry theorem proving, it is important to have their
-geometrical interpretation as well. Extensive research has been done
-to transform algebraic NDG conditions into geometric ones for planar
-geometry (\cite{chou1988mechanical}). It is noted that it can happen
-that statement is true even under weaker assumptions and that some
-conditions are not necessary. In addition, a presence of NDG
-conditions doesn’t necessarily mean that if they are not satisfied the
-conjecture is invalid.
+However NDG conditions obtained from automated provers are given in
+algebraic terms, but in the context of geometry theorem proving, it is
+important to have their geometrical interpretation as well. Extensive
+research has been done to transform algebraic NDG conditions into
+geometric ones for planar geometry (\cite{chou1988mechanical}). It is
+noted that it can happen that statement is true even under weaker
+assumptions and that some conditions are not necessary. In addition, a
+presence of NDG conditions doesn't necessarily mean that if they are
+not satisfied the conjecture is invalid.
 
 To the best of our knowledge, there are no research how gained NDG
 conditions could be transformed into geometric terms for three
-dimensional geometry. We did not investigate automatic approach for
-transforming NDG conditions but we analyze gained conditions with
-pen-and-paper. Couple interesting examples are given below.
+dimensional geometry. We did not create an automated tool for
+interpreting NDG conditions in geometric terms yet, but we manually
+analyzed all the returned NDG conditions for examples from our
+corpus. A couple of interesting examples is shown below.
 
 \begin{example}[Two examples from previous section]
-For both examples from previous section are gained same NDG
-condition. It is expressed with $x_7 \neq 0$. For both examples this
-variable belongs to the plane determined with points $A$, $B$ and
-$C$. Vector of this line is $(x_5, x_6, x_7)$. However, due to
-simplification, points $A$, $B$ and $C$ have some canonical
-coordinates --- $A(0, 0, 0)$, $B(0, 0, b^z)$ and $C(0, c^y,
-c^z)$. These coordinates determine vector of the plane $ABC$ such that
-$x_5 = 0$ and $x_6 = 0$. So, this conditions $x_7 \neq 0$ enables that
-plane is well defined.
+  For both examples from the previous section a same NDG condition is
+  obtained. It is expressed by $x_7 \neq 0$. In both examples the
+  variable $x_7$ is a parameter of the plane determined by points $A$,
+  $B$ and $C$. Its normal vector is $(x_5, x_6, x_7)$. However, due to
+  simplification, points $A$, $B$ and $C$ have some canonical
+  coordinates --- $A(0, 0, 0)$, $B(0, 0, b^z)$ and $C(0, c^y, c^z)$.
+  These coordinates determine vector of the plane $ABC$ such that
+  $x_5 = 0$ and $x_6 = 0$. So, this conditions $x_7 \neq 0$ enables
+  that plane is well defined.
 \end{example}
+\marginpar{Ovde nesto ne valja --- normal vector ravni ABC je (0, 0,
+  x5). Pretpostavljam da ovde treba da stoji x5 razlicito od 0? x5 je
+  ujedno z koordinata tacke S, tako da bi onda taj uslov govorio da
+  tetraedar nije spljosten.}
 
 \begin{example}[Example from (\cite{arhzbirka})] 
 Let $ABCDA_1B_1C_1D_1$ be a cube and let $S$ be the vertex of regular
@@ -1750,6 +1764,7 @@ four side pyramid $ABCDS$ whose height is twice the size of the side
 of the cube. Prove that regular four side pyramid gained in the
 intersection of pyramid $ABCDS$ and cube $ABCDA_1B_1C_1D_1$ has base
 side twice the smaller than the size of the side of the cube.
+\end{example}
 
 \begin{figure}[!h]
 \begin{center}
@@ -1758,7 +1773,7 @@ side twice the smaller than the size of the side of the cube.
 \caption{Cube and pyramid intersection}
 \end{figure}
 
-Term representation of geometry statement is:
+Formal representation of geometry statement is:
 \begin{footnotesize}
 {\tt
 \begin{tabbing}
@@ -1791,15 +1806,11 @@ $\alpha(x_{19}, x_{20}, x_{21}, x_{22})$.
 The second NDG condition ensures that line $l$ and plane $\alpha$
 are not parallel. If they were to be parallel, they would not
 intersect and there would be no point $L$. 
-\end{example}
 
 \section{Conclusion and future work}
 
-To the best of our knowledge there does not exist automated theorem
-prover for solid geometry. Automated methods (such as Wu's method or
-Gr\"obner basis method) can prove solid geometry statements, but using
-these methods requires transforming geometry statements into
-polynomial equations.
+In this paper we focused on developing fully automated theorem provers
+for 3d, solid geometry.
 
 We studied two different algebraization methods for geometry
 statements. The first approach introduces only coordinates of the
@@ -1819,13 +1830,33 @@ and their impact is less obvious. Using second approach, obtained
 polynomials are less complex and that is the reason why the second
 approach was more convenient for algebraic provers.
 
-During this research, we also examined different implementations of
-algebraic provers. GeoProver's Wu's method required to be possible to
-transform polynomials in the premises into triangular system. However,
-this property is hard to secure and special care should be taken for
+
+We implemented a prover based on the two described approaches relying
+on three different third-party algebraic engines (GeoProver,
+Mathematica and Maple). We also made important steps towards full
+integration of our prover with the existing dynamic geometry system
+Stereos. There are descriptions of applying algebraic theorem provers
+on solid geometry problems \cite{shao2016challenging}, but we are not
+aware of other implementations of fully automated theorem provers for
+solid geometry.
+
+During this research, we also compared different algebraic prover
+engines. GeoProver's Wu's method required to be possible to transform
+polynomials in the premises into triangular system. However, this
+property is hard to secure and special care should be taken for
 intersection of two lines. Thus, we felt more comfortable using the
 other two provers, Maple's Wu's method and Mathematica's Gr\"oebner
 basis method.
+
+In our further research we plan to make thorough experiments of the
+effect of the tool that we have developed in high-school and
+university education. We feel that the support for automated theorem
+proving in 3d geometry might have much higher impact than in 2d, since
+it is much harder to observe exact relations between the geometric
+objects only by looking at diagrams that are shown projected on the
+two-dimensional screen. Therefore, we hope that methods and tools
+described in this paper might find their way to the classrooms and
+might help students.
 
 
 
@@ -1834,11 +1865,3 @@ basis method.
 \bibliography{algmethods3d}
 
 \end{document}
-
-
-
-\begin{comment}
-
-
-
-\end{comment}
