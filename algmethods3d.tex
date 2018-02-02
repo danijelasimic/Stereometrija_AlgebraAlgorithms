@@ -1426,7 +1426,7 @@ Maple's Wu's method and Mathematica's Gr\"obner basis method. We
 applied these methods on 38 different problems from various source
 (\cite{janicic1997zbirka, shao2016challenging, arhzbirka, kinknjiga}).
 
-\begin{example}[Regular tetrahedron altitudes] 
+\begin{example}[Regular tetrahedron altitudes]\label{prvi} 
 Let $ABCS$ be a tetrahedron and let $h_a$, $h_b$, $h_c$ and $h_s$ be
 perpendicular lines from vertices $A$, $B$, $C$ and $S$ onto
 appropriate opposite sides. Let $H$ be intersection of lines $h_a$ and
@@ -1439,8 +1439,9 @@ $h_b$. Prove that $H$ is also incident with lines $h_s$ and $h_c$.
 \caption{Tetrahedron altitudes intersect in one point}
 \end{figure}
 
-Geometry statement using term representation:
-\marginpar{Zapisala sam koje polinome pravi drugi pristup, prvi pristup cu sutra. Mislim da nije ovako pregledno jer ima puno polinoma i dva pristupa, Mozda napraviti neku tabelu pa sa leve strane termovska reprezentacija, a sa desne polinomi... }
+Geometry statement using term representation and polynomials obtained
+by two approaches of algebraization (after simplification procedure
+applied):
 
 \footnotetext[11]{Note that coordinates for plane $\alpha_1$ gained
   zero values after simplification and symbolic coordinates are
@@ -1570,31 +1571,28 @@ describing premises, $6$ polynomials for the conclusion (for each
 algebraic method should be invoked) and $33$ variables. After
 simplification procedure, the numbers of polynomials and variables are
 decreased -- $22$ polynomial of premises, $9$ conclusion polynomials
-and $25$ variables. It may seem odd that number of conclusion
-polynomials increased, but that it due to intersection of lines
-\ref{}. All three systems successfully proved statement (proved that
-all $9$ polynomials are zero) and average time for GeoProver was
-$0.1132$ секунде.
+and $25$ variables. All three systems successfully proved statement
+(proved that all $9$ polynomials are zero) and average time for
+GeoProver was $0.1132$ секунде.
 
 Second approach of algebraization produces $44$ polynomials and after
 simplification procedure produces $29$ polynomials defining premises,
-$9$ conclusion polynomials and $29$ variables (presented
+$6$ conclusion polynomials and $29$ variables (presented
 above). Retrieved polynomials are less complex and usually have only
 two monomials. All three provers were successful, but average time was
 smaller, for GeoProver it was $0.0862$ seconds.
 
-\marginpar{Izmeniti tacan prosecan broj monoma, ovo je bilo otprilike}
-\begin{table}[!hb]
+\begin{table}[!ht]
 \begin{center}
 \begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{1.5cm}}
 \                   &  number of polynomials & average number of monomials & number of variables & time \\
 \hline
 \hline
-\textbf{first approach} & $22$ & $?$ & $25$ & $0.1132s$ \\
+\textbf{first approach} & $22$ & $4.58$ & $25$ & $0.1132s$ \\
 \hline
-\textbf{second approach} & $29$ & $?$ & $22$ & $0.0862s$
+\textbf{second approach} & $29$ & $1.97$ & $22$ & $0.0862s$
 \end{tabular}
-\caption{Comparison of two algebraization approaches}
+\caption{Comparison of two algebraization approaches for example \ref{prvi}}
 \end{center}
 \end{table}
 
