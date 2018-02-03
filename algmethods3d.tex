@@ -154,6 +154,9 @@ algebraic proving in solid geometry.
   geometry education.
 \end{enumerate}
 
+Our system and materials are given in an online
+appendix \footnote{\url{http://www.matf.bg.ac.rs/~danijela/solids.html}}.
+
 % \paragraph{Overview of the paper.}
 
 \section{Related work}
@@ -449,7 +452,7 @@ equations over their coordinates. In this section we are going to give
 examples how this could be done, for the most common relations (a
 richer set of relations can be represented using similar techniques,
 and a detailed description is given in an online
-appendix). \marginpar{dodati url}
+appendix)\footnote{\url{http://www.matf.bg.ac.rs/~danijela/solids.html}}.
 
 \subsection{Representation of basic objects -- points, lines, planes, spheres}
 One of the first questions in the algebraization process is what
@@ -1442,7 +1445,7 @@ representation and parameters and polynomials obtained by the two
 approaches of algebraization (after the simplification procedure has
 been applied):
 
-\footnotetext[11]{Note that coordinates for plane $\alpha_1$ gained
+\footnotetext[14]{Note that coordinates for plane $\alpha_1$ gained
   zero values after simplification and symbolic coordinates are
   deleted from the system and substituted with $0$.}
 
@@ -1453,13 +1456,13 @@ Premises:\\
 \\
 \> $A$ $B$ $C$ $S$ = {\tt make\_tetrahedron} \\
   \>\> both first approch and second approach: \\
-  \>\> $A: (0, 0, 0)$\ \ $B: (1, 0, 0)$\ \ $C: (x_1, x_2, 0)$\ \ $S: (x_3, x_4, x_5)$ \\
+  \>\> $A: (0, 0, 0)$\ \ $B: (1, 0, 0)$\ \ $C: (x_1, x_2, 0)$\ \ $S: (x_1, x_3, x_4)$ \\
   \>\> $2\cdot x_1  - 1 = 0$ \\
   \>\> $4\cdot x_2^2  -3 = 0$ \\
   \>\> $3\cdot x_3  -  x_2 = 0$ \\
   \>\> $3\cdot x_4^2  -2 = 0$ \\ \\
 \> $\alpha_1$ = {\tt make\_plane\_trough\_points} $A$ $B$ $C$ \\
-\>\> first approach: \>\>second approach\footnotemark[11]: \\
+\>\> first approach: \>\>second approach\footnotemark[14]: \\
  \>\> $\alpha_1: (A, B, C)$ \>\> $\alpha_1 : (0, 0, x_5, 0)$ \\
  \>\>\> \>$x_5  -  x_2 = 0$ \\
 \> $\alpha_2$ = {\tt make\_plane\_trough\_points $B$ $C$ $S$} \\
@@ -1559,29 +1562,27 @@ Conclusion:\\
 \>\> $x_{19}  -  x_{25} = 0$ \>\> $x_{17}  -  x_{27} = 0$ \\
 \end{tabbing}
 \end{footnotesize}
-\marginpar{Da li se ovde vrse simplifikacije $x_i - x_j$ i
-  $x_i + x_j$? Deluje da ne. Reci onda da to nije uradjeno i da to
-  dodatno uproscava sistem.}
-
 Since tetrahedron is already in canonical position, coordinates of the
 points are $A(0, 0, 0)$, $B(0, 0, 1)$, $C(x_1, x_2, 0)$ and
 $S(x_3, x_4, x_5)$ where $x_1$, $x_2$, $x_3$, $x_4$ and $x_5$ are
 dependent variables occur in polynomials describing tetrahedron
 \ref{tetrahedron}).
 
+Simplifications of the polynomials of the form $x_i - x_j$ and $x_i +
+x_j$ are not performed for this example (and that would additionaly
+simplify polynomial system).
+
 Using first approach for algebraization gives $34$ polynomials
 describing premises, $6$ polynomials for the conclusion (for each
 algebraic method should be invoked) and $33$ variables. After
 simplification procedure, the numbers of polynomials and variables are
-decreased -- $22$ polynomial of premises, $9$ conclusion polynomials
+decreased -- $34$ polynomial of premises, $6$ conclusion polynomials
 and $25$ variables. All three systems successfully proved statement
-(proved that all $9$ polynomials are zero) and average time for
-GeoProver was $0.1132$ секунде.  \marginpar{Treba proveriti da li se
-  ovi brojevi poklapaju sa gore prikazanim polinomima. Kako se broj
-  conclusion polinoma povecao? To treba proveriti i razjasniti.}
+(proved that all $6$ polynomials are zero) and average time for
+GeoProver was $0.1132$ seconds. 
 
 Second approach of algebraization produces $44$ polynomials and after
-simplification procedure produces $29$ polynomials defining premises,
+simplification procedure produces $32$ polynomials defining premises,
 $6$ conclusion polynomials and $29$ variables (presented
 above). Obtained polynomials are significantly less complex (as can be
 noticed above) and usually have only two monomials. All three provers
@@ -1607,7 +1608,7 @@ Some statistics are summarized in Table \ref{tbl:prvi}.
 \end{table}
 
 
-\begin{example}[Angles and tetrahedron, example from (\cite{shao2016challenging})]\label{primer2}
+\begin{example}[Angles and tetrahedron, example from (\cite{shao2016challenging})]\label{drugi}
 Let $ABCD$ be a tetrahedron, $O$ be the circumcenter of $ABCD$, and
 $K$, $L$, $M$ be the middle points of edges $AB$, $BC$, $CA$
 respectively. If $|AB|=|CD|$, $|AC|=|BD|$, $|AD|= |BC|$, then $\angle
@@ -1618,7 +1619,7 @@ KOL = \angle LOM = \angle MOK$.
 \begin{center}
 \input{jednaki_uglovi.tkz}
 \end{center}
-\caption{Example \ref{primer2}, $\angle KOL = \angle LOM = \angle MOK$}
+\caption{Example \ref{drugi}, $\angle KOL = \angle LOM = \angle MOK$}
 \end{figure}
 
 Formal representation of geometry statement:
@@ -1626,7 +1627,7 @@ Formal representation of geometry statement:
 \begin{footnotesize}
 {\tt
 \begin{tabbing}
-make\_tetrahedron $A$ $B$ $C$ $D$ \\
+$A$ $B$ $C$ $D$ = make\_tetrahedron\\
  \\
 $l_1$ = make\_line\_orthogonal\_on\_plane $A$ $B$ $C$ $D$ \\
 $l_2$ = make\_line\_orthogonal\_on\_plane $A$ $C$ $D$ $B$ \\
@@ -1634,8 +1635,8 @@ $l_2$ = make\_line\_orthogonal\_on\_plane $A$ $C$ $D$ $B$ \\
 $O$ = make\_lines\_intersection\ $l_1$ $l_2$ \\
  \\
 $K$ = make\_midpoint $A$ $B$ \\
-$L$ = midpoint $B$ $C$ \\
-$M$ = midpoint $C$ $A$ \\
+$L$ = make\_midpoint $B$ $C$ \\
+$M$ = make\_midpoint $C$ $A$ \\
  \\
 equal\_angles  $K$ $O$ $L$ $L$ $O$ $M$
 \end{tabbing}
@@ -1648,29 +1649,29 @@ $B(0, 0, 1)$, $C(x_1, x_2, 0)$ and $S(x_3, x_4, x_5)$ where $x_1$,
 $x_2$, $x_3$, $x_4$ and $x_5$ are dependent variables and occur in
 polynomials describing tetrahedron (\ref{tetrahedron}).
 
-By using first approach are obtained $18$ different variables, $24$
-polynomials defining premises, $4$ polynomials defining conclusion of
+By using first approach are obtained $24$ different variables, $27$
+polynomials defining premises, $1$ polynomials defining conclusion of
 the geometry conjecture. Obtained polynomials are bit more complex
 than in a previous example. Maple and Mathematica were successful, but
 GeoProver reached memory limit after $0.481$ seconds (e.g. Space limit
 exceeded in pseudo division. Obtained polynomial with 3339 terms).
 
-By using second approach, number of obtained polynomials are equal as
-above, $24$, but polynomials are less complex. All three provers were
-successful and GeoProver reached conclusion after $0.835$ seconds.
-\marginpar{Sta se desava sa vremenim za ostale sisteme?}
+By using second approach, number of obtained polynomials are $24$
+(with $44$ variables), but polynomials are less complex. All three
+provers were successful and GeoProver reached conclusion after $0.835$
+seconds.
 
 Some statistics for this example are summarized in Table \ref{tbl:drugi}.
 
 \begin{table}[!h]
 \begin{center}
-\begin{tabular}{L{2cm}||R{2cm}|R{2cm}|R{2cm}|R{1.5cm}}
-\                   &  number of polynomials & average number of monomials & number of variables & GeoProver time \\
+\begin{tabular}{L{1.8cm}||R{1.8cm}|R{1.8cm}|R{1.8cm}|R{1.8cm}|R{1.8cm}}
+\                   &  number of polynomials & average number of monomials & number of variables & GeoProver time & Maple time\\
 \hline
 \hline
-\textbf{first approach} & $24$ & $7.2$ & $18$ & \emph{memory limit} \\
+\textbf{first approach} & $24$ & $7.2$ & $18$ & \emph{memory limit} & $0.628s$ \\
 \hline
-\textbf{second approach} & $24$ & $3.5$ & $24$ & $0.835s$
+\textbf{second approach} & $24$ & $3.5$ & $24$ & $0.835s$ & $0.471s$
 \end{tabular}
 \caption{Comparison of two algebraization approaches for the Example \ref{drugi}}
 \label{tbl:drugi}
@@ -1750,19 +1751,16 @@ corpus. A couple of interesting examples is shown below.
 
 \begin{example}[Two examples from previous section]
   For both examples from the previous section a same NDG condition is
-  obtained. It is expressed by $x_7 \neq 0$. In both examples the
-  variable $x_7$ is a parameter of the plane determined by points $A$,
-  $B$ and $C$. Its normal vector is $(x_5, x_6, x_7)$. However, due to
-  simplification, points $A$, $B$ and $C$ have some canonical
-  coordinates --- $A(0, 0, 0)$, $B(0, 0, b^z)$ and $C(0, c^y, c^z)$.
-  These coordinates determine vector of the plane $ABC$ such that
-  $x_5 = 0$ and $x_6 = 0$. So, this conditions $x_7 \neq 0$ enables
-  that plane is well defined.
+  obtained. It is expressed by $x_7 \neq 0$. 
+
+  In the first example, vector of the plane $\alpha_2$ is $(x_6, x_7,
+  0)$ and this condition ensures that plane $\alpha_2$ is not equal to
+  the plane $yOz$.
+
+  In the second example, vector of the line $l_2$ is $(x_6, x_7,
+  x_8)$, so $x_7$ coresponds to the second coordinate of the line
+  $l_2$.
 \end{example}
-\marginpar{Ovde nesto ne valja --- normal vector ravni ABC je (0, 0,
-  x5). Pretpostavljam da ovde treba da stoji x5 razlicito od 0? x5 je
-  ujedno z koordinata tacke S, tako da bi onda taj uslov govorio da
-  tetraedar nije spljosten.}
 
 \begin{example}[Example from (\cite{arhzbirka})] 
 \label{ex:kockapiramida}
@@ -1811,7 +1809,9 @@ Now it had to be determined what geometry objects these variables
 determine and it happens to be line $l(x_{13}, x_{14}, x_{15})$ and
 plane $\alpha(x_{19}, x_{20}, x_{21}, x_{22})$.
 
-\marginpar{Ovde prodiskutovati i sta je taj $x_{13}$ tj. sta znaci prvi NDG.}
+The first NDG condition $x_{13} \neq 0$ ensures that the first
+coordinate of the vector of the line $l$ is not equal zero. 
+
 The second NDG condition ensures that line $l$ and plane $\alpha$
 are not parallel. If they were to be parallel, they would not
 intersect and there would be no point $L$. 
