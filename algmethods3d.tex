@@ -1,7 +1,3 @@
-%=====================================================
-%  Template File for Journal of Symbolic Computation
-%=====================================================
-
 \documentclass[final,1p,times,authoryear]{elsarticle}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -58,10 +54,11 @@
 \ead{filip@matf.bg.ac.rs}
 \ead[url]{http://www.matf.bg.ac.rs/~filip/}
 \begin{abstract}
-We describe algebraic methods for automated theorem proving in 3d
-solid geometry and their integration with a geometry language and
-system Stereos. Several methods for transforming statements into
-algebraic form are introduced and compared on a corpus of problems.
+  We describe algebraic methods for automated theorem proving in 3d
+  solid geometry and their integration with a geometry language and
+  system Stereos. Two different methods for transforming geometric
+  statements into algebraic form are introduced, implemented within a
+  theorem prover, and compared on a corpus of problems.
 \end{abstract}
 
 \begin{keyword}
@@ -97,28 +94,28 @@ etc.).
 By doing extensive distortion of diagrams by moving free points,
 student can be pretty sure if a property is generaly true (i.e., true
 in all, but a small number of degenerate cases), but still, that
-cannot be considered to be a proof, and is error prone. Therefore,
+cannot be considered to be a proof and is error prone. Therefore,
 recently dynamic geometry systems have been extended by automated
 reasoning systems, that can automatically prove statements about
 constructed objects (\cite{geogebra-provers}). Such theorem provers
 are usually algebraic (they perform calculations on symbolic
-coordinates of geometric objects).
+parameters of geometric objects, usually coordinates of points).
 
 Most research in both dynamic geometry systems and automated theorem
 proving in geometry has been devoted only to two-dimensional Euclidean
 geometry (plane geometry). However, in our view, application of
 dynamic geometry software for three-dimension space (solid geometry)
 is even more important since it is often hard to determine geometric
-properties of spatial objects only by observing diagrams, since three
-dimensional space is presented only by its two-dimensional projections
-and thus measures of distances and angles are not directly
+properties of spatial objects only by observing diagrams. Namely,
+three dimensional space is presented only by its two-dimensional
+projections and thus measures of distances and angles are not directly
 preserved. It is much easier to see that two lines in plane geometry
 are perpendicular, then to see if two intersecting lines in space are
 perpendicular, even if the viewpoint is moved and the object is
 rotated and looked from many angles.
 
 Some geometry systems developed support for three-dimensional
-constructions. The new version of GeoGeobra have developed support for
+constructions. The new version of GeoGeobra has offered support for
 dynamic three dimension
 graphics\footnote{\url{https://wiki.geogebra.org/en/3D_Graphics_View}}. It
 is possible to create and dynamically change three dimension objects
@@ -137,12 +134,11 @@ geometry.
 
 Having this in mind, this work tries to bridge several gaps that we
 feel are present in current state-of-the-art in the field of automatic
-proving in solid geometry.
+algebraic proving in solid geometry.
 \begin{enumerate}
-\item In this paper we examine and compare two different methods of
-  algebraization of geometry statements, before algebraic theorem
-  provers based on Gr\"obner bases and Wu's method to solid geometry
-  problems are applied.
+\item We define and compare two different methods of algebraization of
+  statements of solid geometry, before algebraic theorem provers based
+  on Gr\"obner bases and Wu's method are applied.
 
 \item We build an implementation of automated theorem provers for
   solid geometry problems based on those two algebraization methods.
@@ -266,8 +262,8 @@ existing ones (e.g., constructs a new line trough the two existing
 points). However, the properties of the new, constructed object can
 usually be specified in terms of one or more relations, so without
 losing generality, it can be assumed that we are dealing only with
-statements that involve relations (although we shall explicitly show
-how to convert some common construction steps into a relational form).
+statements that involve relations (we shall explicitly show how to
+convert some common construction steps into a relational form).
 
 Each object (point, line, circle, etc.) is given by some its
 parameters (most often some coordinates) and by its relationship with
@@ -309,8 +305,7 @@ on.
 
 Algebraic methods in geometry are well described in literature
 (\cite{wu, buchberger}). In this section we give a brief account on
-algebraic methods in geometry, in order to explain some relevant steps
-needed in algebraization of solid objects.
+algebraic methods in geometry.
 
 Algebraization introduces variables $v_i$ that denote parameters of
 geometric objects (usually these are only the coordinates of free and
@@ -326,8 +321,8 @@ are denoted by $g_j$, $j = 1, \ldots, l$, then proving reduces to
 checking if for each $g_j$ it holds that
 $$\forall v_1, \ldots, v_n \in \mathbb{R}. \bigwedge_{i = 1}^{k}
 f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
-Polynomials $f_i$ are sometimes called \emph{premises polynomials} and
-$g_j$ are called \emph{conclusion polynomials}.
+We shall refer to $f_i$ as \emph{premises polynomials} and to $g_j$ as
+\emph{conclusion polynomials}.
 
 Once the geometric theorem has been algebrized, it is possible to
 apply algebraic theorem proving methods.  As Tarski suggested, proving
@@ -335,14 +330,14 @@ geometric properties can be done using quantifier elimination
 procedure for the reals, or the cylindrical algebraic decomposition,
 that is its improved variant, but these approaches are inefficient and
 proving nontrivial geometric properties would take too long. But,
-there is another approach. The main insight, given by Wu Wen-ts\"un in
-1978, is that remarkably many geometrical theorems, when formulated as
-universal algebraic statements in terms of coordinates, are also true
-for all complex values of the ``coordinates''. However, a care should
-be taken, since, in some cases, the condition holds for $\mathbb{R}$,
-but not for $\mathbb{C}$, and in these cases methods fail due to
-counterexamples in $\mathbb{C}$. Statements to be proved are of
-following form:
+there is another, much more efficient approach. The main insight,
+given by Wu Wen-ts\"un in 1978, is that remarkably many geometrical
+theorems, when formulated as universal algebraic statements in terms
+of coordinates, are also true for all complex values of the
+``coordinates''. However, a care should be taken, since, in some
+cases, the condition holds for $\mathbb{R}$, but not for $\mathbb{C}$,
+and in these cases methods fail due to counterexamples in
+$\mathbb{C}$. Statements to be proved are of following form:
 $$\forall v_1, \ldots, v_n \in \mathbb{C}. \bigwedge_{i = 1}^{k} f_i(v_1, \ldots, v_n) = 0 \Longrightarrow g_j(v_1, \ldots, v_n) = 0.$$
 
 This is true when $g_j$ belongs to the radical ideal $I = \langle f_1,
@@ -390,8 +385,9 @@ Gr\"obner basis with respect to some monomial order using B-reduction.
 
 \subsection{Implementations of algebraic methods}
 
-For testing results of applied agrebaization we used three systems --
-GeoProver that uses simple Wu's method (\cite{geoprover}),
+There are several available implementations of Wu's and Buchberger's
+method. In our research we used three systems -- GeoProver that uses
+simple Wu's method (\cite{geoprover}),
 Mathematica\footnote{\url{https://www.wolfram.com/mathematica/}} with
 implemented Gr\"obner basis method and
 Maple\footnote{\url{https://www.maplesoft.com/products/maple/}} with
@@ -493,9 +489,12 @@ their efficiency.
 
 \paragraph{Points and vectors}
 Points will have three parameters, representing their
-coordinates. They will be denoted by superscripts $({\_}^x, {\_}^y,
-{\_}^z)$. For example, point $A$ will be parametrized by the triple of
-$(A^x, A^y, A^z)$. Coordinates can be either symbolic (variables or
+coordinates. They will be denoted by superscripts
+$({\_}^x, {\_}^y, {\_}^z)$. For example, point $A$ will be
+parametrized by the triple of $(A^x, A^y, A^z)$\footnote{When it is
+  necessary to distinguish free and constructed points, we shall use
+  upper-case letters for free and lower-case letters for constructed
+  points.}. Coordinates can be either symbolic (variables or
 expressions) or numeric (when the exact position of some points is
 known or can be directly calculated).
 
@@ -536,8 +535,8 @@ will have the parameters $(l^{v_x}, l^{v_y}, l^{v_z}, l^{A_x},
 l^{A_y}, l^{A_z})$, which represent the line given by the equation:
 $$x = k_l\cdot l^{v_x} + l^{A_x},\quad y = k_l\cdot l^{A_y} +
 l^{A_y},\quad z = k_l\cdot l^{v_z} + l^{A_z}.$$
-In the previous equations, $k_l$ denotes the line ratio, not present
-in the line specification (which is a six-tuple).
+In the previous parametric equations, $k_l$ denotes the line ratio,
+not present in the line specification (which is a six-tuple).
 
 \paragraph{Planes}
 Planes are also represented differently, depending on the used
@@ -564,12 +563,12 @@ parameters --- three coordinates of the center $(o^x, o^y, o^z)$, and
 the radius $r$.
 
 \subsection{Representing relations between geometric objects}
-In this section are given polynomials that arithmetically describe
-relations over constructed objects (for example, two points coincide,
-two lines are parallel, two planes are orthogonal). Each kind of
-relation introduces some polynomial constraints over the parameters of
-the objects that are involved, and can be expressed differently
-depending on the chosen approach.
+In this section we describe polynomials that arithmetically
+characterize relations over constructed objects (for example, two
+points coincide, two lines are parallel, two planes are
+orthogonal). Each relation introduces some polynomial constraints over
+the parameters of the objects that are involved, and can be expressed
+differently depending on the chosen approach.
 
 Input parameters for given relation are parameters of all objects
 involved in it. For example, for the relation \mbox{{\tt congruent}
@@ -658,8 +657,7 @@ $2m^z - a^z - b^z = 0$
 $n\cdot \overrightarrow{MA} = m\cdot \overrightarrow{MB}$.
 
 {\em Explanation:} Note that {\tt midpoint $M$ $A$ $B$} can be
-also written using this rule as {\tt point\_segment\_ratio} $M$ $A$
-$B$ $1$ $1$.
+expressed as {\tt point\_segment\_ratio} $M$ $A$ $B$ $1$ $1$.
 
 \bigskip
 
@@ -698,7 +696,10 @@ Note that if the relation $point\_on\_line\ A\ P\ Q$ occurs in the
 assumptions of the theorem, then, due to the dependence of the three
 polynomials, some variants of the Wu's method might have problem in
 the triangulation phase (for example, GeoProver exibited this
-behaviour).
+behaviour). This causes some serious complications in our
+implementation when GeoProver is used, and we had to devise methods
+that determined which one of the three equations can and must be
+excluded.
 
 % ------------------------
 \item[$\triangleright$] {\tt point\_on\_line} $A$ $l$ --- point $A$ belongs
@@ -781,7 +782,7 @@ could be omitted.
   lines $AB$ and $CD$ are parallel.
 
   {\em Polynomials:} The three polynomials are derived from
-  $\overrightarrow{AB} \times \overrightarrow{CD}$.
+  $\overrightarrow{AB} \times \overrightarrow{CD} = 0$.
 
 % ------------------------
 \item[$\triangleright$] {\tt parallel\_lines} $p$ $q$ --- lines $p$
@@ -789,7 +790,7 @@ could be omitted.
 
   {\em Polynomials:} If the second approach is used, the three
   polynomials derived from
-  $\overrightarrow{p_v} \times \overrightarrow{q_v}$.
+  $\overrightarrow{p_v} \times \overrightarrow{q_v} = 0$.
 
 
 % ------------------------
@@ -811,7 +812,7 @@ polynomial equations). Thus, squares of the cosines of an angles must
 be compared --- $\cos^2{\angle AO_1B} = \cos^2{\angle CO_2D}$.
 Unfortunately, this makes the condition weakened since squares of
 cosines of accute and obtuse angle could be same although angles
-itself are not equal. The final polinomial is derived from
+itself are not equal. The final polynomial is derived from
 $$(\overrightarrow{AO_1}\cdot  \overrightarrow{BO_1})^2|CO_2|^2|DO_2|^2 = (\overrightarrow{CO_2}\cdot  \overrightarrow{DO_2})^2|AO_1|^2|BO_1|^2.$$
 
 The polynomial derived from this equation is quite complex and
@@ -957,6 +958,7 @@ $\overrightarrow{\alpha_v} \cdot \overrightarrow{\beta_v} = 0$.
   derived from {\tt point\_in\_plane} $l_A$ $\pi$ and
   $l_v \cdot \alpha_v = 0$.
 
+\bigskip
 Some theorems can involve spheres. 
 
 % ------------------------
@@ -1064,6 +1066,10 @@ resulting point are introduced (as fresh variables).
 
   {\em Polynomials:} derived from {\tt line\_plane\_intersection $A$ $l$ $\pi$}.
 
+\bigskip
+
+We also support isometric transformations. For example, in most tasks,
+translation in the z-axis direction is used.
 
 % ------------------------
 \item[$\triangleright$]  $A$ = {\tt translate\_z} $O$ $d$ --- construct a
@@ -1759,6 +1765,7 @@ corpus. A couple of interesting examples is shown below.
   tetraedar nije spljosten.}
 
 \begin{example}[Example from (\cite{arhzbirka})] 
+\label{ex:kockapiramida}
 Let $ABCDA_1B_1C_1D_1$ be a cube and let $S$ be the vertex of regular
 four side pyramid $ABCDS$ whose height is twice the size of the side
 of the cube. Prove that regular four side pyramid gained in the
@@ -1778,34 +1785,117 @@ Formal representation of geometry statement is:
 {\tt
 \begin{tabbing}
 \hspace{5mm}\=\kill
-\> make\_cube $A$ $B$ $C$ $D$ $A_1$ $B_1$ $C_1$ $D_1$ \ \ \ \ \ \ \ \ \ \ \ \ \= \\ \\
-
-\>intersection\_lines $M$ $A$ $C$ $B$ $D$ \> intersection\_lines $N$ $A_1$ $C_1$ $B_1$ $D_1$\\
-\>point\_ratio $S$ $M$ $N$ $2$ $1$\\ 
-
-\>line\_points $l$ $A$ $S$ \> line\_points $g$ $B$ $S$\\
-
-\>plane\_points $\alpha$ $A_1$ $B_1$ $C_1$\\
-
-\>intersection\_line\_plane $L$ $l$ $\alpha$ \>  intersection\_line\_plane $G$ $g$ $\alpha$ \\
-
+\> $A$ $B$ $C$ $D$ $A_1$ $B_1$ $C_1$ $D_1$ = make\_cube\\
+\> $M$ = make\_intersection\_lines $A$ $C$ $B$ $D$\\
+\> $N$ = make\_intersection\_lines $A_1$ $C_1$ $B_1$ $D_1$\\
+\> $S$ = make\_point\_ratio $M$ $N$ $2$ $1$\\ 
+\> $l$ = make\_line\_trough\_points $A$ $S$ \\
+\> $g$ = make\_line\_trough\_points $B$ $S$\\
+\> $\alpha$ = make\_plane\_trough\_points $A_1$ $B_1$ $C_1$\\
+\> $L$ = make\_intersection\_line\_plane $l$ $\alpha$\\
+\> $G$ = make\_intersection\_line\_plane $g$ $\alpha$\\
 \>segments\_in\_ratio $L$ $G$ $A$ $B$ $1$ $2$
 \end{tabbing}
 }
 \end{footnotesize}
 
-Algebraic theorem provers proved this geometry conjecture. Derived NDG
-condition is $x_{21} \cdot x_{15} \cdot x_{13} + x_{20} \cdot x_{14}
-\cdot x_{13} + x_{19} \cdot x_{13}^2 \neq 0$. This condition can be
-dismantled into two conditions $x_{13} \neq 0$ and $x_{21} \cdot
-x_{15} + x_{20} \cdot x_{14} + x_{19} \cdot x_{13} \neq 0$. Now it had
-to be determined what geometry objects these variables determine and
-it happens to be line $l(x_{13}, x_{14}, x_{15})$ and plane
-$\alpha(x_{19}, x_{20}, x_{21}, x_{22})$.
+Algebraic theorem provers proved this geometry conjecture. An NDG
+condition obtained from the prover is
+$x_{21} \cdot x_{15} \cdot x_{13} + x_{20} \cdot x_{14} \cdot x_{13} +
+x_{19} \cdot x_{13}^2 \neq 0$.
+This condition can be dismantled into two conditions $x_{13} \neq 0$
+and
+$x_{21} \cdot x_{15} + x_{20} \cdot x_{14} + x_{19} \cdot x_{13} \neq
+0$.
+Now it had to be determined what geometry objects these variables
+determine and it happens to be line $l(x_{13}, x_{14}, x_{15})$ and
+plane $\alpha(x_{19}, x_{20}, x_{21}, x_{22})$.
 
+\marginpar{Ovde prodiskutovati i sta je taj $x_{13}$ tj. sta znaci prvi NDG.}
 The second NDG condition ensures that line $l$ and plane $\alpha$
 are not parallel. If they were to be parallel, they would not
 intersect and there would be no point $L$. 
+
+\section{Integration with Stereos}
+
+Stereos\footnote{\url{http://jason.matf.bg.ac.rs/~filip/stereos/web}}
+(\cite{stereos}) is a language and a system for describing solid
+geometry constructions, in its spirit similar to the GCLC system
+(\cite{gclc}). Geometric objects in Stereos are introduced using
+functions that correspond to construction steps (function calls can be
+nested and objects are represented using terms that involve constants,
+variables and functions) and are displayed using the command
+\verb|draw|. For example, the construction described in Example
+\ref{ex:kockapiramida} can be specified in stereos using the following
+code:
+
+\begin{verbatim}
+// dimension of the cube
+a = 1;
+// the cube
+cb = cube(a);
+draw(c, "70");  // 70% opacity
+// apex of the pyramid
+S = translate_z(intersect(segment(c.A, c.C), segment(c.B, c.D)), 2*a);
+draw(S);
+// pyramid
+pyr = pyramid(polygon(c.A, c.B, c.C, c.D), S);
+draw(pyr, "g");  // green color
+// intersecting square
+sq = intersect(pyr, plane(c.A1, c.B1, c.C1)); // result is  a polygon
+draw(sq, "b"); // blue color
+\end{verbatim}
+
+From a specification Stereos can produce output in different
+formats. For example, it can produce description in the format of one
+of the several supported graphic libraries (Three.js, JVX, Phoria) and
+display a construction in a web browser, so that it can be manipulated
+by a mouse (viewpoint can be change, but also, free points can be
+manipulated). Export can be also be made to LaTeX format (using TikZ
+or GCLC).
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[height=5cm]{stereos-interface.png} \hspace{1cm} \includegraphics[height=5cm]{stereos.png}
+  \caption{Stereos web interface and a produced output for Example \ref{ex:kockapiramida}}
+  \label{fig:stereos}
+\end{figure}
+
+There are several important differences in the language of Stereos an
+the input language of our prover described in the previous section. 
+\begin{enumerate}
+\item Stereos allows nested terms, while our prover language allows
+  only a flat structure - each line of the input can contain only one
+  relation or a function (a construction step).
+\item Stereos allows only functions (construction steps), and does not
+  allow relations, so geometric statements cannot be specified in the
+  original Stereos language.
+\item Stereos supports a richer set of construction steps than our
+  prover: it natively supports intersections of solids and the planes,
+  interesections of solids, 3d convex hulls, etc.
+\end{enumerate}
+
+We have made first steps towards integration of our prover and
+Stereos. First, we have extended the Stereos language by adding the
+command \texttt{prove} that accepts a relation over the previously
+constructed objects. At this point only basic relation directly
+supported by our prover can be used (for example,
+\texttt{prove(orthogonal\_lines(p, q))} reduces to
+\texttt{orthogonal\_lines} $p$ $q$ and \texttt{prove(A = B)} reduces
+to \texttt{equal\_points} $A$ $B$. Stereos specification extended with
+the \texttt{prove} statement is then converted to the input format of
+our prover. Nested terms are flattened and a fresh name for each
+subterm is introduced. Currently, only Stereos constructions that are
+directly supported by our prover can be translated, while for all
+other constructions, an \texttt{out of scope} error is reported.
+
+Currently, Stereos is used only as a thin layer over our basic prover
+so that before proving illustrations can be automatically produced
+from the specification. In the future we are planning to make this
+integration much tighter, and to align two different input formats so
+that our prover can natively support Stereos specifications and
+support more advanced construction steps that Stereos currently
+supports.
 
 \section{Conclusion and future work}
 
@@ -1828,8 +1918,11 @@ smaller number of polynomials and the smaller number of variables also
 help in better productivity, these two properties are not the key ones
 and their impact is less obvious. Using second approach, obtained
 polynomials are less complex and that is the reason why the second
-approach was more convenient for algebraic provers.
-
+approach was more convenient for algebraic provers. This suggest that
+introducing line and plane coefficients as additional variables might
+lead to simpler constraints and more efficient proving --- we assume
+that this might also be the case in plane geometry and plan to
+investigate this issue in our further work.
 
 We implemented a prover based on the two described approaches relying
 on three different third-party algebraic engines (GeoProver,
