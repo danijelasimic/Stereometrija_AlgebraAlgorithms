@@ -1,0 +1,850 @@
+\documentclass{article}
+
+\usepackage{fullpage}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{gclc}
+
+
+\begin{document}
+
+\section{Statement rules}
+Statements are relations over constructed objects (for example, two
+points coincide, two lines are parallel, two planes are orthogonal).
+Each kind of statement introduces some polynomial constraints of the
+coordinates of the objects that are involved. No new objects (and
+therefore, no new parameters) are introduced. These polynomials are
+added to the statement set.
+
+\begin{description}
+% ------------------------
+\item[$\triangleright$] {\tt equal\_points} $A$ $B$ --- two points $A$
+  and $B$ have the same coordinates.
+
+  {\em Polynomials:} The vector equation $\overrightarrow{AB} = 0$
+  yields the following three polynomial equations:
+  \begin{tabbing}
+    $a^x - b^x = 0$\\
+    $a^y - b^y = 0$\\
+    $a^z - b^z = 0$
+  \end{tabbing}
+
+  Note that these polynomials are used only to prove that two points
+  are equal, i.e., only as the conclusion polynomials. If it is known
+  that two points are equal during construction, then they are given
+  the same coordinates, and no polynomials are introduced.
+
+% ------------------------
+\item[$\triangleright$] {\tt congruent} $A$ $B$ $C$ $D$ --- Two
+  segments, $AB$ and $CD$ are congruent.
+
+  %{\em Input:} Points $A$, $B$, $C$, and $D$.
+
+{\em Polynomials:}
+$\overrightarrow{AB} \cdot \overrightarrow{AB} = \overrightarrow{CD} \cdot \overrightarrow{CD}$. \\
+This gives the following polynomial equation:
+
+$$({a^x} - {b^x})^2 + ({a^y} - {b^y})^2 + ({a^z} - {b^z})^2 - ({c^x} - {d^x})^2 - ({c^y} - {d^y})^2 - ({c^z} - {d^z})^2 = 0$$
+
+% ------------------------
+\item[$\triangleright$] {\tt segments\_in\_ratio} $A$ $B$ $C$ $D$
+  $m$ $n$ --- the lengths of segments $AB$ and
+  $CD$ are in the given ratio $\frac{m}{n}$ i.e., that
+  $\frac{|AB|}{|CD|} = \frac{m}{n}$.
+
+{\em Polynomials:} A single equation obtained from the condition
+$n^2 \cdot \overrightarrow{AB} \cdot \overrightarrow{AB} = m^2 \cdot \overrightarrow{CD} \cdot \overrightarrow{CD}$. \\
+
+$\ n^2\cdot(a^x - b^x)^2 + n^2\cdot(a^y - b^y)^2 + n^2\cdot(a^z - b^z)^2 - m^2\cdot(c^x - d^x)^2 - $ \\
+\ \ \ $m^2\cdot(c^y - d^y)^2 - m^2\cdot(c^z - d^z)^2 = 0$
+
+{\em Explanation:} The squares of distances between $A$ and $B$ and
+between $C$ and $D$ must be in the ratio $\frac{m^2}{n^2}$. Note that
+this reduces to congruence when $m = n$.
+
+% ------------------------
+\item[$\triangleright$] {\tt midpoint} $M$ $A$ $B$ --- the point
+  $M$ is the midpoint of the segment determined by points $A$ and
+  $B$.
+
+{\em Polynomials:} The three polynomial equations derived from $\overrightarrow{MA} = \overrightarrow{MB}$:
+
+\begin{tabbing}
+$2m^x - a^x - b^x = 0$ \\ 
+$2m^y - a^y - b^y = 0$ \\ 
+$2m^z - a^z - b^z = 0$
+\end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_segment\_ratio} $M$ $A$ $B$ $m$
+  $n$ --- checks weather the point $M$ divides segment determined by
+  points $A$ and $B$ in ratio determined by $m$ and $n$,
+  e.g. $\frac{|MA|}{|MB|} = \frac{m}{n}$.
+
+{\em Polynomials:} The three polynomial equations derived from
+$n\cdot \overrightarrow{MA} = m\cdot \overrightarrow{MB}$.
+
+{\em Explanation:} Note that {\tt midpoint $M$ $A$ $B$} can be
+expressed as {\tt point\_segment\_ratio} $M$ $A$ $B$ $1$ $1$.
+
+\bigskip
+
+Next we describe some relations that involve both points and lines.
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_on\_line} $A$ $P$ $Q$ --- point
+  $A$ belongs to the line $P$ $Q$.
+
+{\em Polynomials:} The three polynomials are derived from
+$\overrightarrow{PQ} \times \overrightarrow{PA} = 0$.
+
+Note that although there are three polynomial equations, one can
+always be derived from the other two. The three polynomials are:
+
+\begin{eqnarray*}
+  poly_1 = (a^y - p^y)\cdot (q^z - p^z) - (a^z - p^z)\cdot (q^y - p^y) = 0\\
+  poly_2 = (a^z - p^z)\cdot (q^x - p^x) - (a^x - p^x)\cdot (q^z - p^z) = 0\\
+  poly_3 = (a^x - p^x)\cdot (q^y - p^y) - (a^y - p^y)\cdot (q^x - p^x) = 0
+\end{eqnarray*}
+
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_on\_line} $A$ $l$ --- point $A$ belongs
+  to the line $l$.
+
+{\em Polynomials:} If the first approach is used, then this reduces to
+$point\_on\_line\ A\ l_A\ l_B$ described above. If the second approach is
+used, then the three polynomials are derived from
+$\overrightarrow{l_v} \times \overrightarrow{Al_A} = 0$.
+
+In both approaches one polynomial can be derived from the other
+two. Second approach polynomials:
+\begin{tabbing}
+$poly_1 = l^{p_x}\cdot l^{v_y} - a^x\cdot l^{v_y} - l^{p_y}\cdot l^{v_x} + a^y\cdot l^{v_x}$ \\
+$poly_2 = l^{p_x}\cdot l^{v_z} - a^x\cdot l^{v_z} - l^{p_z}\cdot l^{v_x} + a^z\cdot l^{v_x}$ \\
+$poly_3 = l^{p_y}\cdot l^{v_z} - a^y\cdot l^{v_z} - l^{p_z}\cdot l^{v_y} + a^z\cdot l^{v_y}$
+\end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] {\tt lines\_intersection} $A$ $P$ $Q$ $M$ $N$
+  --- point $A$ is the intersection of lines $PQ$ and $MN$.
+
+{\em Polynomials:} Six polynomials are derived from the conditions
+$point\_on\_line\ A\ l_1$ and $point\_on\_line\ A\ l_2$.
+
+Second approach polynomials:
+
+
+\begin{tabbing}
+$a^x - k_1\cdot p^x + k_1\cdot q^x - q^x = 0$ \\
+$a^y - k_\cdot p^y + k_1\cdot q^y - q^y = 0$ \\
+$a^z - k_1\cdot p^z + k_1\cdot q^z - q^z = 0$ \\
+$a^x - k_2\cdot m^x + k_2\cdot n^x - n^x = 0$ \\
+$a^y - k_2\cdot m^y + k_2\cdot n^y - n^y = 0$ \\
+$a^z - k_2\cdot m^z + k_2\cdot n^z - n^z = 0$
+\end{tabbing}
+
+{\em Explanation:} The polynomials were generated using the following
+line equations: \\ $x = k_1\cdot (b^x - a^x) + a^x \ \ \ \ y =
+k_1\cdot (b^y - a^y) + a^y \ \ \ \ z = k_1\cdot (b^z - a^z) + a^z$ ---
+line determined with points $A$ and $B$ \\ $x = k_2\cdot (d^x - c^x) +
+c^x \ \ \ \ y = k_2\cdot (d^y - c^y) + c^y \ \ \ \ z = k_2\cdot (d^z -
+c^z) + c^z$ --- line determined with points $C$ and $D$.
+
+% ------------------------
+\item[$\triangleright$] {\tt lines\_intersection} $A$ $l_1$ $l_2$
+  --- point $A$ is the intersection of lines $l_1$ and $l_2$.
+
+  {\em Polynomials:} If the second approach is used, six polynomials
+  are derived from the conditions $point\_on\_line\ A\ l_1$ and
+  $point\_on\_line\ A\ l_2$.
+  
+  Second approach polynomials:
+  \begin{tabbing}
+    $a^x - k_1\cdot l_1^{v_x} - l_1^{p_x} = 0$ \\
+    $a^y - k_1\cdot l_1^{v_y} - l_1^{p_y} = 0$ \\
+    $a^z - k_1\cdot l_1^{v_z} - l_1^{p_z} = 0$ \\
+    $a^x - k_2\cdot l_2^{v_x} - l_2^{p_x} = 0$ \\
+    $a^y - k_2\cdot l_2^{v_y} - l_2^{p_y} = 0$ \\
+    $a^z - k_2\cdot l_2^{v_z} - l_2^{p_z} = 0$
+  \end{tabbing}
+
+  {\em Explanation:} 
+  Since the point $a$ should belong to both lines $l_1$ (given by the
+  point $\overrightarrow{l_1^p}$ and the vector
+  $\overrightarrow{l_1^v}$) and $l_2$ (given by the point
+  $\overrightarrow{l_2^p}$ and the vector $\overrightarrow{l_2^v}$) it
+  must satisfy their parametric equations, i.e., it must hold that
+  $\overrightarrow{A} = \overrightarrow{l_1^p} + k_1 \cdot
+  \overrightarrow{l_1^v}$
+  and
+  $\overrightarrow{A} = \overrightarrow{l_2^p} + k_2 \cdot
+  \overrightarrow{l_2^v}$.
+
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_lines} $A$ $B$ $C$ $D$ ---
+  the line $AB$ is orthogonal on the line $CD$.
+
+  {\em Polynomials:} A necessary condition is
+  $\overrightarrow{AB} \cdot \overrightarrow{CD} = 0$ and it yields
+  one polynomial. However, this conditions is not enough since it is
+  only checked weather the appropriate vectors of the lines are
+  orthogonal but lines itself could be skew. So, one more condition
+  must be added in order to ensure that lines really intersect, and it
+  can be that vectors $\overrightarrow{AB}$, $\overrightarrow{AC}$,
+  and $\overrightarrow{CD}$ are coplanar, that is easily expressed
+  using scalar triple product:
+  $\overrightarrow{AC} \times (\overrightarrow{AB} \cdot
+  \overrightarrow{CD}) = 0$, and this yields three more polynomials.
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_lines} $l$ $m$ --- the lines
+  $l$ and $m$ are orthogonal.
+
+  {\em Polynomials:} If the second approach is used, the direction
+  vectors of the lines are given as the input, and the polynomials are
+  derived from $\overrightarrow{l_v} \cdot \overrightarrow{m_v} = 0$
+  and
+  $\overrightarrow{m_Am_B} \times (\overrightarrow{l_v} \cdot
+  \overrightarrow{m_v}) = 0$.
+
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_lines} $A$ $B$ $C$ $D$ ---
+  lines $AB$ and $CD$ are parallel.
+
+  {\em Polynomials:} The three polynomials are derived from
+  $\overrightarrow{AB} \times \overrightarrow{CD} = 0$.
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_lines} $p$ $q$ --- lines $p$
+  and $q$ are parallel.
+
+  {\em Polynomials:} If the second approach is used, the three
+  polynomials derived from
+  $\overrightarrow{p_v} \times \overrightarrow{q_v} = 0$.
+
+Second approach polynomials:
+\begin{tabbing}
+$p^{v_y}\cdot q^{v_z} - p^{v_z}\cdot q^{v_y} = 0$ \\
+$p^{v_z}\cdot q^{v_x} - p^{v_x}\cdot q^{v_z} = 0$ \\
+$p^{v_x}\cdot q^{v_y} - p^{v_y}\cdot q^{v_x} = 0$
+\end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] {\tt equal\_angles} $A$ $O_1$ $B$ $C$ $O_2$ $D$ --- angles $\angle AO_1B$ and $\angle
+CO_2D$ are equal.
+
+{\em Polynomials:} Polynomials for this condition could be derived
+using trigonometry condition:
+$$\cos{\angle AO_1B} = \cos{\angle CO_2D}$$
+
+and cosine of an angle can be determined using following equation:
+$$\cos{\angle AO_1B} = \frac{\overrightarrow{AO_1}\cdot
+  \overrightarrow{BO_1}}{2|AO_1||BO_1|}.$$
+
+Polynomial equation for $\cos{\angle CO_2D}$ is similar. However,
+distances ($|AO_1|$ and $|BO_1|$) are calculated square roots and that
+cannot be processed by algebraic theorem provers (that accept only
+polynomial equations). Thus, squares of the cosines of an angles must
+be compared --- $\cos^2{\angle AO_1B} = \cos^2{\angle CO_2D}$.
+Unfortunately, this makes the condition weakened since squares of
+cosines of accute and obtuse angle could be same although angles
+itself are not equal. The final polynomial is derived from
+$$(\overrightarrow{AO_1}\cdot  \overrightarrow{BO_1})^2|CO_2|^2|DO_2|^2 = (\overrightarrow{CO_2}\cdot  \overrightarrow{DO_2})^2|AO_1|^2|BO_1|^2.$$
+
+The polynomial derived from this equation is quite complex and
+challenging for algebraic theorem provers and it can be dissembled
+onto more simpler ones:
+\begin{tabbing}
+$x_1 - (a^x - o_1^x)\cdot(b^x - o_1^x) - (a^y - o_1^y)\cdot(b^y - o_1^y) - (a^z - o_1^z)\cdot(b^z - o_1^z) = 0$ \\
+$x_2 - (c^x - o_2^x)\cdot(d^x - o_2^x) - (c^y - o_2^y)\cdot(d^y - o_2^y) - (c^z - o_2^z)\cdot(d^z - o_2^z) = 0$ \\
+$x_3 - (a^x - o_1^x)^2 - (a^y - o_1^y)^2 - (a^z - o_1^z)^2 = 0$ \\
+$x_4 - (b^x - o_1^x)^2 - (b^y - o_1^y)^2 - (b^z - o_1^z)^2 = 0$ \\
+$x_5 - (c^x - o_2^x)^2 - (c^y - o_2^y)^2 - (c^z - o_2^z)^2 = 0$ \\
+$x_6 - (d^x - o_2^x)^2 - (d^y - o_2^y)^2 - (d^z - o_2^z)^2 = 0$ \\
+$x_1^2\cdot x_5 \cdot x_6 - x_2^2\cdot x_3\cdot x_4 = 0$
+\end{tabbing}
+
+\bigskip
+
+Next we describe some relations that also involve planes.
+
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_in\_plane} $A$ $P$ $Q$ $R$
+  --- the point $A$ belongs to the plane determined by points $P$,
+  $Q$, and $R$.
+
+  {\em Polynomials:} The polynomial
+$$\overrightarrow{PA}\cdot (\overrightarrow{PQ} \times \overrightarrow{PR}) = 0.$$
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_in\_plane} $A$ $\pi$ --- the
+  point $A$ belongs to the plane $\pi$.
+
+  {\em Polynomials:} If the second approach is used, the polynomial
+  $\overrightarrow{\pi_v} \cdot \overrightarrow{A} + \pi^{d} = 0$.
+
+Second approach polynomials:
+\begin{tabbing}
+$\pi^{v_x}\cdot a^x + \pi^{v_y}\cdot a^y + \pi^{v_z}\cdot a^z + \pi^{d} = 0$
+\end{tabbing}
+
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_planes} $A$ $B$ $C$ $P$ $Q$ $R$
+  --- the plane determined by points $A$, $B$, and $C$, and the plane
+  determined by points $P$, $Q$, and $R$ are parallel.
+
+{\em Polynomials:} If the first approach is used, polynomials are
+derived from:
+
+$$\overrightarrow{PQ}\cdot \overrightarrow{AC} \times \overrightarrow{BA} = 0$$
+$$\overrightarrow{PR}\cdot \overrightarrow{AC} \times \overrightarrow{AB} = 0$$
+
+Denote the plane determined by $A$, $B$, and $C$ by $\alpha$, and the
+plane determined by $P$, $Q$, and $R$ by $\beta$. These two equations
+are derived from the conditions that vectors of all lines parallel to
+$\beta$ plane are orthogonal to the normal vector of the plane
+$\beta$. Since $\beta$ and $\alpha$ should be parallel, vectors of
+lines in $\beta$ should be orthogonal to the normal vector of
+$\alpha$, e.g. to the
+$\overrightarrow{AC} \times \overrightarrow{BA}$.  However,
+polynomials gained from these equations are quite complex (and can
+negatively effect algebraic theorem provers). For example, the first
+polynomial is:
+$$(P^x - Q^x)(A^y - B^y)(A^z - C^z) + (A^x - B^x)(A^y - C^y)(P^z - Q^z) \ +$$
+$$(P^x - Q^y)(A^z - B^z)(A^x - C^x) - (P^z - Q^z)(A^y - B^y)(A^x - C^x) \ -$$
+$$(A^z - B^z)(A^y - C^y)(P^x - Q^x) - (P^x - Q^y)(A^x - B^x)(A^z - C^z) = 0$$
+
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_planes} $\alpha$ $\beta$ ---
+  planes $\alpha$ and $\beta$ are parallel.
+
+{\em Polynomials:} 
+If the second approach is used, the three polynomials are derived from
+$\overrightarrow{\alpha_v} \times \overrightarrow{\beta_v} = 0.$ For
+the comparison, one of the three polynomials derived using this
+approach is:
+$$\alpha_{v^y}\beta_{v^z} - \alpha_{v^z}\beta_{v^y} = 0,$$
+and it is significantly simpler than the one in the first approach.
+
+\item[$\triangleright$] {\tt orthogonal\_planes} $A$ $B$ $C$ $P$ $Q$ $R$
+  --- the plane determined by points $A$, $B$, and $C$, and the plane
+  determined by points $P$, $Q$, and $R$ are orthogonal.
+
+  {\em Polynomials:} The polynomial is derived from
+  $(\overrightarrow{AB} \times \overrightarrow{AC}) \cdot
+  (\overrightarrow{PQ} \times \overrightarrow{PR}) = 0$.
+
+Second approach polynomials:
+\begin{tabbing}
+$\alpha^{v_y}\cdot \beta^{v_z} - \alpha^{v_z}\cdot \beta^{v_y} = 0$ \\
+$\alpha^{v_z}\cdot \beta^{v_x} - \alpha^{v_x}\cdot \beta^{v_z} = 0$ \\
+$\alpha^{v_x}\cdot \beta^{v_y} - \alpha^{v_y}\cdot \beta^{v_x} = 0$
+\end{tabbing}
+
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_planes} $\alpha$ $\beta$ ---
+  checks weather two planes, $\alpha$ and $\beta$ are orthogonal.
+
+
+If the second approach is used, the polynomial is
+$\overrightarrow{\alpha_v} \cdot \overrightarrow{\beta_v} = 0$.
+
+Second approach polynomial:
+\begin{tabbing}
+$\alpha^{v_x}\cdot \beta^{v_x} + \alpha^{v_y}\cdot \beta^{v_y} + \alpha^{v_z}\cdot \beta^{v_z} = 0$
+\end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_line\_plane} $A$ $B$ $P$ $Q$ $R$ ---
+  line $AB$ and plane $PQR$ are parallel.
+
+  {\em Polynomials:} The polynomial is determined from
+  $\overrightarrow{AB} \cdot (\overrightarrow{PQ \times PR}) = 0$.
+
+{\em Note:} This statement also holds if line belongs to the plane.
+
+% ------------------------
+\item[$\triangleright$] {\tt parallel\_line\_plane} $p$ $\alpha$ ---
+  line $p$ and plane $\alpha$ are parallel.
+
+  {\em Polynomials:} If the second approach is used, then polynomial
+  $\overrightarrow{p_v} \cdot \overrightarrow{\alpha_v} = 0$.
+
+{\em Note:} This statement also holds if line belongs to the plane.
+
+Second approach polynomial:
+\begin{tabbing}
+$p^{v_x}\cdot \alpha^{v_x} + p^{v_y}\cdot \alpha^{v_y} + p^{v_z}\cdot \alpha^{v_z} = 0$
+\end{tabbing}
+
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_line\_plane} $A$ $B$ $P$ $Q$
+  $R$ --- the line $AB$ and plane $PQR$ are orthogonal.
+
+  {\em Polynomials:} Two polynomials are derived from
+  $\overrightarrow{AB} \cdot \overrightarrow{PQ} = 0$ and
+  $\overrightarrow{AB} \cdot \overrightarrow{PR} = 0$.
+
+% ------------------------
+\item[$\triangleright$] {\tt orthogonal\_line\_plane} $p$ $\alpha$ ---
+  the line $p$ and plane $\alpha$ are orthogonal.
+
+  {\em Polynomials:} If the second approach is used the three
+  polynomials derived from
+  $\overrightarrow{p_v} \times \overrightarrow{\alpha_v} = 0$.
+
+  Second approach polynomials:
+\begin{tabbing}
+$\alpha^{v_y}\cdot p^{v_z} - \alpha^{v_z}\cdot p^{v_y} = 0$\\
+$\alpha^{v_z}\cdot p^{v_x} - \alpha^{v_x}\cdot p^{v_z} = 0$\\
+$\alpha^{v_x}\cdot p^{v_y} - \alpha^{v_y}\cdot p^{v_x} = 0$
+\end{tabbing}
+
+
+% ------------------------
+\item[$\triangleright$] {\tt line\_plane\_intersection\_} $A$ $M$ $N$
+  $P$ $Q$ $R$ --- point $A$ is the intersection of the line $MN$ and
+  plane $PQR$.
+
+  {\em Polynomials:} Polynomials are derived from {\tt point\_on\_line
+    $A$ $M$ $N$} and {\tt point\_in\_plane $A$ $P$ $Q$ $R$}.
+
+% ------------------------
+\item[$\triangleright$] {\tt line\_plane\_intersection} $A$ $l$ $\pi$ ---
+  point $A$ is the intersection of line $l$ and plane $\pi$.
+
+  {\em Polynomials}: Polynomials are derived from {\tt point\_on\_line
+    $A$ $l$} and {\tt point\_in\_plane $A$ $\pi$}.
+
+Second approach polynomials:
+\begin{tabbing}
+$a^x - k\cdot l^{v_x} - l^{p_x} = 0$ \\
+$a^y - k\cdot l^{v_y} - l^{p_y} = 0$ \\
+$a^z - k\cdot l^{v_z} - l^{p_z} = 0$ \\
+$\pi^{v_x}\cdot a^x + \pi^{v_y}\cdot a^y + \pi^{v_z}\cdot a^z + \pi^{d} = 0$
+\end{tabbing}
+{\em Explanation:}  In the generated polnomials is used line
+ratio denoted with $k$. For determing polinomials is used line equation:
+$$x = k\cdot l^{v_x} + l^{p_x}\ \ \ \ \ y = k\cdot l^{v_y} +
+l^{p_y}\ \ \ \ \ z = k\cdot l^{v_z} + l^{p_z}$$ and the fact that
+point $A$ belongs to the line $l$. It is also used the fact that the
+point belongs to the plane $\pi$ and it is used plane equation: 
+$$\pi^{v_x}\cdot x + \pi^{v_y}\cdot y + \pi^{v_z}\cdot z + \pi^{d} =
+0$$ There are four polynomials since there are four unknown variables,
+tree variables are coordinates of the point, and one variable is line
+ratio.
+
+% ------------------------
+\item[$\triangleright$] {\tt line\_in\_plane} $AB$ $PQR$ --- the line
+  $AB$ is in the plane $PQR$.
+
+  {\em Polynomials:} Polynomials are derived from two conditions {\tt
+    point\_in\_plane} $A$ $P$ $Q$ $R$ and {\tt point\_in\_plane} $B$
+  $P$ $Q$ $R$.
+
+% ------------------------
+\item[$\triangleright$] {\tt line\_in\_plane} $l$ $\alpha$ --- the $l$
+  is in the plane $\alpha$.
+
+  {\em Polynomials:} If the second approach is used, polynomials are
+  derived from {\tt point\_in\_plane} $l_A$ $\pi$ and
+  $l_v \cdot \alpha_v = 0$.
+
+Second approach polynomials:
+\begin{tabbing}
+$l^{v_x}\cdot \alpha^{v_x} + l^{v_y}\cdot \alpha^{v_y} + l^{v_z}\cdot \alpha^{v_z} = 0$ \\
+$\alpha^{v_x}\cdot l^{p_x} + \alpha^{v_y}\cdot l^{p_y} + \alpha^{v_z}\cdot l^{p_z} + \alpha^{d} = 0$
+\end{tabbing}
+
+\bigskip
+Some theorems can involve spheres. 
+
+% ------------------------
+\item[$\triangleright$] {\tt point\_on\_sphere} $A$ $\mathcal{S}$
+  --- point $A$ belongs to the sphere $\mathcal{S}$.
+
+{\em Polynomials:} Sphere $\mathcal{S}$ is defined with its center $O$
+and radius $r$. Thus, polynomial is derived from
+$\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$.
+
+% ------------------------
+\item[$\triangleright$] {\tt equal\_multiple\_four\_numbers} $m$ $n$
+  $p$ $q$ -- checks weather it is true $m*n = p*q$ where $m$, $n$, $p$
+  and $q$ are four integer numbers.
+
+\end{description}
+
+\section{Constructions of points}
+
+\begin{description}
+
+% ------------------------
+\item[$\triangleright$] $A$ = {\tt make\_point} --- a free point.
+
+  {\em Introduced objects and parameters}: a point $A$ with the three
+  fresh parameters $A_x$, $A_y$, and $A_z$ representing its
+  coordinates.
+
+  {\em Polynomials:} No polynomials are introduced.
+
+% ------------------------
+\item[$\triangleright$] $A$ $=$ {\tt make\_point\_on\_line} $l$ ---
+  construct a semi-free point $A$ that belongs to the line $l$.
+  
+  {\em Introduced objects and parameters}: introduces a point $A$ with
+  three fresh parameters $a^x$, $a^y$ and $a^z$ representing its
+  coordinates.
+
+  {\em Polynomials:} derived from {\tt point\_on\_line $A$ $l$}.
+
+% ------------------------
+\item[$\triangleright$] $A$ = {\tt make\_point\_in\_plane} $\pi$ ---
+  construct a semi-free point $A$ that belongs to the plane $\pi$.
+
+  {\em Introduced objects and parameters}: introduces a point $A$ with
+  three fresh parameters $a^x$, $a^y$ and $a^z$ representing its
+  coordinates.
+  
+  {\em Polynomials:} derived from {\tt point\_in\_plane $A$ $\pi$}.
+
+% ------------------------
+\item[$\triangleright$] $A$ = {\tt make\_lines\_intersection} $l_1$
+  $l_2$ --- point $A$ is the intersection of lines $l_1$ and $l_2$.
+
+  {\em Introduced objects and parameters}: a point $A$ with three
+  fresh parameters $a^x$, $a^y$ and $a^z$ representing its
+  coordinates.
+
+  {\em Polynomials:} derived from {\tt lines\_intersection $A$ $l_1$ $l_2$}.
+
+% ------------------------
+\item[$\triangleright$] $A$ = {\tt make\_line\_plane\_intersection}
+  $l$ $\pi$ --- point $A$ is the intersection of line $l$ and plane
+  $\pi$.
+
+  {\em Introduced objects and parameters}: a point $A$ with three
+  fresh parameters $a^x$, $a^y$ and $a^z$ representing its
+  coordinates.
+
+  {\em Polynomials:} derived from {\tt line\_plane\_intersection $A$ $l$ $\pi$}.
+
+\bigskip
+
+We also support isometric transformations. For example, in most tasks,
+translation in the z-axis direction is used.
+
+% ------------------------
+\item[$\triangleright$]  $A$ = {\tt translate\_z} $O$ $d$ --- construct a
+  point by translating point $A$ by some parameter along $z$-axis.
+
+  {\em Introduced objects and parameters:} point $A$ with the
+  coordinates $(o^x, o^y, a^z)$, for a single fresh parameter $a^z$.
+
+  {\em Polynomial:} A polynomial derived from
+  $\overrightarrow{AO} = (0, 0, d)$.
+
+\bigskip
+ 
+Support for integer numbers.
+
+% ------------------------
+\item[$\triangleright$] {\tt make\_distance\_number} $n$ $A$ $B$ ---
+  constructs the variable with name $n$ representing square distance
+  between points $A$ and $B$.
+
+  $n = \overrightarrow{AB} \cdot \overrightarrow{AB}$
+\end{description}
+
+
+\paragraph{Constructions of lines}
+Although the construction of a free line could be easily introduced,
+for simplicity, we have chosen to support only free points (and a free
+line can be constructed as a line trough two free points).
+
+\begin{description}
+% ------------------------
+\item[$\triangleright$] $l$ $=$ {\tt make\_line\_trough\_points} $A$
+  $B$ --- for two given points $A$ and $B$ constructs the line $l$
+  that contains them.
+
+  {\em Introduced objects and parameters:} if the first approach is
+  used, no new parameters are introduced and the name $l$ is
+  associated with the pair of points $A$ and $B$. If the second
+  approach is used, fresh parameters $l^{v_x}$, $l^{v_y}$, $l^{v_z}$
+  that represent the direction vector of the are introduced. There is
+  no need to introduce the parameters for the point $l^A$, as it can
+  be associated either to the point $A$ or the point $B$.
+
+  {\em Polynomials:} If the first approach is used no polynomials are
+  needed. If the second approach is used, the polynomials are derived
+  from {\tt point\_on\_line $B$ $l$} (if $A$ is chosen for $l^A$).
+
+Second approach polynomials:
+\begin{tabbing}
+$l^{v_x} - a^x + b^x = 0$ \\
+$l^{v_y} - a^y + b^y = 0$ \\
+$l^{v_z} - a^z + b^z = 0$
+\end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] $l$ = {\tt make\_line\_orthogonal\_on\_plane}
+  $\pi$ $A$ -- for a given plane $\pi$ and a point $A$ constructs the
+  line $l$ that is orthogonal on the given plane $\pi$ and contains
+  the point $A$.
+
+  {\em Introduced objects and parameters:} if the first approach is
+  used then first point $l_A$ determining the line is point $A$. The
+  fresh symbolic coordinates of the second point $l_B$ are introduced.
+
+  If the second approach is used line $l$ is determined by the
+  parameters $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, a^x, a^y, a^z)$ (its
+  direction vector is the normal vector of the plane, and its point is
+  the point $A$).
+
+  {\em Polynomials:} If the first approach is used, polynomials are
+  determined by
+  $l_B = l_A + \overrightarrow{\pi_A\pi_B} \times
+  \overrightarrow{\pi_A\pi_C}$.
+
+  If the second approach is used, no polynomials are generated.
+
+% ------------------------
+\item[$\blacktriangleright$] $l$ = {\tt make\_line\_orthogonal\_on\_plane\_} $A$ $B$ $C$ $D$\\
+
+{\em Description:} For given points $A$, $B$, $C$ and $D$ determines
+line $l$ witch is orhogonal on the plane determined with points $A$,
+$B$ and $C$ and incides with the point $A$.
+
+Second approach polynomials:
+\begin{tabbing}
+$l^{v_x} - b^y\cdot c^z + b^y\cdot a^z + a^y\cdot c^z + b^z\cdot c^y - b^z\cdot a^y - a^z\cdot c^y = 0$ \\
+$l^{v_y} - b^x\cdot c^z - b^x\cdot a^z - a^x\cdot c^z - b^z\cdot c^x + b^z\cdot a^x + a^z\cdot c^x = 0$ \\
+$l^{v_z} - b^x\cdot c^y + b^x\cdot a^y + a^x\cdot c^y + b^y\cdot c^x - b^y\cdot a^x - a^y\cdot c^x = 0$ 
+\end{tabbing}
+
+{\em Explanation:} The parameters for the point on the line can be the
+point $A$. Line vector is the same as the vector of the plane $ABC$,
+and can be determined using formula:
+$$(l^{v_x}, l^{v_y}, l^{v_z}) = \begin{vmatrix} i & j & k \\ b^x - a^x
+  & b^y - a^y & b^z - a^z \\ c^x - a^x & c^y - a^y & c^z - a^z
+\end{vmatrix}$$
+\end{description}
+
+
+\section{Constructions of the plane}
+
+\begin{description}
+% ------------------------
+\item[$\triangleright$] $\pi$ = {\tt make\_plane\_trough\_points} $A$
+  $B$ $C$ --- for three given points $A$, $B$ and $C$ constructs the
+  plane $\pi$ containing all of them.
+
+  {\em Introduced objects and parameters:} if the first approach is
+  used, no new variables are introduced and the name $\pi$ is
+  associated with the triple of points $A$, $B$, and $C$. If the
+  second approach is used, then plane $\pi$ is determined with fresh
+  symbolic parameters $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$.
+
+  {\em Polynomials:} If the second approach is used, polynomials are
+  derived from
+  $\overrightarrow{\pi} = \overrightarrow{AB} \times
+  \overrightarrow{AC}$ and {\tt point\_on\_plane $A$ $\pi$}.
+
+Second approach polynomials:
+\begin{tabbing}
+$\pi^{v_x} - b^y\cdot c^z + b^y\cdot a^z + a^y\cdot c^z + b^z\cdot c^y - b^z\cdot a^y - a^z\cdot c^y = 0$ \\
+$\pi^{v_y} - b^x\cdot c^z - b^x\cdot a^z - a^x\cdot c^z - b^z\cdot c^x + b^z\cdot a^x + a^z\cdot c^x = 0$ \\
+$\pi^{v_z} - b^x\cdot c^y + b^x\cdot a^y + a^x\cdot c^y + b^y\cdot c^x - b^y\cdot a^x - a^y\cdot c^x = 0$ \\
+$\pi^{d} + \pi^{v_x}\cdot a^x + \pi^{v_y}\cdot a^y + \pi^{v_z}\cdot a^z$
+\end{tabbing}
+
+{\em Explanation:} The normal vector of the line can be obtained as a
+vector product of the vectors $\overrightarrow{AB}$ and
+$\overrightarrow{AC}$. Since $(b^x - a^x, b^y - a^y, b^z - a^z)$ and
+$(c^x - a^x, c^y - a^y, c^z - a^z)$ are vectors of two lines
+determined with points $A$ and $B$, and points $C$ and $D$, the first
+three polynomials are derived using the formula:
+$$(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}) = \begin{vmatrix} i & j & k \\ b^x
+  - a^x & b^y - a^y & b^z - a^z \\ c^x - a^x & c^y - a^y & c^z - a^z
+\end{vmatrix}$$
+
+The last parameter of the plane $\pi^{d}$ is obtained from the
+condition that the point $A$ is in the plane $\pi$, and satisfies its
+equation. Note that this equation uses the symbolic parameters
+$\pi^{v_x}$, $\pi^{v_y}$ and $\pi^{v_z}$ that are introduced in this
+construction step.
+
+
+% ------------------------
+\item[$\triangleright$] $\pi$ = {\tt
+    make\_plane\_orthogonal\_on\_plane\_containing\_line} $\alpha$ $l$
+  --- for given plane $\alpha$ and line $l$ constructs plane with line
+  $l$ and orthogonal to the plane $\alpha$.
+
+  {\em Introduced objects and parameters:} if the first approach is
+  used, no new variables are introduced and the name $\pi$ is
+  associated with the triple of points $l_A$, $l_B$, and new fresh
+  point $\pi_C$. If the second approach is used, then plane $\pi$ is
+  determined with fresh symbolic parameters
+  $(\pi^{v_x}, \pi^{v_y}, \pi^{v_z}, \pi^{d})$.
+
+  {\em Polynomials:} If the first approach is used polynomials are
+  derived from $(\overrightarrow{\pi_Cl_A} \times
+  \overrightarrow{\pi_Cl_B}) \cdot (\overrightarrow{\alpha_A\alpha_B}
+  \times \overrightarrow{\alpha_A\alpha_C}) = 0$. If the second
+  approach is used, polynomials are derived from $\overrightarrow{\pi}
+  = \overrightarrow{\alpha} \times \overrightarrow{l}$ and {\tt
+    point\_on\_plane $l_A$ $\pi$}.
+
+Second approach polynomials:
+\begin{tabbing}
+$\pi^{v_x} - \alpha^{v_y}\cdot l_z + \alpha^{v_z}\cdot l_y = 0$ \\
+$\pi^{v_y} - \alpha^{v_z}\cdot l_x + \alpha^{v_x}\cdot l_z = 0$ \\
+$\pi^{v_z} - \alpha^{v_x}\cdot l_y + \alpha^{v_y}\cdot l_x = 0$ \\
+$\pi^{v_x}\cdot l^{p_x} + \pi^{v_y}\cdot l^{p_y} + \pi^{v_z}\cdot l^{p_z} + \pi^{d} = 0$
+\end{tabbing}
+{\em Explanation:} These polynomials were derived using formula:
+$$ (\pi^{v_x}, \pi^{v_y}, \pi^{v_z}) = \begin{vmatrix}
+i & j & k \\
+\alpha^{v_x} & \alpha^{v_y} & \alpha^{v_z} \\
+l^{v_x} & l^{v_y} & l^{v_z}
+\end{vmatrix}
+$$ and the condition that point $(l^{p_x}, l^{p_y}, l^{p_z})$ also
+lies in plane $\pi$.
+\end{description}
+
+
+\section{Solid construction}
+
+\begin{description}
+% ------------------------
+\item[$\triangleright$] $A$ $B$ $C$ $D$ $A_1$ $B_1$ $C_1$ $D_1$ = {\tt
+    make\_cube} --- construct the cube in the canonical position, with
+  the edge length equal to $1$.
+
+  {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+  $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$, $A_1(0, 0, 1)$,
+  $B_1(1, 0, 1)$, $C_1(1, 1, 1)$ and $D(0, 1, 1)$. Since the cube is
+  in the canonical position, no symbolic variables are introduced.
+
+  {\em Explanation:} No polynomials are generated.
+
+% ------------------------
+\item[$\triangleright$] $A$ $B$ $C$ $D$ = {\tt
+    make\_tetrahedron} \label{tetrahedron} --- construct the
+  tetrahedron in the
+  canonical position.
+
+  {\em Introduced objects and parameters:} The vertices of the
+  tetrahedron have the coordinates $A(0, 0, 0)$, $B(1, 0, 0)$,
+  $C(c^x, c^y, 0)$ and $D(c^x, d^y, d^z)$, with the four fresh
+  parameters $c^x$, $c^y$, $d^y$, and $d^z$.
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = 2\cdot c^x - 1$ \\
+                   \> $poly_2 = 2\cdot {c^y}^2 - 3$ \\
+                   \> $poly_3 = 3\cdot d^y - c^y$ \\
+                   \> $poly_4 = 3\cdot {d^z}^2 - 2$
+\end{tabbing}
+
+{\em Explanation:} $c^x = \frac{1}{2}$, $c^y = \frac{\sqrt{3}}{2}$,
+$d^y = \frac{\sqrt{3}}{6} = \frac{c^y}{3}$,
+$d^z = \frac{\sqrt{2}}{\sqrt{3}}$. Note that all our objects always
+have either symbolic or integer parameters and polynomials must always
+have integer coefficients, so irrational values (and even fractions)
+must be introduced using polynomials.
+
+% ------------------------
+\item[$\triangleright$] $A$ $B$ $C$ $D$ $S$ = {\tt make\_pyramid} ---
+   construct a regular four--side pyramid in the canonical position --
+   the base is a unit square in the $xOy$ plane, its lateral edges are
+   equal in length, and the height is not constrained.
+   {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+   $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$ and $S(s^x, s^y, s^z)$, for
+   three fresh parameters $s^x$, $s^y$ and $s^z$.
+
+ \begin{tabbing}
+ {\em Polynomials:} \= $poly_1 = 2\cdot s^x - 1$ \\
+                    \> $poly_2 = 2\cdot s^y - 1$
+ \end{tabbing}
+
+ {\em Explanation:} The projection of the apes is $(s^x, s^y, 0)$ and
+ it lies in the middle of the square, so $s^x = s^y =
+ \frac{1}{2}$. Note that $s^z$ is not constrained.
+
+% ------------------------
+\item[$\triangleright$] $\mathcal{S}$ = {\tt make\_sphere} $A$ $B$ $C$
+  $D$ --- construct a sphere $\mathcal{S}$ trough four given points
+  $A$, $B$, $C$, $D$.
+  
+ {\em Introduced objects and parameters:} the sphere is determined by
+ its center $O = (O^x, O^y, O^z)$ and its radius $r$ --- four fresh
+ parameters $O^x$, $O^y$, $O^z$ and $r$ are introduced.
+
+{\em Polynomials:} Polynomials are derived from
+$\overrightarrow{AO}\cdot\overrightarrow{AO} = r^2$,
+$\overrightarrow{BO}\cdot\overrightarrow{BO} = r^2$,
+$\overrightarrow{CO}\cdot\overrightarrow{CO} = r^2$, and
+$\overrightarrow{DO}\cdot\overrightarrow{DO} = r^2$.
+
+% ------------------------
+ \item[$\triangleright$] $A$ $B$ $C$ $D$ = {\tt make\_square} ---
+   construct a square in the canonical position: the base is a unit
+   square in the $xOy$ plane, its lateral edges are equal in length,
+   and the height is not constrained.
+
+   {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+   $B(1, 0, 0)$, $C(1, 1, 0)$, $D(0, 1, 0)$.
+
+% ------------------------
+ \item[$\triangleright$] $A$ $B$ $C$ = {\tt
+     make\_equilateral\_triangle} --- construct a equilateral triangle
+   in the canonical position; it is in $xOy$ plane, one point is in
+   origin, and another point is on
+   $x$-axis. \\
+   {\em Introduced objects and parameters:} Points $A(0, 0, 0)$,
+   $B(1, 0, 0)$, $C(c^x, c^y, 0)$, for two fresh parameters $c^x$ and
+   $c^y$.
+
+ \begin{tabbing}
+ {\em Polynomials:} \= $poly_1 = 2\cdot c^x - 1$ \\
+                    \> $poly_2 = 4\cdot c^y - 3$
+ \end{tabbing}
+
+% ------------------------
+\item[$\triangleright$] $A_1$ $A_2$ $A_3$ $A_4$ $A_5$ $A_6$ = {\tt
+    make\_regular\_hexagon} --- construct a regular hexagon in the
+  canonical position; it is in $xOy$ plane, one point is in origin,
+  and another
+  point is on $x$-axis. \\
+  {\em Introduced objects and parameters:} Points $A_1(0, 0, 0)$,
+  $A_2(1, 0, 0)$, $A_3(a_3^x, a_3^y, 0)$, $A_4(1, a_4^y, 0)$,
+  $A_5(0, a_4^y, 0)$ and $A_6(a_6^x, a_3^y, 0)$, for four fresh
+  parameters $a_3^x$, $a_3^y$, $a_4^y$ and $a_6^x$.
+
+\begin{tabbing}
+{\em Polynomials:} \= $poly_1 = 2\cdot a_3^x - 3$ \\
+                   \> $poly_2 = 4(a_3^y)^2 - 3$ \\
+                   \> $poly_3 = a_4^y - 3$ \\
+                   \> $poly_4 = 2a_6^x - 1$
+\end{tabbing}
+\end{description}
+
+
+\end{document}
+
