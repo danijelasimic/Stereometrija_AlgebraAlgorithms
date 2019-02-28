@@ -1,0 +1,9 @@
+make_cube A B C D A1 B1 C1 D1
+
+midpoint S B B1
+
+plane_points pi A D1 S
+
+midpoint T B1 C1
+
+point_in_plane T pi

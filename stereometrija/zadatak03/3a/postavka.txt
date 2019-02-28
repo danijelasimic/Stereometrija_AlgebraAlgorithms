@@ -1,0 +1,9 @@
+make_cube A B C D E F G H
+
+intersection_4points M E G H F
+intersection_4points N A C B D
+
+intersection_4points O E N A M
+intersection_4points P F N B M
+
+segments_in_ratio O P A B 1 2

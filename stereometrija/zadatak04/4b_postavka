@@ -1,0 +1,10 @@
+//pokazujemo da je srednja linija trougla jednaka polovini naspramne stranice
+
+point C1
+point B1
+point A1
+
+midpoint P B1 A1
+midpoint Q C1 B1
+
+segments_in_ratio P Q A1 C1 1 2

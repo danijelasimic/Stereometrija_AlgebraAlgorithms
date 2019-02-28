@@ -1,0 +1,5 @@
+Nije najjasnije sta se dokazuje jer nema postavke
+
+Zato, mi konstrusemo tacku koja je na duploj udaljenosti od osnovice kvadrata
+
+Dokazujemo da je stranica dobijenog kvadrata u preseku jednaka polovini stranice kocke

@@ -1,0 +1,11 @@
+make_cube A B C D E F G H
+
+midpoint A1 A C
+midpoint B1 A F
+midpoint C1 A H
+
+plane_points pi A1 B1 C1
+
+line_points l A G
+
+orthogonal_line_plane l pi

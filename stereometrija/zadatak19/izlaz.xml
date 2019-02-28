@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE geothm SYSTEM "geothm.dtd">
+<geothm name="geothm\_zadatak">
+<xpolysys>
+	<xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="2" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="1" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+		 </xterm>
+	</xpoly>
+	<xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="2" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="1" exp="1"></pow>
+		 </xterm>
+	</xpoly>
+	<xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="3" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="1" exp="1"></pow>
+		 </xterm>
+	</xpoly>
+</xpolysys>
+	<xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="2" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="3" exp="1"></pow>
+		 </xterm>
+	</xpoly>
+</geothm>

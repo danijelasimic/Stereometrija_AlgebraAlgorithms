@@ -1,0 +1,6 @@
+A) dokazujemo da sve cetiri tacke koje su na sredini strana se nalaze u jednoj ravni
+
+B) dokazujemo da je visina male piramide koja se dobije jednaka polovini visine velike piramide 
+
+C) dokazujemo da su ravni paralelne
+ 

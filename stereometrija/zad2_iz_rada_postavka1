@@ -1,0 +1,9 @@
+point A
+point B
+point C
+point D
+
+equal_angles_rel B A D B C D
+equal_angles_rel A B C A D C
+
+congruent A B B C

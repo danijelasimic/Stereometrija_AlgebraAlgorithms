@@ -1,0 +1,11 @@
+make_tetrahedron A B C D
+
+plane_points alpha A B C
+
+line_orth_plane l alpha D
+
+intersection_line_plane D1 l alpha
+
+midpoint E D D1
+
+orthogonal_4points A E E B

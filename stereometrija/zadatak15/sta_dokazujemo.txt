@@ -1,0 +1,6 @@
+A) dokazujemo da je duzina stranice osnovice male piramide jednaka polovini duzine stranice velike piramide
+   
+
+B) da je visina piramide male jednaka trecini visne velike piramide 
+
+

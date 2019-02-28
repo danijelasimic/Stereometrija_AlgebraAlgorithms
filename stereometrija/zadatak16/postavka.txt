@@ -1,0 +1,16 @@
+make_cube A B C D A1 B1 C1 D1
+
+intersection_4points M A C B D
+intersection_4points N A1 C1 B1 D1
+
+point_ratio S M N 2 1
+
+line_points l A S
+line_points g B S
+
+plane_points alpha A1 B1 C1
+
+intersection_line_plane L l alpha
+intersection_line_plane G g alpha
+
+segments_in_ratio L G A B 1 2

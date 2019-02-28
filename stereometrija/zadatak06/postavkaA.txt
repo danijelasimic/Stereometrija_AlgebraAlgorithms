@@ -1,0 +1,10 @@
+make_pyramid_4side A B C D S
+
+midpoint A1 A S
+midpoint B1 B S
+midpoint C1 C S
+midpoint D1 D S
+
+plane_points alpha A1 B1 C1
+
+point_in_plane D1 alpha

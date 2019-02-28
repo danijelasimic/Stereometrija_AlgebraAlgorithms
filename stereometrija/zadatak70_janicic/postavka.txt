@@ -1,0 +1,22 @@
+point A
+point B
+point C
+point D
+
+congruent A B C D
+congruent A D B C
+
+midpoint M A C
+midpoint N B D
+
+line_points l M N
+
+line_points d A C
+
+orthogonal_lines l d
+
+
+
+
+napomena: prebaciti polinome koji opisuju kongruentnost (ooni su automatski statement polinomi) u polinome koji idu u construction
+(radjena racuna modifikacija u xml fajlu)

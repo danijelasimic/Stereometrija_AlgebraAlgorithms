@@ -1,0 +1,15 @@
+point A
+point B
+point C
+point D
+
+orthogonal_4points_rel A B B C
+orthogonal_4points_rel B C C D
+orthogonal_4points_rel C D D A
+orthogonal_4points_rel D A A B
+
+plane_points alpha A B C
+
+point_in_plane D alpha
+
+

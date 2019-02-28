@@ -1,0 +1,45 @@
+make_tetrahedron A B C D
+
+point E
+point F
+point G
+point H
+point K
+point L
+
+line e A B
+line f B C
+line g C D
+line h D A
+line k D B
+line l D C
+
+point_on_line_rel E e
+point_on_line_rel F f
+point_on_line_rel G g
+point_on_line_rel H h
+point_on_line_rel K k
+point_on_line_rel L l
+
+make_distance_number n1 A E
+make_distance_number n2 B E
+make_distance_number n3 B F
+make_distance_number n4 C F
+make_distance_number n5 C G
+make_distance_number n6 A G
+make_distance_number n7 D H
+make_distance_number n8 A H
+make_distance_number n9 D K
+make_distance_number n10 B K
+make_distance_number n11 D L
+make_distance_number n12 C L
+
+equal_multiple_numbers4 n1 n2 n3 n4
+equal_multiple_numbers4 n3 n4 n5 n6
+equal_multiple_numbers4 n5 n6 n7 n8
+equal_multiple_numbers4 n7 n8 n9 n10
+equal_multiple_numbers4 n9 n10 n11 n12
+
+make_sphere s E F G H
+
+point_on_sphere K s

@@ -1,0 +1,22 @@
+make_pyramid_4side A B C D S
+
+midpoint A1 A S
+midpoint B1 B S
+midpoint C1 C S
+midpoint D1 D S
+
+plane_points alpha A1 B1 C1
+
+line_orth_plane l alpha S
+
+intersection_line_plane M l alpha
+
+
+
+plane_points beta A B C
+
+line_orth_plane g beta S
+
+intersection_line_plane N g beta
+
+segments_in_ratio S M S N 1 2

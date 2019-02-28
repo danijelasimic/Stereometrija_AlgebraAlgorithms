@@ -1,0 +1,14 @@
+make_tetrahedron A B C D
+
+plane_points alpha1 A B C
+plane_points alpha2 B C D
+plane_points alpha3 A C D
+
+line_orth_plane h1 alpha1 D
+line_orth_plane h2 alpha2 A
+line_orth_plane h3 alpha3 B
+
+intersection_lines H1 h1 h2
+intersection_lines H2 h2 h3
+
+equal_points H1 H2

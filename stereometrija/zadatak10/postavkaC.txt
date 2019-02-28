@@ -1,0 +1,20 @@
+make_cube A B C D A1 B1 C1 D1
+
+midpoint M A B
+midpoint N A D
+midpoint P B C
+midpoint K D C
+
+line_points l1 M N
+line_points l2 P K
+plane_points pi A B C
+
+plane_orht_plane_has_line alpha pi l1
+plane_orht_plane_has_line beta pi l2
+
+line_points g A1 C1
+
+intersection_line_plane V g alpha
+intersection_line_plane W g beta
+
+segments_in_ratio V W M P 1 1

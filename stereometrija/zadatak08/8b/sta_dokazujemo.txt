@@ -1,0 +1,3 @@
+dokazujemo da je visina tetraedra jednaka trecini dijagonale.
+
+

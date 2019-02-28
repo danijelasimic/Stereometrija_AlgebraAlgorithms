@@ -1,0 +1,13 @@
+A) konstrisemo ovu ravan koja sadrzi prvi zeleni trougao; ona sece gornju dijagonalu u tacki F; pokazujemo da 
+je duzina od temana kocke do F jednaka polovini stranice kvadrata u osnovi 
+
+B) F odredjuemo na isti nacin; L nam je presek donje dijagonale i stranice kvadrata; pokazujemo da su duzine od 
+temena do F, odnosno L jednake
+
+B_pom) L konstrusisemo kao pod B; pokazujemo da je duzina od temena kocke do L polovina stranice kvadrata
+
+C) napravimo obe ravni koje sadrze po jedan zeleni trougao; odredimo preseke ovih ravni sa gornjom dijagonalom, 
+to su tacke V W; pokazujemo da je duzina VW jednaka duzini stranice kvadrata u osnovi
+
+Cpom) konstrukcija ista kao pod C; pokazujemo da je duzina koja je odredjena temenom kocke i tackom V i duzina 
+koja je odredjena suprotnim temenom kvadrata te kocke i tackom W -- da su ove duzine jednake

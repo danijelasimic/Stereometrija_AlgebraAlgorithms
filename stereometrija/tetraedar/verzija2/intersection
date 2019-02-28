@@ -1,0 +1,325 @@
+3: <xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="5" exp="1"></pow>
+			<pow vtype="x" ind="6" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="5" exp="1"></pow>
+			<pow vtype="x" ind="15" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="1" exp="1"></pow>
+			<pow vtype="x" ind="6" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="1" exp="1"></pow>
+			<pow vtype="x" ind="15" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="6" exp="1"></pow>
+			<pow vtype="x" ind="5" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="6" exp="1"></pow>
+			<pow vtype="x" ind="14" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="3" exp="1"></pow>
+			<pow vtype="x" ind="5" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="3" exp="1"></pow>
+			<pow vtype="x" ind="14" exp="1"></pow>
+		 </xterm>
+	</xpoly>
+
+
+
+
+
+
+
+4: <xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="9" exp="1"></pow>
+			<pow vtype="x" ind="10" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="9" exp="1"></pow>
+			<pow vtype="x" ind="16" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="10" exp="1"></pow>
+			<pow vtype="x" ind="9" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="10" exp="1"></pow>
+			<pow vtype="x" ind="15" exp="1"></pow>
+		 </xterm>
+	</xpoly>
+
+
+
+
+
+
+
+
+5: <xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="10" exp="1"></pow>
+			<pow vtype="x" ind="8" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="10" exp="1"></pow>
+			<pow vtype="x" ind="14" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="8" exp="1"></pow>
+			<pow vtype="x" ind="10" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="8" exp="1"></pow>
+			<pow vtype="x" ind="16" exp="1"></pow>
+		 </xterm>
+	</xpoly>
+
+
+
+
+
+1: <xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="9" exp="1"></pow>
+			<pow vtype="x" ind="10" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="9" exp="1"></pow>
+			<pow vtype="x" ind="19" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="10" exp="1"></pow>
+			<pow vtype="x" ind="9" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="10" exp="1"></pow>
+			<pow vtype="x" ind="18" exp="1"></pow>
+		 </xterm>
+	</xpoly>
+
+
+
+
+
+2: <xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="10" exp="1"></pow>
+			<pow vtype="x" ind="8" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="10" exp="1"></pow>
+			<pow vtype="x" ind="17" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="8" exp="1"></pow>
+			<pow vtype="x" ind="10" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="8" exp="1"></pow>
+			<pow vtype="x" ind="19" exp="1"></pow>
+		 </xterm>
+	</xpoly>
+
+
+
+
+
+
+
+
+4: <xpoly>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="12" exp="1"></pow>
+			<pow vtype="x" ind="13" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="12" exp="1"></pow>
+			<pow vtype="x" ind="19" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="-1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="13" exp="1"></pow>
+			<pow vtype="x" ind="12" exp="1"></pow>
+		 </xterm>
+		 <xterm>
+			 <ufrac>
+				 <upoly>
+					 <uterm coeff="1" >
+					 </uterm>
+				 </upoly>
+			 </ufrac>
+			<pow vtype="x" ind="13" exp="1"></pow>
+			<pow vtype="x" ind="18" exp="1"></pow>
+		 </xterm>
+	</xpoly>

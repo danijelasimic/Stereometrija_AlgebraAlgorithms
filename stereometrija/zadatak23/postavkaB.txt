@@ -1,0 +1,7 @@
+make_cube A B C D A1 B1 C1 D1
+
+intersection_4points M A C1 B D1
+
+intersection_4points N C D1 D C1
+
+segments_in_ratio M N A B 1 2

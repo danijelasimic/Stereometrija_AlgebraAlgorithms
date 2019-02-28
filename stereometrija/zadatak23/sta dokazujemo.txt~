@@ -1,0 +1,9 @@
+nema postavke, pa nije jasno sta treba -- pretpostavljam zapremina preseka
+
+to mozemo da uradimo tako sto izracunamo zapreminu prizme i od nje oduzmemo zapreminu ove male piramide koja je iznad preseka.
+
+da bi to uradili, potrebno je pokazati da su ove ravni normalne (ravni koje zapravo sadrze stranice piramide)
+
+sve strane piramide znamo (jedna je stranica, ostale su polovine dijagonala), osim jedne
+
+a) dokaz da su normalne

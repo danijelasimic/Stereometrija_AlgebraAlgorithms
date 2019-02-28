@@ -1,0 +1,12 @@
+make_pyramid_4side A B C D S
+
+midpoint M A B
+midpoint M1 S B
+
+intersection_4points T1 S M A M1
+
+midpoint N B C
+
+intersection_4points T2 S N C M1
+
+segments_in_ratio T1 T2 A B 1 2 

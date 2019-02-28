@@ -1,0 +1,15 @@
+make_cube A B C D E F G H
+
+intersection_4points A1 A C B D
+intersection_4points B1 A F E B
+intersection_4points C1 A H E D
+
+plane_points pi A1 B1 C1
+
+line_points l A G
+
+intersection_line_plane T l pi
+
+segments_in_ratio A T A G 1 3
+
+

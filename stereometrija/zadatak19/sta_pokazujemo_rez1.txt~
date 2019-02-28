@@ -1,0 +1,19 @@
+nije najjasnije sta se u zadatku trazi jer nema postavke zadatka
+
+pokazujemo da tacka B pripada ravni odredjenoj sa A M i H
+
+u ovom zadatku nije bilo potrebno pokretati dokazivac jer je prilikom uproscavanja polinoma, polinom tvrdjenja postao 0:
+
+polinomi konstrukcije+tvrdjenja:
+  +  2*x_25  -  x_1  -  x_4
+  +  2*x_26  -  x_2  -  x_5
+  +  2*x_27  -  x_3  -  x_6
+  +  x_28  -  x_26*x_24  +  x_26*x_3  +  x_2*x_24  +  x_27*x_23  -  x_27*x_2  -  x_3*x_23
+  +  x_29  +  x_25*x_24  -  x_25*x_3  -  x_1*x_24  -  x_27*x_22  +  x_27*x_1  +  x_3*x_22
+  +  x_30  -  x_25*x_23  +  x_25*x_2  +  x_1*x_23  +  x_26*x_22  -  x_26*x_1  -  x_2*x_22
+  +  x_31  +  x_28*x_1  +  x_29*x_2  +  x_30*x_3
+  +  x_28*x_4  +  x_29*x_5  +  x_30*x_6  +  x_31
+ 
+ 
+nakon uproscavanja, ostaje samo jedan polinom konstrukcije 
+  +  2*x_2  -  x_1

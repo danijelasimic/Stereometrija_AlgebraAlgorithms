@@ -1,0 +1,80 @@
+make_cube A B C D E F G H
+
+midpoint M A B
+
+plane_points pi A M H
+
+point_in_plane B pi
+
+
+
+
+uprosceno bez pregledaca
+  +  2*x_25  -  x_1  -  x_4
+  +  2*x_26  -  x_2  -  x_5
+  +  2*x_27  -  x_3  -  x_6
+  +  x_28  -  x_26*x_24  +  x_26*x_3  +  x_2*x_24  +  x_27*x_23  -  x_27*x_2  -  x_3*x_23
+  +  x_29  +  x_25*x_24  -  x_25*x_3  -  x_1*x_24  -  x_27*x_22  +  x_27*x_1  +  x_3*x_22
+  +  x_30  -  x_25*x_23  +  x_25*x_2  +  x_1*x_23  +  x_26*x_22  -  x_26*x_1  -  x_2*x_22
+  +  x_31  +  x_28*x_1  +  x_29*x_2  +  x_30*x_3
+statements:
+  +  x_28*x_4  +  x_29*x_5  +  x_30*x_6  +  x_31
+ 
+ 
+ 
+intersection:
+ 
+ 
+ 
+  +  2*x_1  -1
+ 
+  +  x_2  +  x_1
+ 
+  +  x_3  -  x_1
+ 
+statements:
+statements:
+
+ Symarry: 
+Broj polinoma: 3
+statements:
+
+ Symarry: 
+Broj polinoma: 3Polinom zakljucka je prilikom uproscavanja postao 0
+Tvrdjenje uspesno dokazano!!
+ :)
+
+
+
+
+
+
+
+
+
+II pregledac:
+  +  2*x_25  -  x_1  -  x_4
+  +  2*x_26  -  x_2  -  x_5
+  +  2*x_27  -  x_3  -  x_6
+statements:
+  +  x_2*x_27*x_22  -  x_2*x_27*x_4  -  x_2*x_6*x_22  +  x_2*x_6*x_4  -  x_5*x_27*x_22  +  x_5*x_27*x_4  +  x_5*x_6*x_22  -  x_5*x_6*x_4  +  x_1*x_26*x_24  -  x_1*x_26*x_6  -  x_1*x_5*x_24  +  x_1*x_5*x_6  -  x_4*x_26*x_24  +  x_4*x_26*x_6  +  x_4*x_5*x_24  -  x_4*x_5*x_6  +  x_25*x_23*x_3  -  x_25*x_23*x_6  -  x_25*x_5*x_3  +  x_25*x_5*x_6  -  x_4*x_23*x_3  +  x_4*x_23*x_6  +  x_4*x_5*x_3  -  x_4*x_5*x_6  -  x_3*x_26*x_22  +  x_3*x_26*x_4  +  x_3*x_5*x_22  -  x_3*x_5*x_4  +  x_6*x_26*x_22  -  x_6*x_26*x_4  -  x_6*x_5*x_22  +  x_6*x_5*x_4  -  x_27*x_23*x_1  +  x_27*x_23*x_4  +  x_27*x_5*x_1  -  x_27*x_5*x_4  +  x_6*x_23*x_1  -  x_6*x_23*x_4  -  x_6*x_5*x_1  +  x_6*x_5*x_4  -  x_2*x_25*x_24  +  x_2*x_25*x_6  +  x_2*x_4*x_24  -  x_2*x_4*x_6  +  x_5*x_25*x_24  -  x_5*x_25*x_6  -  x_5*x_4*x_24  +  x_5*x_4*x_6
+ 
+ 
+ 
+intersection:
+ 
+ 
+ 
+  +  2*x_1  -1
+ 
+statements:
+
+
+ Symarry: 
+Broj polinoma: 1
+
+
+ Symarry: 
+Broj polinoma: 1Polinom zakljucka je prilikom uproscavanja postao 0
+Tvrdjenje uspesno dokazano!!
+ :)

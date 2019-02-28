@@ -1,0 +1,10 @@
+dokazujemo da tacke koje se dobijaju u presku ovih pravi leze u istoj ravni
+
+rucna modifikacija:
+posmatracujuci polinome, neke promenljive su jednake:
+x_3 zamenjeno sa x_3  (izbacen polinom p_2)
+x_4 zamenjeno sa x_1  (izbacen polinom p_3)
+x_8 zamenjeno sa x_7  (izbacen polinom p_7)
+x_12 zamenjeno sa x_11  (izbacen polinomi p_11, p_14)
+
+uspesna triangulacija, space limit problem

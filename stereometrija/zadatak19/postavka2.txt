@@ -1,0 +1,7 @@
+make_cube A B C D E F G H
+
+midpoint M A B
+
+plane_points pi A M H
+
+point_in_plane G pi

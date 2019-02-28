@@ -1,0 +1,6 @@
+point A
+point B
+
+midpoint M A B
+
+segments_in_ratio A M A B 1 2
